@@ -23,13 +23,11 @@ set ttyfast
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
 
-" No annoying sound on errors
-set noerrorbells
-set novisualbell
+set term=xterm-256color
 set t_vb=
-
 set t_Co=256 " using 256 colors
-set t_ti= t_te= " put terminal in 'termcap' mode
+set t_ti=    " put terminal in 'termcap' mode
+set t_te=    " put terminal in 'termcap' mode
 set guicursor+=a:blinkon0 " no cursor blink
 
 " search:
@@ -50,9 +48,6 @@ set number
 " 顯示相對行號。
 " set relativenumber
 
-" 搜尋不分大小寫。
-set ignorecase
-
 " 使用空白取到 Tab。
 set expandtab
 
@@ -72,6 +67,35 @@ set cursorcolumn
 " 顯示輸入的命令
 set showcmd
 
+set laststatus=2
+
+" Enable auto completion menu after pressing TAB.
+set wildmenu
+
+" Make wildmenu behave like similar to Bash completion.
+set wildmode=list:longest
+
+" There are certain files that we would never want to edit with Vim.
+" Wildmenu will ignore files with these extensions.
+set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+
+" Mappings {{{
+
+" Move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Type jj to exit insert mode quickly.
+inoremap jj <Esc>
+
+" }}}
+
 " Plug menu {{{
 call plug#begin('~/.vim/plugged')
 
@@ -90,10 +114,23 @@ Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
+Plug 'majutsushi/tagbar'
+
 " Git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
+Plug 'pangloss/vim-javascript'
+
 call plug#end()
 " }}}
+
+" ==============================
+" NERDTreeToggle Config
+" ==============================
 noremap <C-n> :NERDTreeToggle<CR>
+
+" ==============================
+" Tagbar Config
+" ==============================
+nmap <F8> :TagbarToggle<CR>
