@@ -30,7 +30,6 @@ set t_ti=    " put terminal in 'termcap' mode
 set t_te=    " put terminal in 'termcap' mode
 set guicursor+=a:blinkon0 " no cursor blink
 
-" search:
 set incsearch                   " Find as you type search
 set hlsearch                    " Highlight search terms
 set ignorecase                  " Case insensitive search
@@ -83,13 +82,28 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 set noerrorbells
 set novisualbell
 
+" Lines of memoy to remember
+set history=10000
+
 " Mappings {{{
+
+" Reload .vimrc
+nnoremap <F12> :so $MYVIMRC<CR>
 
 " Move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <C-r>=escape(expand("%:p:h"), " ")<cr>/
 
 " Type jj to exit insert mode quickly.
 inoremap jj <Esc>
@@ -113,10 +127,11 @@ Plug 'shougo/denite.nvim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
 Plug 'majutsushi/tagbar'
 
-" Git
+" Autocomplete
+
+" Git Tools
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
