@@ -74,16 +74,15 @@ ZSH_THEME="agnoster"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-git
-docker
-docker-compose
-k
-kubectl
-z
-zsh-autosuggestions
-zsh-history-substring-search
-zsh-syntax-highlighting
-autojump
+  git
+  docker
+  docker-compose
+  kubectl
+  z
+  zsh-autosuggestions
+  zsh-history-substring-search
+  zsh-syntax-highlighting
+  autojump
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -168,3 +167,4 @@ compinit
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 # <<<< Kubectl command completion (end)
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
