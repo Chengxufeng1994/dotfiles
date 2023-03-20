@@ -123,6 +123,7 @@ Plug 'godlygeek/tabular'
 Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
 Plug 'shougo/denite.nvim'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -149,3 +150,15 @@ noremap <C-n> :NERDTreeToggle<CR>
 " Tagbar Config
 " ==============================
 nmap <F8> :TagbarToggle<CR>
+
+" ==============================
+" Suntastic Config
+" ==============================
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 2
+let g:syntastic_check_on_wq = 1
