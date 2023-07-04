@@ -129,6 +129,7 @@ Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
+Plug 'easymotion/vim-easymotion'
 
 " Autocomplete
 
@@ -138,6 +139,10 @@ Plug 'tpope/vim-fugitive'
 
 Plug 'pangloss/vim-javascript'
 
+" Go
+Plug 'jstemmer/gotags'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
 call plug#end()
 " }}}
 
@@ -145,11 +150,46 @@ call plug#end()
 " NERDTreeToggle Config
 " ==============================
 noremap <C-n> :NERDTreeToggle<CR>
+" 顯示行號 
+let NERDTreeShowLineNumbers=1
+" 打開文件時是否顯示目錄 
+let NERDTreeAutoCenter=1
+" 是否顯示隱藏文件 
+let NERDTreeShowHidden=1
+" 打開 vim 文件及顯示書籤列表
+let NERDTreeShowBookmarks=2
 
 " ==============================
 " Tagbar Config
 " ==============================
 nmap <F8> :TagbarToggle<CR>
+let g:tagbar_type_go = {
+\ 'ctagstype' : 'go',
+\ 'kinds'     : [
+\ 'p:package',
+\ 'i:imports:1',
+\ 'c:constants',
+\ 'v:variables',
+\ 't:types',
+\ 'n:interfaces',
+\ 'w:fields',
+\ 'e:embedded',
+\ 'm:methods',
+\ 'r:constructor',
+\ 'f:functions'
+\ ],
+\ 'sro' : '.',
+\ 'kind2scope' : {
+\ 't' : 'ctype',
+\ 'n' : 'ntype'
+\ },
+\ 'scope2kind' : {
+\ 'ctype' : 't',
+\ 'ntype' : 'n'
+\ },
+\ 'ctagsbin'  : 'gotags',
+\ 'ctagsargs' : '-sort -silent'
+\ }
 
 " ==============================
 " Suntastic Config
@@ -162,3 +202,38 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 2
 let g:syntastic_check_on_wq = 1
+
+" ==============================
+" Vim-Go Config
+" ==============================
+set autowrite
+
+" Go syntax highlighting
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_operators = 1
+
+" Enable auto formatting on saving
+let g:go_fmt_autosave = 1
+
+" Run `goimports` on your current file on every save
+let g:go_fmt_command = "goimports"
+
+" Status line types/signatures
+let g:go_auto_type_info = 1
+
+" Linter
+let g:go_metalinter_command = "golangci-lint"
+let g:go_metalinter_enabled = ['vet', 'errcheck', 'staticcheck', 'gosimple']
+
+" Run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
