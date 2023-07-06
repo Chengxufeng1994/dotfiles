@@ -90,6 +90,17 @@ set history=10000
 " Reload .vimrc
 nnoremap <F12> :so $MYVIMRC<CR>
 
+" 定義快捷鍵的前綴，即<Leader>
+" let mapleader=";"
+
+" ==== 系统剪切板复制粘贴 ====
+" visual mode 複製內容到系統剪貼簿
+vmap <Leader>c "+yy
+" normal mode 複製內容到系統剪貼簿
+nmap <Leader>c "+yy
+" normal mode 黏貼系統剪貼簿到內容
+nmap <Leader>v "+p
+
 " Move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -100,6 +111,7 @@ map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
+map <leader>t<leader> :tabnext<cr>
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
