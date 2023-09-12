@@ -13,3 +13,8 @@ brew "go"
 
 # terminal
 brew "tmux"
+
+# kubernetes
+brew "k9s"
+brew "kubectl"
+brew "kubectx"
