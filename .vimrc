@@ -85,6 +85,8 @@ set novisualbell
 " Lines of memoy to remember
 set history=10000
 
+set updatetime=100
+
 " Mappings {{{
 
 " Reload .vimrc
