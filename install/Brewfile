@@ -9,3 +9,7 @@ brew "ripgrep"
 
 # languages/tools
 brew "fnm"
+brew "go"
+
+# terminal
+brew "tmux"

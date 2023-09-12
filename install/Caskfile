@@ -1,0 +1,8 @@
+tap "homebrew/cask-fonts"
+
+cask "datagrip"		
+cask "font-fira-code"		
+cask "font-meslo-lg-nerd-font"	
+cask "goland"			
+cask "iterm2"			
+cask "visual-studio-code"
