@@ -1,0 +1,11 @@
+# fs/network
+brew "tree"
+
+# search/grep/diff
+brew "fzf"
+brew "jq"
+brew "autojump"
+brew "ripgrep"
+
+# languages/tools
+brew "fnm"
