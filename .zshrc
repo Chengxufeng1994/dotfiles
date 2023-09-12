@@ -114,6 +114,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias kctx="kubectx"
 
+export PATH=/usr/local/bin/:$PATH
+
 export GOROOT="/usr/local/go"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
@@ -144,8 +146,6 @@ unset __conda_setup
 zstyle ':completion:*' matcher-list 'm:{a-za-z}={a-za-z}' \
     'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' menu yes select
-autoload -Uz compinit
-compinit
 # End of lines added by compinstall
 
 # zsh-users/zsh-history-substring-search
@@ -160,11 +160,16 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 # >>>> Vagrant command completion (start)
 fpath=(/opt/vagrant/embedded/gems/2.3.2/gems/vagrant-2.3.2/contrib/zsh $fpath)
-compinit
 # <<<<  Vagrant command completion (end)
 
 # >>>> Kubectl command completion (start)
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 # <<<< Kubectl command completion (end)
 
+complete -C '/usr/local/bin/aws_completer' aws
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+autoload bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
+
