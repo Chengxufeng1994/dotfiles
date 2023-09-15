@@ -1,3 +1,5 @@
+tap "hashicorp/tap"
+
 # fs/network
 brew "tree"
 
