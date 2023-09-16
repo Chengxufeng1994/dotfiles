@@ -1,7 +1,8 @@
 #
 # Unix
 #
-alias ll="ls -alh"
+alias l='ls -1A'         # lists files/directories
+alias ll='ls -lah'         # lists files/directories with additional information
 alias ln= "ln -v"
 alias rmrf="rm -rf"
 alias mkdir="mkdir -p"
