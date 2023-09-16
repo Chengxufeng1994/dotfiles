@@ -4,9 +4,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# zsh-completions
-fpath=(/usr/local/share/zsh-completions $fpath)
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -74,15 +71,16 @@ ZSH_THEME="agnoster"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
+  autojump
+  colored-man-pages
   docker
   docker-compose
+  extract
+  git
   kubectl
   z
   zsh-autosuggestions
-  zsh-history-substring-search
   zsh-syntax-highlighting
-  autojump
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -112,64 +110,69 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias kctx="kubectx"
-[ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export PATH=/usr/local/bin/:$PATH
+# Easy way to check for command_existing in shell scripts
+command_exists () {
+  command -v "$1" >/dev/null 2>&1
+}
 
-export GOROOT="/usr/local/go"
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
+export MAVEN_HOME=$HOME/Development/apache-maven-3.8.5
+export PATH=$MAVEN_HOME/bin:$PATH
+
+export CARGO_HOME=$HOME/.cargo/bin
+export PATH=$CARGO_HOME:$PATH
+
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export PATH=$GOPATH/bin:$PATH
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export ISTIO_HOME=$HOME/Development/istio-1.15.3
+export PATH=$ISTIO_HOME/bin:$PATH
 
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+[ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/bennycheng/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$("$HOME/opt/anaconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/bennycheng/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/bennycheng/opt/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/opt/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/bennycheng/opt/anaconda3/bin:$PATH"
+        export PATH="$HOME/opt/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# The following lines were added by compinstall
-# case-insensitive (all), partial-word and then substring completion
-zstyle ':completion:*' matcher-list 'm:{a-za-z}={a-za-z}' \
-    'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' menu yes select
-# End of lines added by compinstall
-
-# zsh-users/zsh-history-substring-search
-bindkey '^[[a' history-substring-search-up
-bindkey '^[[b' history-substring-search-down
-
-bindkey -M emacs '^P' history-substring-search-up
-bindkey -M emacs '^N' history-substring-search-down
-
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
-# >>>> Vagrant command completion (start)
-fpath=(/opt/vagrant/embedded/gems/2.3.2/gems/vagrant-2.3.2/contrib/zsh $fpath)
-# <<<<  Vagrant command completion (end)
-
 # >>>> Kubectl command completion (start)
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 # <<<< Kubectl command completion (end)
 
-complete -C '/usr/local/bin/aws_completer' aws
+# >>>> Vagrant command completion (start)
+if [ -f '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.sh' ]; then
+    . '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.sh';
+fi
+# <<<<  Vagrant command completion (end)
 
-autoload bashcompinit && bashcompinit
-autoload -Uz compinit && compinit
+# >>>> AWS command completion (start)
+if [ -f '/usr/local/bin/aws_completer' ]; then
+    complete -C  '/usr/local/bin/aws_completer' aws;
+fi
+# >>>> AWS command completion (end)
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "$HOME/Development/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Development/google-cloud-sdk/path.zsh.inc"; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "$HOME/Development/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Development/google-cloud-sdk/completion.zsh.inc"; fi
+
+# atuojump setup
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+# fzf setup
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# fnm setup
+eval "$(fnm env --use-on-cd)"

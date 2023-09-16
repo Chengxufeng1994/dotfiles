@@ -10,7 +10,6 @@ alias mkdir="mkdir -p"
 # https://gist.github.com/zephinzer/f0a321e9bcb204debd45160b890eb6a3
 #
 alias k="kubectl"
-alias kctx="kubectx"
 alias kapply="k apply -f"
 alias kdel="k delete -f"
 alias kdesc="k describe"
@@ -19,3 +18,6 @@ alias klog="k logs"
 alias kexec='k exec'
 alias ktop="k top"
 alias krollout="k rollout"
+
+alias kctx="kubectx"
+alias kns="kubens"
