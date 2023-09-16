@@ -1,4 +1,5 @@
 tap "hashicorp/tap"
+tap 'homebrew/bundle'
 
 # fs/network
 brew "tree"
@@ -20,6 +21,7 @@ brew "tmux"
 brew "k9s"
 brew "kubectl"
 brew "kubectx"
+brew "minikube"
 
 # hashicorp
 brew "terraform"
