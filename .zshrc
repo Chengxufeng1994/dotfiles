@@ -113,6 +113,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias kctx="kubectx"
+[ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PATH=/usr/local/bin/:$PATH
 
@@ -167,8 +169,6 @@ fpath=(/opt/vagrant/embedded/gems/2.3.2/gems/vagrant-2.3.2/contrib/zsh $fpath)
 # <<<< Kubectl command completion (end)
 
 complete -C '/usr/local/bin/aws_completer' aws
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 autoload bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
