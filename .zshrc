@@ -156,6 +156,10 @@ if [ -f '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.s
 fi
 # <<<<  Vagrant command completion (end)
 
+if [ -f '/usr/local/bin/terraform' ]; then
+    complete -o nospace -C /usr/local/bin/terraform terraform
+fi
+
 # >>>> AWS command completion (start)
 if [ -f '/usr/local/bin/aws_completer' ]; then
     complete -C  '/usr/local/bin/aws_completer' aws;
@@ -176,3 +180,6 @@ if [ -f "$HOME/Development/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME
 
 # fnm setup
 eval "$(fnm env --use-on-cd)"
+
+autoload -U +X bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
