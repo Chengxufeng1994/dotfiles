@@ -2,11 +2,12 @@
   br = branch
   ci = commit
   co = checkout
-  l = log --oneline --graph
-  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+  st = status
   pu = push
-  s = status
-  st = stash 
+  l = log --oneline
+  lo = log --oneline --graph --decorate
+  ll = log --pretty=format:'%h %ad | %s%d [%Cgreen%an%Creset]' --graph --date=short
+  lg = log --pretty=format:'%Cred%h%Cre %ad |%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --graph  --abbrev-commit --date=short
 [color]
   ui = true
 [init]
