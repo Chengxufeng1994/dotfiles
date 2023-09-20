@@ -28,3 +28,6 @@ brew "minikube"
 
 # hashicorp
 brew "terraform"
+
+# protocol buffer
+brew "protobuf"
