@@ -79,6 +79,7 @@ plugins=(
   extract
   git
   kubectl
+  poetry
   z
   zsh-autosuggestions
   zsh-history-substring-search
@@ -138,6 +139,8 @@ export PATH=$GOPATH/bin:$PATH
 export ISTIO_HOME=$HOME/Development/istio-1.15.3
 export PATH=$ISTIO_HOME/bin:$PATH
 
+export POETRY_ROOT=$HOME/.local
+export PATH="$POETRY_ROOT/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
