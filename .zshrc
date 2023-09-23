@@ -72,6 +72,7 @@ ZSH_THEME="agnoster"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   autojump
+  brew
   colored-man-pages
   docker
   docker-compose
@@ -80,6 +81,7 @@ plugins=(
   kubectl
   z
   zsh-autosuggestions
+  zsh-history-substring-search
   zsh-syntax-highlighting
 )
 
@@ -115,6 +117,13 @@ source $ZSH/oh-my-zsh.sh
 command_exists () {
   command -v "$1" >/dev/null 2>&1
 }
+
+# zsh plugins
+# zsh-history-substring-search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
 
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
 export MAVEN_HOME=$HOME/Development/apache-maven-3.8.5
