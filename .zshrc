@@ -138,6 +138,10 @@ export PATH=$GOPATH/bin:$PATH
 export ISTIO_HOME=$HOME/Development/istio-1.15.3
 export PATH=$ISTIO_HOME/bin:$PATH
 
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
 
 # >>>> Kubectl command completion (start)
