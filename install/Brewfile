@@ -16,6 +16,7 @@ brew "rsync"
 # languages/tools
 brew "fnm"
 brew "go"
+brew "pyenv"
 
 # terminal
 brew "tmux"
