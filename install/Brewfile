@@ -25,6 +25,7 @@ brew "tmux"
 brew "k9s"
 brew "kubectl"
 brew "kubectx"
+brew "helm"
 brew "minikube"
 
 # hashicorp
