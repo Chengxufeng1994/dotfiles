@@ -33,3 +33,6 @@ brew "terraform"
 
 # protocol buffer
 brew "protobuf"
+
+# mongodb
+brew "mongosh"
