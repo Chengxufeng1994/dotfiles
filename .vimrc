@@ -157,15 +157,17 @@ Plug 'easymotion/vim-easymotion'
 " Autocomplete
 
 " Git Tools
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-
-Plug 'pangloss/vim-javascript'
 
 " Go
 Plug 'jstemmer/gotags'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'dgryski/vim-godef'
+
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " Theme
 Plug 'dracula/vim', { 'as': 'dracula' }
