@@ -109,11 +109,20 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" Leave the cursor at center of window
+nmap n nzz
+map <C-d> <C-d>zz
+map <C-u> <C-u>zz
+map <C-o> <C-o>zz
+
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 map <leader>t<leader> :tabnext<cr>
+
+" split below
+set sb
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -150,6 +159,7 @@ Plug 'easymotion/vim-easymotion'
 " Git Tools
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'pangloss/vim-javascript'
 
@@ -157,13 +167,16 @@ Plug 'pangloss/vim-javascript'
 Plug 'jstemmer/gotags'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
+" Theme
+Plug 'dracula/vim', { 'as': 'dracula' }
+
 call plug#end()
 " }}}
 
 " ==============================
 " NERDTreeToggle Config
 " ==============================
-noremap <C-n> :NERDTreeToggle<CR>
+noremap <F10> :NERDTreeToggle<CR>
 " 顯示行號 
 let NERDTreeShowLineNumbers=1
 " 打開文件時是否顯示目錄 
@@ -172,11 +185,32 @@ let NERDTreeAutoCenter=1
 let NERDTreeShowHidden=1
 " 打開 vim 文件及顯示書籤列表
 let NERDTreeShowBookmarks=2
+" 忽略顯示文件提示
+" let NERDTreeIgnore=['\.pyc','\~$','\.swp']
+let g:nerdtree_tabs_open_on_console_startup=1
+
+" ==============================
+" NERDTree Git Plugin Config
+" ==============================
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+
+let g:NERDTreeGitStatusShowIgnoredStatus = 1
 
 " ==============================
 " Tagbar Config
 " ==============================
-nmap <F8> :TagbarToggle<CR>
+nmap <F9> :TagbarToggle<CR>
 let g:tagbar_type_go = {
 \ 'ctagstype' : 'go',
 \ 'kinds'     : [
@@ -217,23 +251,42 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 2
 let g:syntastic_check_on_wq = 1
 
+let g:syntastic_go_checkers = ['govet', 'errcheck', 'go']
+
 " ==============================
 " Vim-Go Config
 " ==============================
 set autowrite
 
 " Go syntax highlighting
+let g:go_version_warning = 1
+let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_variable_assignments = 1
+let g:go_highlight_format_strings = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_operators = 1
+let g:go_highlight_generate_tags = 1
+
+" Specifes the `gopls` diagnostics level
+let g:go_diagnostics_enabled = 1
+let g:go_diagnostics_level = 2
 
 " Enable auto formatting on saving
 let g:go_fmt_autosave = 1
 
+let g:go_list_type = "quickfix"
+
 " Run `goimports` on your current file on every save
 let g:go_fmt_command = "goimports"
+" Use this option to define the command to be used for |:GoDef|. By default
+" `guru` is being used as it covers all edge cases. But one might also use
+" `godef` as it's faster. Current valid options are: `[guru, godef]` >
+let g:go_def_mode = "gopls"
 
 " Status line types/signatures
 let g:go_auto_type_info = 1
@@ -251,3 +304,10 @@ function! s:build_go_files()
     call go#cmd#Build(0)
   endif
 endfunction
+
+" ==============================
+" Dracula Theme 
+" ==============================
+set termguicolors
+colorscheme dracula
+
