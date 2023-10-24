@@ -1,12 +1,41 @@
 #
 # Unix
 #
-alias l='ls -1A'         # lists files/directories
-alias ll='ls -lah'         # lists files/directories with additional information
+alias l='ls -l --color=auto'                # lists files/directories
+alias ll='ls -alh --color=auto'             # lists files/directories with additional information
+alias lh='ls -alths --color=auto'           # lists files/directories with additional information
+alias grep='grep --color=auto'
+alias mygrep='grep -rnIi --color'
 alias rmrf="rm -rf"
 alias mkdir="mkdir -p"
+alias tf="tail -f"
+
 alias fd="find . -type d -name"
 alias ff="find . -type f -name"
+
+alias ports="netstat -tulanp"
+alias ntlp="netstat -tlnp"
+
+alias psgrep='ps -ef | grep '
+alias psme='ps -ef | grep $USER --color=always'
+#cpu rank
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+# memory rank
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+
+alias meminfo='free -h -l -t'
+alias cpuinfo='lscpu'
+
+alias du='du -h'
+alias dus='du -h -s'
+alias dud='du -h -d 1'
+
+#
+# ripgrep
+#
+alias rgg='rg -tgo'
 
 #
 # Kubectl
