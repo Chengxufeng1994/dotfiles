@@ -13,6 +13,9 @@ brew "ripgrep"
 # sync data
 brew "rsync"
 
+# ctags
+brew "ctags"
+
 # languages/tools
 brew "fnm"
 brew "go"
