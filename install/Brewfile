@@ -31,6 +31,8 @@ brew "kubectx"
 brew "helm"
 brew "minikube"
 
+brew "ansible"
+
 # hashicorp
 brew "terraform"
 
