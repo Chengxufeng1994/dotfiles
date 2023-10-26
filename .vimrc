@@ -210,11 +210,10 @@ let g:airline#extensions#tabline#enabled = 1
 " ==============================
 " NERDTreeToggle Config
 " ==============================
-noremap <F10> :NERDTreeToggle<CR>
+noremap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>?
+nnoremap <leader>n :NERDTreeFocus<CR>
 
-let NERDTreeChDirMode=0
-let NERDTreeQuitOnOpen=1
-let NERDTreeMouseMode=2
 " 顯示行號 
 let NERDTreeShowLineNumbers=1
 " 打開文件時是否顯示目錄 
@@ -226,7 +225,9 @@ let NERDTreeShowBookmarks=1
 " 忽略顯示文件提示
 " let NERDTreeIgnore=['\.pyc','\~$','\.swp']
 let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+
 let g:nerdtree_tabs_open_on_console_startup=1
+let g:nerdtree_tabs_autoclose=0
 
 " ==============================
 " NERDTree Git Plugin Config
