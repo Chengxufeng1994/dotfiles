@@ -29,6 +29,7 @@ set t_Co=256 " using 256 colors
 set t_ti=    " put terminal in 'termcap' mode
 set t_te=    " put terminal in 'termcap' mode
 set guicursor+=a:blinkon0 " no cursor blink
+set background=dark
 
 set incsearch                   " Find as you type search
 set hlsearch                    " Highlight search terms
