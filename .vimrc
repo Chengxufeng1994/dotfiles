@@ -7,6 +7,7 @@
 set nocompatible
 " Assume a dark background
 set background=dark
+set termguicolors
 
 filetype plugin indent on
 syntax on
@@ -31,24 +32,64 @@ set ttyfast
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
 
-set term=xterm-256color
-set t_vb=
-set t_Co=256 " using 256 colors
-set t_ti=    " put terminal in 'termcap' mode
-set t_te=    " put terminal in 'termcap' mode
-set guicursor+=a:blinkon0 " no cursor blink
+" set term=xterm-256color
+" set t_vb=
+" set t_Co=256 " using 256 colors
+" set t_ti=    " put terminal in 'termcap' mode
+" set t_te=    " put terminal in 'termcap' mode
+" set guicursor+=a:blinkon0 " no cursor blink
 
 set number                      " Line numbers on
 " set relativenumber            " Line relativenumber on
-set incsearch                   " Find as you type search
 set hlsearch                    " Highlight search terms
+set incsearch                   " Find as you type search
 set ignorecase                  " Case insensitive search
 set smartcase                   " Case sensitive when uc present
+set wildmenu                    " Show list instead of just completing
+set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
+" There are certain files that we would never want to edit with Vim.
+" Wildmenu will ignore files with these extensions.
+set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
+set scrolljump=5                " Lines to scroll when cursor leaves screen
+set scrolloff=3                 " Minimum lines to keep above and below cursor
+set foldenable                  " Auto fold code
+" set list
+" set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
+
+" 文字編碼加入 utf8
+set enc=utf8
+scriptencoding utf-8
+
+set tabpagemax=15               " Only show 15 tabs
 set showmode                    " Display the current mode
 
-set splitright                  " Puts new vsplit windows to the right of the current
-set splitbelow                  " Puts new split windows to the bottom of the current
+set cursorline                  " Highlight current line
+set cursorcolumn                " Highlight current line
 
+if has('cmdline_info')
+    set ruler                   " Show the ruler
+    set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+    set showcmd                 " Show partial commands in status line and
+                                " Selected characters/lines in visual mode
+endif
+
+set laststatus=2
+
+" Lines of memoy to remember
+set history=10000               " Store a ton of history (default is 20)
+" set spell                     " Spell checking on
+set hidden                      " Allow buffer switching without saving
+set updatetime=100
+
+" Setting up the directories
+set backup                      " Backups are nice ...
+if has('persistent_undo')
+    set undofile                " So is persistent undo ...
+    set undolevels=1000         " Maximum number of changes that can be undone
+    set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
+endif
+
+" set wrap                      " Wrap long lines
 set nowrap                      " Do not wrap long lines
 set autoindent                  " Indent at the same level of the previous line
 set shiftwidth=2                " Use indents of 4 spaces
@@ -56,46 +97,12 @@ set expandtab                   " Tabs are spaces, not tabs
 set tabstop=2                   " An indentation every four columns
 set softtabstop=2               " Let backspace delete indent
 
-" 啟用行游標提示。
-set cursorline
-
-" 文字編碼加入 utf8。
-set enc=utf8
-
-" 字數過長時換行。
-set wrap
-
-" 高亮當前行 (水平)。
-set cursorline
-
-" 高亮當前列 (垂直)。
-set cursorcolumn
-
-" 顯示輸入的命令
-set showcmd
-
-set laststatus=2
-
-" Enable auto completion menu after pressing TAB.
-set wildmenu
-
-" Make wildmenu behave like similar to Bash completion.
-set wildmode=list:longest
-
-" There are certain files that we would never want to edit with Vim.
-" Wildmenu will ignore files with these extensions.
-set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
-
-set foldenable                  " Auto fold code
+set splitright                  " Puts new vsplit windows to the right of the current
+set splitbelow                  " Puts new split windows to the bottom of the current
 
 " No annoying sound on errors
 set noerrorbells
 set novisualbell
-
-" Lines of memoy to remember
-set history=10000
-
-set updatetime=100
 
 " Mappings {{{
 
@@ -103,7 +110,7 @@ set updatetime=100
 nnoremap <F12> :so $MYVIMRC<CR>
 
 " 定義快捷鍵的前綴，即<Leader>
-" let mapleader=";"
+let mapleader=";"
 
 " ==== 系统剪切板复制粘贴 ====
 " visual mode 複製內容到系統剪貼簿
@@ -119,11 +126,17 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+
 " Leave the cursor at center of window
 nmap n nzz
 map <C-d> <C-d>zz
 map <C-u> <C-u>zz
 map <C-o> <C-o>zz
+
+" The following two lines conflict with moving to top and
+" bottom of the screen
+map <S-H> gT
+map <S-L> gt
 
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
@@ -137,6 +150,10 @@ map <leader>te :tabedit <C-r>=escape(expand("%:p:h"), " ")<cr>/
 
 " Type jj to exit insert mode quickly.
 inoremap jj <Esc>
+
+" Visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
 
 " }}}
 
@@ -161,6 +178,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
 Plug 'easymotion/vim-easymotion'
+Plug 'frazrepo/vim-rainbow'
 
 " Autocomplete & Sinppets
 " Plug 'SirVer/ultisnips'
@@ -232,6 +250,7 @@ let g:NERDTreeGitStatusShowIgnoredStatus = 1
 " Tagbar Config
 " ==============================
 nmap <F9> :TagbarToggle<CR>
+
 let g:tagbar_type_go = {
 \ 'ctagstype' : 'go',
 \ 'kinds'     : [
@@ -330,8 +349,11 @@ function! s:build_go_files()
 endfunction
 
 " ==============================
-" Dracula Theme 
+" Dracula Theme
 " ==============================
-set termguicolors
 colorscheme dracula
 
+" ==============================
+" Vim Rainbow 
+" ==============================
+let g:rainbow_active = 1
