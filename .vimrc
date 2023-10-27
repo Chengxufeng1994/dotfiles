@@ -7,7 +7,9 @@
 set nocompatible
 " Assume a dark background
 set background=dark
-set termguicolors
+if has('termguicolors')
+  set termguicolors
+endif
 
 filetype plugin indent on
 syntax on
@@ -53,11 +55,12 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 set scrolljump=5                " Lines to scroll when cursor leaves screen
 set scrolloff=3                 " Minimum lines to keep above and below cursor
 set foldenable                  " Auto fold code
+set foldmethod=manual
 " set list
 " set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 
 " 文字編碼加入 utf8
-set enc=utf8
+set encoding=UTF-8
 scriptencoding utf-8
 
 set tabpagemax=15               " Only show 15 tabs
@@ -95,14 +98,17 @@ set autoindent                  " Indent at the same level of the previous line
 set shiftwidth=2                " Use indents of 4 spaces
 set expandtab                   " Tabs are spaces, not tabs
 set tabstop=2                   " An indentation every four columns
-set softtabstop=2               " Let backspace delete indent
+set softtabstop=2               " Let backspace delete indent set
+set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
 
 set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
 
 " No annoying sound on errors
-set noerrorbells
-set novisualbell
+" set noerrorbells
+" set novisualbell
+
+set vb                          " Disable the annoying beep sound
 
 " Mappings {{{
 
@@ -110,7 +116,7 @@ set novisualbell
 nnoremap <F12> :so $MYVIMRC<CR>
 
 " 定義快捷鍵的前綴，即<Leader>
-let mapleader=";"
+let mapleader=","
 
 " ==== 系统剪切板复制粘贴 ====
 " visual mode 複製內容到系統剪貼簿
@@ -148,12 +154,12 @@ map <leader>t<leader> :tabnext<cr>
 " Super useful when editing files in the same directory
 map <leader>te :tabedit <C-r>=escape(expand("%:p:h"), " ")<cr>/
 
-" Type jj to exit insert mode quickly.
-inoremap jj <Esc>
-
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
+
+" Type jj to exit insert mode quickly.
+inoremap jj <Esc>
 
 " }}}
 
@@ -166,7 +172,9 @@ Plug 'vim-airline/vim-airline-themes'
 
 " Basic
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'easymotion/vim-easymotion'
 Plug 'godlygeek/tabular'
+Plug 'frazrepo/vim-rainbow'
 Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
@@ -177,8 +185,7 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
-Plug 'easymotion/vim-easymotion'
-Plug 'frazrepo/vim-rainbow'
+Plug 'ryanoasis/vim-devicons'
 
 " Autocomplete & Sinppets
 " Plug 'SirVer/ultisnips'
@@ -214,6 +221,7 @@ noremap <C-n> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>?
 nnoremap <leader>n :NERDTreeFocus<CR>
 
+let NERDTreeWinSize=50
 " 顯示行號 
 let NERDTreeShowLineNumbers=1
 " 打開文件時是否顯示目錄 
@@ -250,7 +258,7 @@ let g:NERDTreeGitStatusShowIgnoredStatus = 1
 " ==============================
 " Tagbar Config
 " ==============================
-nmap <F9> :TagbarToggle<CR>
+nmap <F8> :TagbarToggle<CR>
 
 let g:tagbar_type_go = {
 \ 'ctagstype' : 'go',
@@ -293,7 +301,7 @@ let g:syntastic_check_on_open = 2
 let g:syntastic_check_on_wq = 1
 
 let g:syntastic_go_checkers = ['govet', 'errcheck', 'go']
-" let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 " ==============================
 " Vim-Go Config
@@ -312,9 +320,9 @@ let g:go_highlight_function_parameters = 1
 " let g:go_highlight_format_strings = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_operators = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_generate_tags = 1
+" let g:go_highlight_methods = 1
+" let g:go_highlight_structs = 1
+" let g:go_highlight_generate_tags = 1
 
 " Specifes the `gopls` diagnostics level
 let g:go_diagnostics_enabled = 1
@@ -348,6 +356,13 @@ function! s:build_go_files()
     call go#cmd#Build(0)
   endif
 endfunction
+
+map <silent> <leader>gi :GoImports<cr>
+map <silent> <leader>gd :GoDoc<cr>
+map <silent> <leader>gr :GoRun<cr>
+map <silent> <leader>gb :GoBuild<cr>
+map <silent> <leader>gt :GoTest<cr>
+map <silent> <leader>ge :GoErrCheck<cr>
 
 " ==============================
 " Dracula Theme
