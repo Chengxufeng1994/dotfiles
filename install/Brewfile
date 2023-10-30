@@ -5,6 +5,7 @@ tap 'homebrew/bundle'
 brew "tree"
 
 # search/grep/diff
+brew "bat"
 brew "fzf"
 brew "jq"
 brew "autojump"
