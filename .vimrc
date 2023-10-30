@@ -86,7 +86,10 @@ set hidden                      " Allow buffer switching without saving
 set updatetime=100
 
 " Setting up the directories
-set backup                      " Backups are nice ...
+set nobackup                    " No backup files
+set nowritebackup               " Only in case you don't want a backup file while editing
+set noswapfile                  " No swap files 
+
 if has('persistent_undo')
     set undofile                " So is persistent undo ...
     set undodir=$HOME/.vim/undo " Directory where the undo files will be stored
