@@ -89,6 +89,7 @@ set updatetime=100
 set backup                      " Backups are nice ...
 if has('persistent_undo')
     set undofile                " So is persistent undo ...
+    set undodir=$HOME/.vim/undo " Directory where the undo files will be stored
     set undolevels=1000         " Maximum number of changes that can be undone
     set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
 endif
