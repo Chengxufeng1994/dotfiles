@@ -239,7 +239,7 @@ let NERDTreeShowBookmarks=1
 " let NERDTreeIgnore=['\.pyc','\~$','\.swp']
 let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
 
-let g:nerdtree_tabs_open_on_console_startup=1
+let g:nerdtree_tabs_open_on_console_startup=0
 let g:nerdtree_tabs_autoclose=0
 
 " ==============================
