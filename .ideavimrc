@@ -1,0 +1,118 @@
+let mapleader=","
+
+syntax on
+
+""" Plugins  --------------------------------
+" set surround
+" set multiple-cursors
+
+" https://youtrack.jetbrains.com/issue/VIM-1521
+set commentary
+
+set argtextobj
+" set easymotion
+" set textobj-entire
+" set ReplaceWithRegister
+" set exchange
+
+""" Common settings -------------------------
+set history=100000
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set showmode
+set number
+set expandtab
+set autoindent
+" set relativenumber
+set scrolloff=3
+set clipboard+=unnamed
+
+set foldmethod=indent
+set foldlevel=99
+
+" https://superuser.com/questions/622898/how-to-turn-off-the-bell-sound-in-intellij
+" https://stackoverflow.com/questions/63386803/how-to-turn-off-a-bell-in-intellij-idea
+set visualbell
+
+""" Idea specific settings -----------------
+set ideajoin
+set ideamarks
+set ideastatusicon=gray
+set idearefactormode=keep
+
+""" My Mappings ----------------------------
+
+" open recent project
+nnoremap <Leader>o :<C-u>action RecentProjectListGroup<CR>
+
+" open recent files
+nnoremap <Leader>e :<C-u>action RecentFiles<CR>
+
+" go to somewhere (g in normal mode for goto somewhere)
+nnoremap ga :<C-u>action GotoAction<CR>
+nnoremap gb :<C-u>action JumpToLastChange<CR>
+
+nnoremap gc :<C-u>action GotoClass<CR>
+nnoremap gd :<C-u>action GotoDeclaration<CR>
+nnoremap gs :<C-u>action GotoSuperMethod<CR>
+nnoremap gi :<C-u>action GotoImplementation<CR>
+
+nnoremap gt :<C-u>action GotoTest<CR>
+nnoremap gf :<C-u>action GotoFile<CR>
+nnoremap gm :<C-u>action GotoSymbol<CR>
+
+nnoremap gu :<C-u>action ShowUsages<CR>
+nnoremap gp :<C-u>action FindInPath<CR>
+nnoremap gr :<C-u>action RecentFiles<CR>
+nnoremap gh :<C-u>action Back<CR>
+nnoremap gl :<C-u>action Forward<CR>
+
+" Screen management
+" vertical split screen
+nnoremap <Leader>+ <C-W>v
+nnoremap <Leader>- <C-W>s
+" nnoremap <C-h> <C-W>h
+" nnoremap <C-l> <C-W>l
+" nnoremap <C-j> <C-W>j
+" nnoremap <C-k> <C-W>k
+
+" system clipboard
+vmap <leader>yiw "+yiw
+nmap <leader>yiw "+yiw
+vmap <leader>y "+y
+vmap <leader>d "_d
+nmap <leader>y "+yy
+nmap <leader>p "+p
+nmap <leader>P "+P
+vmap <leader>p "+p
+vmap <leader>P "+P
+
+" double click jj to exit insert mod
+inoremap jj <Esc>
+
+" tn, tp toggle tab
+noremap tn gt
+noremap tp gT
+
+" \+w save or exit similar :wq
+nnoremap <leader>w :w<cr>
+inoremap <leader>w <C-c>:w<cr>
+
+" \+q，close tab, similar:q!
+nnoremap <leader>q :q!<cr>
+inoremap <leader>q <C-c>:q!<cr>
+
+" The default C-o and C-i behaviours have certain inconsistencies with
+" Vim which I can't quite pinpoint.
+" I'm using the default IntelliJ behaviours instead.
+map <C-o> <Action>(Back)
+map <C-i> <Action>(Forward)
+map g; <Action>(JumpToLastChange)
+map g, <Action>(JumpToNextChange)
+
+" https://gist.github.com/zhangjian98/ecd67c8463bab649295707ba6c3fb363
+" https://github.com/JetBrains/ideavim/discussions/303
+" https://danidiaz.medium.com/configuring-ideavimrc-de16a4da0715
+" https://jungejason.github.io/ideavim/
