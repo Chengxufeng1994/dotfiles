@@ -44,3 +44,5 @@ brew "protobuf"
 
 # mongodb
 brew "mongosh"
+
+brew "lazygit"
