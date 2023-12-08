@@ -4,6 +4,16 @@
 alias l='ls -l --color=auto'                # lists files/directories
 alias ll='ls -alh --color=auto'             # lists files/directories with additional information
 alias lh='ls -alths --color=auto'           # lists files/directories with additional information
+
+alias ls='exa'
+alias l='exa -lbF --git'
+alias ll='exa -lbGF --git'
+alias llm='exa -lbGd --git --sort=modified'
+alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'
+alias lx='exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale'
+alias lS='exa -1'
+alias lt='exa --tree --level=2'
+
 alias grep='grep --color=auto'
 alias mygrep='grep -rnIi --color'
 alias rmrf="rm -rf"
