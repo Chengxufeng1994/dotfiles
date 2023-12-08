@@ -46,3 +46,5 @@ brew "protobuf"
 brew "mongosh"
 
 brew "lazygit"
+brew "exa"
+brew "tldr"
