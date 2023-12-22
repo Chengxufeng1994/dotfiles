@@ -45,7 +45,8 @@ alias dud='du -h -d 1'
 #
 # ripgrep
 #
-alias rgg='rg -tgo'
+# alias rgg='rg -tgo'
+alias rg='rg --files --no-ignore-vcs --hidden --column --line-number --no-heading --color=always --smart-case'
 
 #
 # Kubectl
