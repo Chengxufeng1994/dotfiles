@@ -141,11 +141,20 @@ export PATH=$ISTIO_HOME/bin:$PATH
 
 export POETRY_ROOT=$HOME/.local
 export PATH="$POETRY_ROOT/bin:$PATH"
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 
 [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
+
+# >>>> pyenv(python version manager) (start)
+if [ -x "$HOMEBREW_PATH/bin/pyenv" ]; then
+    export PYTHON_CONFIGURE_OPTS='--enable-optimizations --with-lto' 
+    export PYTHON_CFLAGS='-march=native -mtune=native'
+    export LDFLAGS="-L/opt/homebrew/opt/zlib/lib"
+    export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
+    export PYENV_ROOT="$HOME/.pyenv"
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
+# >>>> pyenv(python version manager) (end)
 
 # >>>> Kubectl command completion (start)
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)

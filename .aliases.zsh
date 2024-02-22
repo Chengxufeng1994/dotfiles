@@ -38,15 +38,16 @@ alias psmem10='ps auxf | sort -nr -k 4 | head -10'
 alias meminfo='free -h -l -t'
 alias cpuinfo='lscpu'
 
-alias du='du -h'
-alias dus='du -h -s'
-alias dud='du -h -d 1'
+alias duh='du -h'
+alias duhs='du -h -s'
+alias duhd='du -h -d 1'
+alias ducks='du -cks * | sort -rn | head' 
 
 #
 # ripgrep
 #
-# alias rgg='rg -tgo'
-alias rg='rg --files --no-ignore-vcs --hidden --column --line-number --no-heading --color=always --smart-case'
+alias rgg='rg -tgo --no-ignore-vcs --hidden --column --line-number --no-heading --color=always --smart-case'
+# alias rg='rg --files --no-ignore-vcs --hidden --column --line-number --no-heading --color=always --smart-case'
 
 #
 # Kubectl
