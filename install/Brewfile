@@ -33,6 +33,7 @@ brew "kubefwd"
 brew "helm"
 brew "minikube"
 brew "skaffold"
+brew "stern"
 
 brew "ansible"
 
@@ -45,6 +46,7 @@ brew "protobuf"
 # mongodb
 brew "mongosh"
 
+brew "hugo"
 brew "lazygit"
 brew "exa"
 brew "tldr"
