@@ -42,7 +42,7 @@ set lazyredraw
 " set guicursor+=a:blinkon0 " no cursor blink
 
 set number                      " Line numbers on
-" set relativenumber            " Line relativenumber on
+set relativenumber            " Line relativenumber on
 set hlsearch                    " Highlight search terms
 set incsearch                   " Find as you type search
 set ignorecase                  " Case insensitive search
@@ -77,11 +77,11 @@ if has('cmdline_info')
                                 " Selected characters/lines in visual mode
 endif
 
-set laststatus=2
+set laststatus=2                " Show status line
 
 " Lines of memoy to remember
 set history=10000               " Store a ton of history (default is 20)
-" set spell                     " Spell checking on
+"set spell spelllang=en_us       " Spell checking on
 set hidden                      " Allow buffer switching without saving
 set updatetime=100
 
@@ -108,6 +108,8 @@ set backspace=indent,eol,start  " Allow backspacing over everything in insert mo
 
 set splitright                  " Puts new vsplit windows to the right of the current
 set splitbelow                  " Puts new split windows to the bottom of the current
+
+set autoread                    " If file change, will notifaction
 
 " No annoying sound on errors
 " set noerrorbells
@@ -187,6 +189,7 @@ Plug 'scrooloose/syntastic'
 Plug 'shougo/denite.nvim'
 Plug 'tpope/vim-surround'
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'jlanzarotta/bufexplorer'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
@@ -219,10 +222,15 @@ call plug#end()
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
+" =============================
+" BufExplorer
+" =============================
+map <C-h> :BufExplorer<CR>
+
 " ==============================
 " NERDTreeToggle Config
 " ==============================
-noremap <C-n> :NERDTreeToggle<CR>
+noremap <C-n> :NERDTreeToggle<CR>:vertical resize 50<CR>
 nnoremap <C-f> :NERDTreeFind<CR>?
 nnoremap <leader>n :NERDTreeFocus<CR>
 
@@ -239,8 +247,13 @@ let NERDTreeShowBookmarks=1
 " let NERDTreeIgnore=['\.pyc','\~$','\.swp']
 let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
 
+
 let g:nerdtree_tabs_open_on_console_startup=0
 let g:nerdtree_tabs_autoclose=0
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " ==============================
 " NERDTree Git Plugin Config
