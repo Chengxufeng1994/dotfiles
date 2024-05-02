@@ -10,6 +10,8 @@
   lg = log --pretty=format:'%Cred%h%Cre %ad |%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --graph  --abbrev-commit --date=short
 [color]
   ui = true
+[commit]
+	cleanup = strip
 [init]
   defaultbranch = main
 [user]
