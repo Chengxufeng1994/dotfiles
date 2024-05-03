@@ -8,6 +8,8 @@
   lo = log --oneline --graph --decorate
   ll = log --pretty=format:'%h %ad | %s%d [%Cgreen%an%Creset]' --graph --date=short
   lg = log --pretty=format:'%Cred%h%Cre %ad |%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --graph  --abbrev-commit --date=short
+#  lg = log --pretty=format:'%Cred%h%Cre %ad |%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --graph  --abbrev-commit --date=short
+  lg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --color --graph --all --
 [color]
   ui = true
 [commit]
