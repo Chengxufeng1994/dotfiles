@@ -30,10 +30,12 @@ brew "k9s"
 brew "kubectl"
 brew "kubectx"
 brew "kubefwd"
+brew "kubespy"
 brew "helm"
 brew "minikube"
 brew "skaffold"
 brew "stern"
+brew "colima"
 
 brew "ansible"
 

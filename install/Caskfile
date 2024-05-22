@@ -1,9 +1,9 @@
 tap "homebrew/cask-fonts"
 
-cask "datagrip"
+# cask "datagrip"
 cask "font-fira-code"
 cask "font-meslo-lg-nerd-font"
-cask "goland"
+# cask "goland"
 cask "google-chrome"
 cask "iterm2"
 cask "postman"
