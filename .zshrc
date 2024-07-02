@@ -145,7 +145,7 @@ export PATH="$POETRY_ROOT/bin:$PATH"
 [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
 
 # >>>> pyenv(python version manager) (start)
-if [ -x "$HOMEBREW_PATH/bin/pyenv" ]; then
+if [ -x "$HOMEBREW_PREFIX/bin/pyenv" ]; then
     export PYTHON_CONFIGURE_OPTS='--enable-optimizations --with-lto' 
     export PYTHON_CFLAGS='-march=native -mtune=native'
     export LDFLAGS="-L/opt/homebrew/opt/zlib/lib"
