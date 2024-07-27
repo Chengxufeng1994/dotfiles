@@ -5,14 +5,14 @@ alias l='ls -l --color=auto'                # lists files/directories
 alias ll='ls -alh --color=auto'             # lists files/directories with additional information
 alias lh='ls -alths --color=auto'           # lists files/directories with additional information
 
-alias ls='exa'
-alias l='exa -lbF --git'
-alias ll='exa -lbGF --git'
-alias llm='exa -lbGd --git --sort=modified'
-alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'
-alias lx='exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale'
-alias lS='exa -1'
-alias lt='exa --tree --level=2'
+# alias ls='exa'
+# alias l='exa -lbF --git'
+# alias ll='exa -lbGF --git'
+# alias llm='exa -lbGd --git --sort=modified'
+# alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'
+# alias lx='exa -lbhHigUmuSa@ --time-style=long-iso --git --color-scale'
+# alias lS='exa -1'
+# alias lt='exa --tree --level=2'
 
 alias grep='grep --color=auto'
 alias mygrep='grep -rnIi --color'
@@ -63,8 +63,12 @@ alias kgcrd="kubectl get crd"
 alias kgn="kubectl get node -o wide"
 alias kgns="kubectl get namespace -o wide"
 alias kgs="kubectl get service -o wide"
+alias kgsl="kubectl get service -o wide --show-labels"
 alias kgd="kubectl get deployment -o wide"
 alias kgp="kubectl get pods -o wide"
+alias kgpl="kubectl get pods -o wide --show-labels"
+
+alias kccm="kubectl create configmap"
 
 alias kd="kubectl delete"
 alias kdn="kubectl delete namespace"
