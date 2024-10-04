@@ -24,6 +24,7 @@ brew "pyenv"
 
 # terminal
 brew "tmux"
+brew "tmux-mem-cpu-load"
 
 # kubernetes
 brew "k9s"
@@ -49,9 +50,10 @@ brew "protobuf"
 # mongodb
 brew "mongosh"
 
+brew "buf"
+# brew "exa"
 brew "hugo"
 brew "lazygit"
-brew "exa"
-brew "tldr"
-brew "buf"
 brew "pre-commit"
+brew "tldr"
+brew "wrk"

@@ -80,11 +80,15 @@ plugins=(
   git
   kubectl
   poetry
+  ssh-agent
   z
   zsh-autosuggestions
   zsh-history-substring-search
   zsh-syntax-highlighting
 )
+
+zstyle :omz:plugins:ssh-agent identities id_rsa_benny id_rsa_leadtek
+zstyle :omz:plugins:ssh-agent lifetime 24h
 
 source $ZSH/oh-my-zsh.sh
 
