@@ -49,6 +49,10 @@ alias ducks='du -cks * | sort -rn | head'
 alias rgg='rg -tgo --no-ignore-vcs --hidden --column --line-number --no-heading --color=always --smart-case'
 # alias rg='rg --files --no-ignore-vcs --hidden --column --line-number --no-heading --color=always --smart-case'
 
+# 
+# lazygit
+alias lg='lazygit'
+
 #
 # Kubectl
 # https://gist.github.com/zephinzer/f0a321e9bcb204debd45160b890eb6a3
