@@ -435,6 +435,9 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" No high light
+nnoremap <esc><esc> :noh<return><esc>
+
 " Leave the cursor at center of window
 nnoremap n nzxzv
 nnoremap N Nzzzv
@@ -482,6 +485,7 @@ nnoremap <silent> <leader><space> :noh<cr>
 
 " Type jj to exit insert mode quickly.
 inoremap jj <Esc>
+inoremap jk <Esc>
 
 "" Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>

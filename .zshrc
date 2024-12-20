@@ -170,8 +170,8 @@ if [ -f '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.s
 fi
 # <<<<  Vagrant command completion (end)
 
-if [ -f '/usr/local/bin/terraform' ]; then
-    complete -o nospace -C /usr/local/bin/terraform terraform
+if [ -f "$HOMEBREW_PREFIX/bin/terraform" ]; then
+    complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
 fi
 
 # >>>> AWS command completion (start)
