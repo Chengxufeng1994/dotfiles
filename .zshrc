@@ -157,15 +157,17 @@ export PATH="$POETRY_ROOT/bin:$PATH"
 
 # >>>> pyenv(python version manager) (start)
 if [ -x "$HOMEBREW_PREFIX/bin/pyenv" ]; then
-    export PYTHON_CONFIGURE_OPTS='--enable-optimizations --with-lto' 
-    export PYTHON_CFLAGS='-march=native -mtune=native'
-    export LDFLAGS="-L/opt/homebrew/opt/zlib/lib"
-    export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
     export PYENV_ROOT="$HOME/.pyenv"
-    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init - zsh)"
 fi
 # >>>> pyenv(python version manager) (end)
+
+# >>>> terraform (start)
+if [ -f "$HOMEBREW_PREFIX/bin/terraform" ]; then
+    complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+fi
+# >>>> terraform (end)
 
 # >>>> Kubectl command completion (start)
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
@@ -176,10 +178,6 @@ if [ -f '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.s
     . '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.sh';
 fi
 # <<<<  Vagrant command completion (end)
-
-if [ -f "$HOMEBREW_PREFIX/bin/terraform" ]; then
-    complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
-fi
 
 # >>>> AWS command completion (start)
 if [ -f '/usr/local/bin/aws_completer' ]; then
