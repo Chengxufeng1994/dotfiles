@@ -3,17 +3,17 @@
 " URL:
 " License:
 
-" Must be first line
-set nocompatible
+set nocompatible            " be iMproved, requirede
+filetype off                " Required
+filetype plugin indent on   " Required
+syntax on
+
 " Assume a dark background
 set background=dark
 if has('termguicolors')
   set termguicolors
 endif
 
-" Required
-filetype plugin indent on
-syntax on
 
 if !isdirectory(expand("~/.vim/"))
     call mkdir($HOME . "/.vim")
@@ -80,8 +80,8 @@ scriptencoding utf-8
 set tabpagemax=15               " Only show 15 tabs
 set showmode                    " Display the current mode
 
-set cursorline                  " Highlight current line
-set cursorcolumn                " Highlight current line
+set nocursorline                  " Highlight current line
+set nocursorcolumn                " Highlight current line
 
 if has('cmdline_info')
     set ruler                   " Show the ruler
@@ -89,8 +89,6 @@ if has('cmdline_info')
     set showcmd                 " Show partial commands in status line and
                                 " Selected characters/lines in visual mode
 endif
-
-set laststatus=2                " Show status line
 
 " Lines of memoy to remember
 set history=10000               " Store a ton of history (default is 20)
@@ -112,6 +110,7 @@ endif
 " set wrap                      " Wrap long lines
 set nowrap                      " Do not wrap long lines
 set autoindent                  " Indent at the same level of the previous line
+set smartindent
 
 " Fix backspace indent
 set backspace=indent,eol,start  " Allow backspacing over everything in insert mode
@@ -121,16 +120,16 @@ set tabstop=4                   " An indentation every four columns
 set softtabstop=0               " Let backspace delete indent set
 set shiftwidth=4                " Use indents of 4 spaces
 set expandtab                   " Tabs are spaces, not tabs
+set smarttab
 
+set autoread                    " If file change, will notifaction
+set laststatus=2                " Show status line
+set splitright                  " Puts new vsplit windows to the right of the current
+set splitbelow                  " Puts new split windows to the bottom of the current
 " Enable hidden buffers
 set hidden                      " Allow buffer switching without saving
 
-set fileformats=unix,dos,mac
-
-set autoread                    " If file change, will notifaction
-
-set splitright                  " Puts new vsplit windows to the right of the current
-set splitbelow                  " Puts new split windows to the bottom of the current
+set fileformats=unix,dos,mac    " Prefer Unix over Windows over OS 9 formats 
 
 " Disable visualbell, No annoying sound on errors
 set noerrorbells visualbell t_vb= " Disable the annoying beep sound
@@ -160,13 +159,15 @@ Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
 Plug 'ryanoasis/vim-devicons'
 Plug 'Yggdroot/indentLine'
+Plug 'vim-scripts/grep.vim'
+Plug 'Raimondi/delimitMate'
+Plug 'dense-analysis/ale'
 
 " Vim-Session
 
 " Autocomplete & Sinppets
 " Plug 'SirVer/ultisnips'
 " Plug 'honza/vim-snippets'
-
 
 " Git Tools
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -190,9 +191,46 @@ call plug#end()
 " ==============================
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
-" let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+if !exists('g:airline_powerline_fonts')
+  let g:airline#extensions#tabline#left_sep = ' '
+  let g:airline#extensions#tabline#left_alt_sep = '|'
+  let g:airline_left_sep          = '▶'
+  let g:airline_left_alt_sep      = '»'
+  let g:airline_right_sep         = '◀'
+  let g:airline_right_alt_sep     = '«'
+  let g:airline#extensions#branch#prefix     = '⤴' "➔, ➥, ⎇
+  let g:airline#extensions#readonly#symbol   = '⊘'
+  let g:airline#extensions#linecolumn#prefix = '¶'
+  let g:airline#extensions#paste#symbol      = 'ρ'
+  let g:airline_symbols.linenr    = '␊'
+  let g:airline_symbols.branch    = '⎇'
+  let g:airline_symbols.paste     = 'ρ'
+  let g:airline_symbols.paste     = 'Þ'
+  let g:airline_symbols.paste     = '∥'
+  let g:airline_symbols.whitespace = 'Ξ'
+else
+  let g:airline#extensions#tabline#left_sep = ''
+  let g:airline#extensions#tabline#left_alt_sep = ''
+
+  " powerline symbols
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  let g:airline_symbols.readonly = ''
+  let g:airline_symbols.linenr = ''
+endif
+
+
 
 " =============================
 " BufExplorer
@@ -304,16 +342,21 @@ let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 " ==============================
 set autowrite
 
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
 let g:go_list_type = "quickfix"
-" Run `goimports` on your current file on every save
 let g:go_fmt_command = "goimports"
-" Use this option to define the command to be used for |:GoDef|. By default
-" `guru` is being used as it covers all edge cases. But one might also use
-" `godef` as it's faster. Current valid options are: `[guru, godef]` >
 let g:go_def_mode = "gopls"
 let g:go_fmt_fail_silently = 1
 
-" Go syntax highlighting
 let g:go_version_warning = 1
 let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
@@ -326,6 +369,7 @@ let g:go_highlight_generate_tags = 1
 let g:go_highlight_space_tab_error = 0
 let g:go_highlight_array_whitespace_error = 0
 let g:go_highlight_trailing_whitespace_error = 0
+let g:go_highlight_extra_types = 1
 let g:go_highlight_function_calls = 1
 let ggo_highlight_function_parameters = 1
 " let g:go_highlight_variable_assignments = 1
@@ -346,22 +390,17 @@ let g:go_auto_type_info = 1
 let g:go_metalinter_command = "golangci-lint"
 let g:go_metalinter_enabled = ['vet', 'errcheck', 'staticcheck', 'gosimple']
 
-" Run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#test#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
-  endif
-endfunction
-
 map <silent> <leader>gi :GoImports<cr>
 map <silent> <leader>gd :GoDoc<cr>
 map <silent> <leader>gr :GoRun<cr>
 map <silent> <leader>gb :GoBuild<cr>
 map <silent> <leader>gt :GoTest<cr>
 map <silent> <leader>ge :GoErrCheck<cr>
+
+" ale
+let g:ale_linters = {}
+:call extend(g:ale_linters, {
+    \"go": ['golint', 'go vet'], })
 
 " ==============================
 " Dracula Theme
@@ -434,6 +473,9 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+map k gk
+map j gj
 
 " No high light
 nnoremap <esc><esc> :noh<return><esc>
