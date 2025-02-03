@@ -30,7 +30,8 @@ endif
 set runtimepath+=$HOME/.vim
 
 " 定義快捷鍵的前綴，即<Leader>
-let mapleader=","
+let mapleader="\<sPACe>"
+nnoremap <SPACE> <Nop>
 
 set title
 set titleold="Terminal"
@@ -553,13 +554,20 @@ endif
 " ripgrep
 if executable('rg')
   let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-  set grepprg=rg\ --vimgrep
-  command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+  set grepprg=rg\ --vimgrep\ --smart-case\ --hidden\ --no-ignore-vcs
+  set grepformat=%f:%l:%c:%m
+  command! -bang -nargs=* Rg
+    \ call fzf#vim#grep(
+    \   'rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1,
+    \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+    \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+    \   <bang>0)
 endif
 
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>e :FZF -m<CR>
+nnoremap <C-G> :Rg<CR>
 "Recovery commands from history through FZF
 nmap <leader>y :History:<CR>
 

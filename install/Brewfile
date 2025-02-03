@@ -53,6 +53,7 @@ brew "mongosh"
 
 brew "buf"
 brew "hugo"
+brew "fd"
 brew "lazygit"
 brew "pre-commit"
 brew "tldr"
