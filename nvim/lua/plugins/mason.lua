@@ -23,6 +23,7 @@ return {
               "bashls",
               "vimls",
               "rust_analyzer",
+              "tflint",
             },
           })
         end,

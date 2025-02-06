@@ -50,6 +50,8 @@ return {
           "query",
           "vim",
           "vimdoc",
+          "terraform",
+          "hcl",
         },
         highlight = {
           enable = true,

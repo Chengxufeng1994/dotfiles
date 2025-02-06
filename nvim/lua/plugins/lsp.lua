@@ -35,6 +35,7 @@ return {
       ts_ls = {
         enabled = false,
       },
+      terraformls = {},
     },
   },
 }
