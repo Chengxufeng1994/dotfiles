@@ -45,6 +45,9 @@ brew "ansible"
 # hashicorp
 brew "terraform"
 
+# argocd
+brew "argocd"
+
 # protocol buffer
 brew "protobuf"
 
