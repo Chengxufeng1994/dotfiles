@@ -24,6 +24,7 @@ return {
               "vimls",
               "rust_analyzer",
               "tflint",
+              "marksman",
             },
           })
         end,

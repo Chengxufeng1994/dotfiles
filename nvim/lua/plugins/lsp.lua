@@ -29,13 +29,25 @@ return {
           },
         },
       },
+      helm_ls = {},
+      terraformls = {},
       tsserver = {
         enabled = false,
       },
       ts_ls = {
         enabled = false,
       },
-      terraformls = {},
     },
+  },
+  setup = {
+    yamlls = function()
+      LazyVim.lsp.on_attach(function(client, buffer)
+        if vim.bo[buffer].filetype == "helm" then
+          vim.schedule(function()
+            vim.cmd("LspStop ++force yamlls")
+          end)
+        end
+      end, "yamlls")
+    end,
   },
 }

@@ -83,6 +83,9 @@ return {
     end,
   },
 
+  -- lazy calls setup() by itself
+  { "danilamihailov/beacon.nvim" },
+
   -- Neovim plugin to improve the default vim.ui interfaces
   {
     "stevearc/dressing.nvim",
@@ -124,6 +127,14 @@ return {
         require("mini.icons").mock_nvim_web_devicons()
         return package.loaded["nvim-web-devicons"]
       end
+    end,
+  },
+
+  {
+    "echasnovski/mini.cursorword",
+    version = "*",
+    config = function()
+      require("mini.cursorword").setup()
     end,
   },
 }

@@ -1,5 +1,5 @@
+-- Syntax highlightings
 return {
-  -- Syntax highlightings
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -52,6 +52,7 @@ return {
           "vimdoc",
           "terraform",
           "hcl",
+          "helm",
         },
         highlight = {
           enable = true,
