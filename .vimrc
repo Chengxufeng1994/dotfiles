@@ -40,7 +40,7 @@ set titlestring=%F
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
 
-" set term=xterm-256color
+set term=xterm-256color
 " set t_vb=
 set t_Co=256 " using 256 colors
 " set t_ti=    " put terminal in 'termcap' mode
