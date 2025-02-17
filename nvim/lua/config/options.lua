@@ -2,6 +2,12 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
+-- LazyVim completion engine to use.
+-- Can be one of: nvim-cmp, blink.cmp
+-- Leave it to "auto" to automatically use the completion engine
+-- enabled with `:LazyExtras`
+vim.g.lazyvim_cmp = "nvim-cmp"
+
 ---- General
 vim.opt.backup = false
 vim.opt.writebackup = false -- Don't store backup
@@ -14,9 +20,9 @@ vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.opt.mouse = "a" -- allow the mouse to be used in Nvim
 
 -- Tab
-vim.opt.tabstop = 4 -- number of visual spaces per TAB
+vim.opt.tabstop = 2 -- number of visual spaces per TAB
 vim.opt.softtabstop = 0 -- number of spacesin tab when editing
-vim.opt.shiftwidth = 4 -- insert 4 spaces on a tab
+vim.opt.shiftwidth = 2 -- insert 4 spaces on a tab
 vim.opt.expandtab = true -- tabs are spaces, mainly because of python
 vim.opt.smarttab = true
 

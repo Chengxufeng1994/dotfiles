@@ -33,7 +33,11 @@ return {
           "gomod",
           "gowork",
           "gosum",
+          "git_config",
+          "gitcommit",
+          "git_rebase",
           "gitignore",
+          "gitattributes",
           "javascript",
           "typescript",
           "tsx",
@@ -129,5 +133,6 @@ return {
 
   {
     "towolf/vim-helm",
+    ft = "helm",
   },
 }

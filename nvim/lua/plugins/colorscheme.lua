@@ -8,6 +8,11 @@ return {
       -- use the night style
       style = "storm",
 
+      styles = {
+        -- sidebars = "transparent",
+        -- floats = "transparent",
+      },
+
       transparent = true,
     })
   end,

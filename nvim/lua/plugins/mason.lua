@@ -11,11 +11,14 @@ return {
         config = function()
           require("mason-tool-installer").setup({
             ensure_installed = {
+              "delve",
               "gopls",
               "golangci-lint",
+              "gomodifytags",
               "gofumpt",
               "goimports",
               "golines",
+              "impl",
               "lua_ls",
               "ts_ls",
               "stylua",
