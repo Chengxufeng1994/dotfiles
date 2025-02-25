@@ -150,8 +150,8 @@ export PATH=$GOPATH/bin:$PATH
 export ISTIO_HOME=$HOME/Development/istio-1.15.3
 export PATH=$ISTIO_HOME/bin:$PATH
 
-export POETRY_ROOT=$HOME/.local
-export PATH="$POETRY_ROOT/bin:$PATH"
+export POETRY_HOME=$HOME/.local
+export PATH="$POETRY_HOME/bin:$PATH"
 
 [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
 
