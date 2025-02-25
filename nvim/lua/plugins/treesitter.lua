@@ -57,6 +57,8 @@ return {
           "terraform",
           "hcl",
           "helm",
+          "ninja",
+          "rst",
         },
         highlight = {
           enable = true,

@@ -36,7 +36,33 @@ return {
           },
         },
       },
+      pyright = {},
+      basedpyright = {},
       helm_ls = {},
+      ruff = {
+        cmd_env = { RUFF_TRACE = "messages" },
+        init_options = {
+          settings = {
+            logLevel = "error",
+          },
+        },
+        keys = {
+          {
+            "<leader>co",
+            LazyVim.lsp.action["source.organizeImports"],
+            desc = "Organize Imports",
+          },
+        },
+      },
+      ruff_lsp = {
+        keys = {
+          {
+            "<leader>co",
+            LazyVim.lsp.action["source.organizeImports"],
+            desc = "Organize Imports",
+          },
+        },
+      },
       terraformls = {},
       tsserver = {
         enabled = false,
@@ -174,6 +200,12 @@ return {
 
       -- register the formatter with LazyVim
       LazyVim.format.register(formatter)
+    end,
+    ruff = function()
+      LazyVim.lsp.on_attach(function(client, _)
+        -- Disable hover in favor of Pyright
+        client.server_capabilities.hoverProvider = false
+      end, ruff)
     end,
     --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
     --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
