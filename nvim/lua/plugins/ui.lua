@@ -1,4 +1,6 @@
 return {
+  { "akinsho/bufferline.nvim", opts = { options = { separator_style = "slope" } } },
+
   -- nerd font supported icons
   {
     "nvim-tree/nvim-web-devicons",
