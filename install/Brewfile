@@ -21,7 +21,7 @@ brew "ctags"
 brew "fnm"
 brew "go"
 brew "pyenv"
-brew "pipx"
+brew "uv"
 
 # terminal
 brew "tmux"
