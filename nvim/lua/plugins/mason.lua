@@ -12,6 +12,7 @@ return {
           require("mason-tool-installer").setup({
             ensure_installed = {
               "delve",
+              -- golang
               "gopls",
               "golangci-lint",
               "gomodifytags",
@@ -24,9 +25,16 @@ return {
               "stylua",
               "shellcheck",
               "bashls",
+              -- vim
               "vimls",
+              -- rust
               "rust_analyzer",
               "tflint",
+              -- code spell
+              "codespell",
+              "misspell",
+              "cspell",
+              -- markdown
               "marksman",
             },
           })

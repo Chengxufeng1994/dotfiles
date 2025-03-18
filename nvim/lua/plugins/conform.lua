@@ -6,7 +6,10 @@ return {
         sh = { "shfmt" },
         zsh = { "shfmt" },
 
+        python = { "ruff_fix", "ruff_format" },
+
         go = { "golines", "gofmt", "goimports" },
+
         lua = { "stylua" },
 
         hcl = { "packer_fmt" },

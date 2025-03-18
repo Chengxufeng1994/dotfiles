@@ -60,16 +60,27 @@ return {
           "ninja",
           "rst",
         },
+        context_commentstring = {
+          enable = true,
+          enable_autocmd = false,
+        },
         highlight = {
           enable = true,
           disable = { "csv" },
         },
         indent = {
           enable = true,
-          -- disable = { "python" },
+          disable = { "python" },
         },
         auto_install = true,
+        ignore_install = { "" }, -- List off parsers to ignore installing,
         sync_install = false,
+        auto_pairs = {
+          enable = true,
+        },
+        autotag = {
+          enable = true,
+        },
         textobjects = {
           select = {
             enable = true,
@@ -77,7 +88,6 @@ return {
           },
         },
         modules = {},
-        ignore_install = {},
       })
     end,
   },
