@@ -1,7 +1,13 @@
 return {
   "mfussenegger/nvim-dap",
-  optional = true,
+  recommended = true,
+  desc = "Debugging support. Requires language specific adapters to be configured. (see lang extras)",
   dependencies = {
+    "rcarriga/nvim-dap-ui",
+    {
+      "theHamsta/nvim-dap-virtual-text",
+      opts = {},
+    },
     {
       "williamboman/mason.nvim",
       opts = { ensure_installed = { "delve" } },
