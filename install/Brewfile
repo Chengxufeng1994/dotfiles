@@ -46,6 +46,9 @@ brew "ansible"
 # hashicorp
 brew "terraform"
 
+# aws
+brew "aws-sam-cli"
+
 # argocd
 brew "argocd"
 
