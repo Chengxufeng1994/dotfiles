@@ -1,2 +1,19 @@
 .DS_Store
-*.lock.json
+
+# Lazy.nvim plugin manager directory
+lazy-lock.json
+
+# Node packages (in case you're using plugins needing npm/yarn)
+node_modules/
+
+# MacOS metadata
+.DS_Store
+
+# Linux files
+*~
+
+# Optional: VS Code settings if you're mixing with VSCode Neovim
+.vscode/
+
+# Optional: LuaLS metadata
+.lua_ls/
