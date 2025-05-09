@@ -3,15 +3,24 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     -- managing tool
-    { "williamboman/mason.nvim" },
+    { "mason.nvim" },
 
     -- bridges mason with the lspconfig
-    { "williamboman/mason-lspconfig.nvim" },
+    { "williamboman/mason-lspconfig.nvim", config = function() end },
 
     -- nvim-cmp source for neovim's built-in LSP
     { "hrsh7th/cmp-nvim-lsp" },
   },
   opts = {
+    -- options for vim.lsp.buf.format
+    -- `bufnr` and `filter` is handled by the LazyVim formatter,
+    -- but can be also overridden when specified
+    format = {
+      formatting_options = nil,
+      timeout_ms = nil,
+    },
+    -- LSP Server Settings
+    ---@type lspconfig.options
     servers = {
       eslint = {
         settings = {

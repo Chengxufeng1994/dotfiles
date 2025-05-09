@@ -195,13 +195,14 @@ if [ -f "$HOME/Development/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # fzf setup
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ -s $(brew --prefix)/bin/fzf ]] && source <($(brew --prefix)/bin/fzf --zsh)
 
 # fnm setup
 eval "$(fnm env --use-on-cd)"
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 autoload -U +X bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
