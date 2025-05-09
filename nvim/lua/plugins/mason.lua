@@ -1,9 +1,10 @@
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
+    version = "^1.0.0",
     dependencies = {
       -- bridges mason with the lspconfig
-      { "williamboman/mason-lspconfig.nvim" },
+      { "mason-org/mason-lspconfig.nvim", version = "^1.0.0", config = function() end },
 
       -- Install and upgrade third party tools automatically
       {
@@ -41,7 +42,11 @@ return {
         end,
       },
     },
-    config = function(_)
+    cmd = "Mason",
+    keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+    build = ":MasonUpdate",
+    opts_extend = { "ensure_installed" },
+    config = function(_, opts)
       require("mason").setup({
         ui = {
           height = 0.85,
