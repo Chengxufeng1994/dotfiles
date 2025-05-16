@@ -28,6 +28,9 @@ brew "uv"
 brew "tmux"
 brew "tmux-mem-cpu-load"
 
+# test
+brew "k6"
+
 # kubernetes
 brew "k9s"
 brew "kubectl"
