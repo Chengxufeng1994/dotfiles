@@ -94,7 +94,7 @@ plugins=(
   zsh-syntax-highlighting
 )
 
-zstyle :omz:plugins:ssh-agent identities id_rsa_github_personal id_rsa_github_vivotek id_rsa_gitlab_benny id_rsa_gitlab_leadtek
+zstyle :omz:plugins:ssh-agent identities id_rsa_github_personal id_rsa_github_vivotek id_rsa_gitlab_benny
 zstyle :omz:plugins:ssh-agent lifetime 24h
 
 source $ZSH/oh-my-zsh.sh
@@ -141,19 +141,28 @@ export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Content
 export MAVEN_HOME=$HOME/Development/apache-maven-3.8.5
 export PATH=$MAVEN_HOME/bin:$PATH
 
-export CARGO_HOME=$HOME/.cargo/bin
-export PATH=$CARGO_HOME:$PATH
+export POETRY_HOME=$HOME/.local
+export PATH="$POETRY_HOME/bin:$PATH"
 
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 
+export CARGO_HOME=$HOME/.cargo/bin
+export PATH=$CARGO_HOME:$PATH
+
 export ISTIO_HOME=$HOME/Development/istio-1.15.3
 export PATH=$ISTIO_HOME/bin:$PATH
 
-export POETRY_HOME=$HOME/.local
-export PATH="$POETRY_HOME/bin:$PATH"
-
 [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# atuojump setup
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+# fzf setup
+[[ -s $(brew --prefix)/bin/fzf ]] && source <($(brew --prefix)/bin/fzf --zsh)
 
 # >>>> pyenv(python version manager) (start)
 if [ -x "$HOMEBREW_PREFIX/bin/pyenv" ]; then
@@ -185,23 +194,19 @@ if [ -f '/usr/local/bin/aws_completer' ]; then
 fi
 # >>>> AWS command completion (end)
 
+# >>>> GCP command completion (start)
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "$HOME/Development/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Development/google-cloud-sdk/path.zsh.inc"; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME/Development/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Development/google-cloud-sdk/completion.zsh.inc"; fi
+# >>>> GCP command completion (end)
 
-# atuojump setup
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-
-# fzf setup
-[[ -s $(brew --prefix)/bin/fzf ]] && source <($(brew --prefix)/bin/fzf --zsh)
+# starship setup
+# eval "$(starship init zsh)"
 
 # fnm setup
 eval "$(fnm env --use-on-cd)"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 autoload -U +X bashcompinit && bashcompinit
 autoload -Uz compinit && compinit

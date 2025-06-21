@@ -1,7 +1,16 @@
 [alias]
+  aa = add -A .
   br = branch
-  ci = commit
+  brd = branch -d
+  brD = branch -D
+  merged = branch --merged
+  ca = commit -a
+  ci = commit -a -v
+  cm = commit -m
+  amd = commit --amend --no-edit
   co = checkout
+  cob = checkout -b
+  d = diff
   st = status
   pu = push
   l = log --oneline
@@ -17,6 +26,8 @@
   template = ~/.gitmessage.txt
 [init]
   defaultBranch = main
+[merge]
+  log = true
 [user]
   name = Benny Cheng
   email = benny12628@gmail.com
