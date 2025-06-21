@@ -1,6 +1,7 @@
 return {
   {
     "mason-org/mason.nvim",
+    lazy = false,
     version = "^1.0.0",
     dependencies = {
       -- bridges mason with the lspconfig

@@ -1,9 +1,10 @@
 #
 # Unix
 #
-alias l='ls -l --color=auto'                # lists files/directories
-alias ll='ls -alh --color=auto'             # lists files/directories with additional information
-alias lh='ls -alths --color=auto'           # lists files/directories with additional information
+alias l='ls -l --color=auto'      # lists files/directories
+alias ll='ls -alh --color=auto'   # lists files/directories with additional information
+alias lh='ls -alths --color=auto' # lists files/directories with additional information
+alias lt='ls -lhtrF --color=auto'
 
 alias grep='grep --color=auto'
 alias mygrep='grep -rnIi --color'
@@ -32,7 +33,7 @@ alias cpuinfo='lscpu'
 alias duh='du -h'
 alias duhs='du -h -s'
 alias duhd='du -h -d 1'
-alias ducks='du -cks * | sort -rn | head' 
+alias ducks='du -cks * | sort -rn | head'
 
 #
 # ripgrep
@@ -40,7 +41,7 @@ alias ducks='du -cks * | sort -rn | head'
 alias rgg='rg -tgo --no-ignore-vcs --hidden --column --line-number --no-heading --color=always --smart-case'
 # alias rg='rg --files --no-ignore-vcs --hidden --column --line-number --no-heading --color=always --smart-case'
 
-# 
+#
 # lazygit
 alias lg='lazygit'
 
@@ -75,26 +76,26 @@ alias kdf="kubectl delete -f"
 
 alias kdesc="kubectl describe"
 
-alias klog="kubectl logs"                   # dump pod logs (stdout)
-alias klogf="kubectl logs -f"               # stream pod logs (stdout)
+alias klog="kubectl logs"     # dump pod logs (stdout)
+alias klogf="kubectl logs -f" # stream pod logs (stdout)
 # e.g: klog <pod> -c <container>
 
-alias krit="kubectl run -i --tty"           # Run pod as interactive shell
+alias krit="kubectl run -i --tty" # Run pod as interactive shell
 # e.g: krit busybox --image=busybox:1.28 -- sh
 
-alias keit='kubectl exec -it'               # Interactive shell access to a running pod
+alias keit='kubectl exec -it' # Interactive shell access to a running pod
 # e.g: keit --stdin --tty <pod> -- <command>
 
-alias ktop="kubectl top"                    # show metrics for a given pod and its containers
+alias ktop="kubectl top" # show metrics for a given pod and its containers
 
 alias kr="kubectl rollout"
 alias krh="kubectl rollout history"
-alias krs="kubectl rollout status -w" 
-alias krr="kubectl rollout restart" 
+alias krs="kubectl rollout status -w"
+alias krr="kubectl rollout restart"
 
-alias kcv="kubectl config view"             # show Merged kubeconfig settings.
-alias kcc="kubectl config current-context"  # display the current context
-alias kcgc="kubectl config get-contexts"    # display list of contexts.
+alias kcv="kubectl config view"            # show Merged kubeconfig settings.
+alias kcc="kubectl config current-context" # display the current context
+alias kcgc="kubectl config get-contexts"   # display list of contexts.
 
 # short alias to set/show context/namespace (only works for bash and bash-compatible shells, current context to be set before using kn to set namespace)
 alias kx='f() { [ "$1" ] && kubectl config use-context $1 || kubectl config current-context ; } ; f'

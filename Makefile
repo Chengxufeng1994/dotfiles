@@ -35,13 +35,15 @@ install-zsh:
 	fi
 	@zsh --version
 
-install-p10k: install-zsh
+install-ohmyzsh: install-zsh
 	@if [ ! -d "$$HOME/.oh-my-zsh" ]; then \
 		echo "Installing Oh My Zsh..."; \
 		sh -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended; \
 	else \
 		echo "Oh My Zsh already installed."; \
 	fi
+
+install-p10k: install-ohmyzsh
 	@if [ ! -d "$$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then \
 		echo "Installing Powerlevel10k..."; \
 		git clone --depth=1 https://github.com/romkatv/powerlevel10k.git \
