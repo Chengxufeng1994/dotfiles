@@ -19,7 +19,17 @@
 #  lg = log --pretty=format:'%Cred%h%Cre %ad |%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --graph --abbrev-commit --date=short
   lg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --color --graph --
   alg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --color --graph --all --
+  # Go to root of git repo.
+  grt = "!cd $(git rev-parse --show-toplevel)"
+  # Sync local and remote commits.
+  sync = "!git pull --rebase && git push"
+  # Sync local and remote tags.
+  sync-tags = "!git fetch --tags && git push --tags"
+  # Sync local and remote commits and tags.
+  sync-all = "!git pull --rebase && git push --progress && git push --tags"
 [color]
+  diff = auto
+  status = auto
   ui = true
 [commit]
 	cleanup = strip
