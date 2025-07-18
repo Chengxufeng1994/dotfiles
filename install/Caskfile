@@ -1,9 +1,7 @@
 tap "homebrew/cask-fonts"
 
-# cask "datagrip"
 cask "font-fira-code"
 cask "font-meslo-lg-nerd-font"
-# cask "goland"
 cask "google-chrome"
 cask "iterm2"
 cask "obsidian"
@@ -11,6 +9,7 @@ cask "postman"
 cask "raycast"
 cask "spotify"
 cask "visual-studio-code"
+cask "jordanbaird-ice"
 
 cask "chatgpt"
 cask "claude"
