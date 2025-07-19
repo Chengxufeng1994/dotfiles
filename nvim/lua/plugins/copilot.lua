@@ -1,36 +1,48 @@
 return {
   {
     "zbirenbaum/copilot.lua",
-    enabled = true,
     cmd = "Copilot",
     build = ":Copilot auth",
     event = "BufReadPost",
-    opts = {
-      suggestion = {
-        enabled = not vim.g.ai_cmp,
-        auto_trigger = true,
-        hide_during_completion = vim.g.ai_cmp,
-        keymap = {
-          accept = false, -- handled by nvim-cmp / blink.cmp
-          next = "<M-]>",
-          prev = "<M-[>",
+    opts = function()
+      return {
+        suggestion = {
+          enabled = not vim.g.ai_cmp, -- 如果啟用 ai_cmp, Copilot suggestions 關閉
+          auto_trigger = true, -- 輸入時自動出建議
+          hide_during_completion = vim.g.ai_cmp, -- 補全選單出現時自動隱藏 Copilot
+          keymap = {
+            accept = false, -- 由 cmp or LazyVim 接手 accept 行為
+            next = "<M-]>", -- 下個建議
+            prev = "<M-[>", -- 上個建議
+          },
         },
-      },
-      panel = { enabled = false },
-      filetypes = {
-        markdown = true,
-        help = true,
-      },
-    },
+        panel = { enabled = false }, -- 關閉 Copilot side panel
+        filetypes = {
+          ["*"] = true,
+          -- markdown = true,
+          -- help = true,
+        },
+      }
+    end,
+    config = function(_, opts)
+      require("copilot").setup(opts)
+      LazyVim.cmp.actions.ai_accept = function()
+        local suggestion = require("copilot.suggestion")
+        if suggestion.is_visible() then
+          LazyVim.create_undo()
+          suggestion.accept()
+          return true
+        end
+      end
+    end,
   },
+
   {
     "zbirenbaum/copilot-cmp",
     opts = {},
     config = function(_, opts)
       local copilot_cmp = require("copilot_cmp")
       copilot_cmp.setup(opts)
-      -- attach cmp source whenever copilot attaches
-      -- fixes lazy-loading issues with the copilot cmp source
       LazyVim.lsp.on_attach(function()
         copilot_cmp._on_insert_enter({})
       end, "copilot")
@@ -50,5 +62,6 @@ return {
       },
     },
   },
+
   { "giuxtaposition/blink-cmp-copilot" },
 }

@@ -1,15 +1,21 @@
 return {
-  "folke/tokyonight.nvim",
-  lazy = true,
-  priority = 1000,
-  opts = {
-    style = "storm",
-
-    styles = {
-      sidebars = "transparent",
-      floats = "transparent",
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      style = "storm",
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
+      transparent = true,
     },
-
-    transparent = true,
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "tokyonight",
+    },
   },
 }

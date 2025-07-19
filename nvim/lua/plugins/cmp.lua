@@ -74,7 +74,7 @@ return {
           { name = "path" },
           { name = "git" },
         }, {
-          { name = "buffer" }, -- show buffer's completion only if type more then keyword_length
+          { name = "buffer", keyword_length = 3 }, -- show buffer's completion only if type more then keyword_length
         }),
         formatting = {
           format = lspkind.cmp_format({
@@ -84,7 +84,13 @@ return {
           }),
         },
       })
+
+      -- Commandline (`:`) 補全（可選）
+      cmp.setup.cmdline(":", {
+        sources = {
+          { name = "cmdline" },
+        },
+      })
     end,
   },
-  { "petertriho/cmp-git", opts = {} },
 }

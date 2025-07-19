@@ -1,32 +1,48 @@
 return {
-  "mfussenegger/nvim-dap",
-  recommended = true,
-  desc = "Debugging support. Requires language specific adapters to be configured. (see lang extras)",
-  dependencies = {
+  {
+    "mfussenegger/nvim-dap",
+    recommended = true,
+    desc = "Debugging support. Requires language specific adapters to be configured. (see lang extras)",
+
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      -- virtual text for the debugger
+      {
+        "theHamsta/nvim-dap-virtual-text",
+        opts = {},
+      },
+      {
+        "mason-org/mason.nvim",
+        opts = { ensure_installed = { "delve" } },
+      },
+      {
+        "leoluz/nvim-dap-go",
+        opts = {},
+      },
+    },
+  },
+  {
     "rcarriga/nvim-dap-ui",
-    {
-      "theHamsta/nvim-dap-virtual-text",
-      opts = {},
-    },
-    {
-      "williamboman/mason.nvim",
-      opts = { ensure_installed = { "delve" } },
-    },
-    {
-      "leoluz/nvim-dap-go",
-      opts = {},
-    },
-    "mfussenegger/nvim-dap-python",
-    -- stylua: ignore
+    dependencies = { "nvim-neotest/nvim-nio" },
+  -- stylua: ignore
     keys = {
-      { "<leader>dPt", function() require('dap-python').test_method() end, desc = "Debug Method", ft = "python" },
-      { "<leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
+      { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
+      { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = {"n", "v"} },
     },
-    config = function()
-      if vim.fn.has("win32") == 1 then
-        require("dap-python").setup(LazyVim.get_pkg_path("debugpy", ".venv/Scripts/pythonw.exe"))
-      else
-        require("dap-python").setup(LazyVim.get_pkg_path("debugpy", ".venv/bin/python"))
+    opts = {},
+    config = function(_, opts)
+      local dap = require("dap")
+      local dapui = require("dapui")
+
+      dapui.setup(opts)
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open({})
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close({})
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close({})
       end
     end,
   },

@@ -1,3 +1,5 @@
+local auto_format = true
+
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
@@ -6,7 +8,7 @@ return {
     { "mason.nvim" },
 
     -- bridges mason with the lspconfig
-    { "williamboman/mason-lspconfig.nvim", config = function() end },
+    { "mason-org/mason-lspconfig.nvim" },
 
     -- nvim-cmp source for neovim's built-in LSP
     { "hrsh7th/cmp-nvim-lsp" },
@@ -48,22 +50,13 @@ return {
       pyright = {},
       basedpyright = {},
       helm_ls = {},
-      ruff = {
+      ruff_lsp = {
         cmd_env = { RUFF_TRACE = "messages" },
         init_options = {
           settings = {
             logLevel = "error",
           },
         },
-        keys = {
-          {
-            "<leader>co",
-            LazyVim.lsp.action["source.organizeImports"],
-            desc = "Organize Imports",
-          },
-        },
-      },
-      ruff_lsp = {
         keys = {
           {
             "<leader>co",
@@ -210,11 +203,11 @@ return {
       -- register the formatter with LazyVim
       LazyVim.format.register(formatter)
     end,
-    ruff = function()
+    ruff_lsp = function()
       LazyVim.lsp.on_attach(function(client, _)
         -- Disable hover in favor of Pyright
         client.server_capabilities.hoverProvider = false
-      end, ruff)
+      end, "ruff_lsp")
     end,
     --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
     --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
