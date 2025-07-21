@@ -7,9 +7,9 @@ return {
       "hrsh7th/cmp-nvim-lsp", -- nvim-cmp source for neovim's built-in LSP
       "hrsh7th/cmp-buffer", -- nvim-cmp source for buffer words
       "hrsh7th/cmp-path", -- nvim-cmp source for path words
-      "hrsh7th/cmp-cmdline", -- nvim-cmp source for vim's cmdline
       "onsails/lspkind-nvim", -- lspkind (VS pictograms)
       "petertriho/cmp-git",
+      "zbirenbaum/copilot-cmp",
       { "saadparwaiz1/cmp_luasnip", enabled = true },
       -- Snippet engine
       {
@@ -69,6 +69,7 @@ return {
           end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
+          { name = "copilot" },
           { name = "nvim_lsp" },
           { name = "luasnip" },
           { name = "path" },
@@ -81,14 +82,8 @@ return {
             mode = "symbol_text",
             maxwidth = 70,
             show_labelDetails = false,
+            symbol_map = { Copilot = "" },
           }),
-        },
-      })
-
-      -- Commandline (`:`) 補全（可選）
-      cmp.setup.cmdline(":", {
-        sources = {
-          { name = "cmdline" },
         },
       })
     end,
