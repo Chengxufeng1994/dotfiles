@@ -35,7 +35,6 @@ return {
         "json",
         "lua",
         "rust",
-        "sql",
         "markdown",
         "markdown_inline",
         "python",

@@ -47,9 +47,20 @@ return {
           },
         },
       },
-      pyright = {},
-      basedpyright = {},
       helm_ls = {},
+      marksman = {},
+      pyright = {
+        settings = {
+          python = {
+            analysis = {
+              autoSearchPaths = true,
+              diagnosticMode = "workspace",
+              useLibraryCodeForTypes = true,
+              typeCheckingMode = "basic",
+            },
+          },
+        },
+      },
       ruff_lsp = {
         cmd_env = { RUFF_TRACE = "messages" },
         init_options = {
@@ -66,6 +77,8 @@ return {
         },
       },
       terraformls = {},
+      --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
+      --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
       tsserver = {
         enabled = false,
       },
@@ -104,7 +117,7 @@ return {
               enumMemberValues = { enabled = true },
               functionLikeReturnTypes = { enabled = true },
               parameterNames = { enabled = "literals" },
-              parameterTypes = { enabled = false },
+              parameterTypes = { enabled = true },
               propertyDeclarationTypes = { enabled = true },
               variableTypes = { enabled = false },
             },
@@ -203,11 +216,13 @@ return {
       -- register the formatter with LazyVim
       LazyVim.format.register(formatter)
     end,
-    ruff_lsp = function()
+    ["ruff"] = function()
       LazyVim.lsp.on_attach(function(client, _)
-        -- Disable hover in favor of Pyright
-        client.server_capabilities.hoverProvider = false
-      end, "ruff_lsp")
+        if client.name == "ruff" then
+          -- Disable hover to avoid conflict with pyright
+          client.server_capabilities.hoverProvider = false
+        end
+      end, "ruff")
     end,
     --- @deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
     --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically

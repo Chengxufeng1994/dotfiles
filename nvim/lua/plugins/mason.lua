@@ -4,10 +4,13 @@ return {
     cmd = "Mason",
     keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
     build = ":MasonUpdate",
-    version = "^1.0.0",
+    -- version = "^1.0.0",
     dependencies = {
       -- bridges mason with the lspconfig
-      { "mason-org/mason-lspconfig.nvim", version = "^1.0.0" },
+      {
+        "mason-org/mason-lspconfig.nvim",
+        -- version = "^1.0.0",
+      },
 
       -- Install and upgrade third party tools automatically
       {
@@ -16,7 +19,10 @@ return {
           require("mason-tool-installer").setup({
             auto_update = true,
             ensure_installed = {
+              -- shell
+              "bashls",
               "shfmt",
+              "shellcheck",
               -- golang
               "delve",
               "gopls",
@@ -26,25 +32,29 @@ return {
               "goimports",
               "golines",
               "impl",
+              -- lua
               "lua_ls",
-              "ts_ls",
               "stylua",
-              "shellcheck",
-              "bashls",
               -- python
               "ruff",
+              "pyright",
               "debugpy",
               -- vim
               "vimls",
               -- rust
               "rust_analyzer",
+              -- terraform
               "tflint",
+              -- typescript
+              "vtsls",
               -- code spell
               "codespell",
               "misspell",
               "cspell",
               -- markdown
               "marksman",
+              "markdownlint-cli2",
+              "markdown-toc",
               "prettier",
             },
           })

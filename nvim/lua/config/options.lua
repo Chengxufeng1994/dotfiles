@@ -12,7 +12,9 @@ vim.g.lazyvim_cmp = "nvim-cmp"
 -- Set to "basedpyright" to use basedpyright instead of pyright.
 vim.g.lazyvim_python_lsp = "pyright"
 -- Set to "ruff_lsp" to use the old LSP implementation version.
-vim.g.lazyvim_python_ruff = "ruff"
+vim.g.lazyvim_python_ruff = "ruff_lsp"
+-- Set to false to disable auto format
+vim.g.lazyvim_eslint_auto_format = true
 
 -- utf8
 vim.g.encoding = "UTF-8"
@@ -113,4 +115,4 @@ vim.opt.scrolljump = 5
 vim.opt.foldenable = true
 vim.opt.foldlevel = 99
 vim.opt.foldmethod = "expr" -- or 'syntax'
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
