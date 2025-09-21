@@ -211,3 +211,5 @@ eval "$(fnm env --use-on-cd)"
 autoload -U +X bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
