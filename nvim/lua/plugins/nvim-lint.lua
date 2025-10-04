@@ -12,24 +12,32 @@ return {
         typescript = { "eslint" },
         javascriptreact = { "eslint" },
         typescriptreact = { "eslint" },
+        lua = { "selene", "luacheck" },
         -- Use the "*" filetype to run linters on all filetypes.
         -- ['*'] = { 'global linter' },
         -- Use the "_" filetype to run linters on filetypes that don't have other linters configured.
         -- ['_'] = { 'fallback linter' },
         -- ["*"] = { "typos" },
       },
-      -- LazyVim extension to easily override linter options
-      -- or add custom linters.
-      ---@type table<string,table>
       linters = {
-        -- -- Example of using selene only when a selene.toml file is present
-        -- selene = {
-        --   -- `condition` is another LazyVim extension that allows you to
-        --   -- dynamically enable/disable linters based on the context.
-        --   condition = function(ctx)
-        --     return vim.fs.find({ "selene.toml" }, { path = ctx.filename, upward = true })[1]
-        --   end,
-        -- },
+        selene = {
+          condition = function(ctx)
+            local root = LazyVim.root.get({ normalize = true })
+            if root ~= vim.uv.cwd() then
+              return false
+            end
+            return vim.fs.find({ "selene.toml" }, { path = root, upward = true })[1]
+          end,
+        },
+        luacheck = {
+          condition = function(ctx)
+            local root = LazyVim.root.get({ normalize = true })
+            if root ~= vim.uv.cwd() then
+              return false
+            end
+            return vim.fs.find({ ".luacheckrc" }, { path = root, upward = true })[1]
+          end,
+        },
       },
     },
     config = function(_, opts)

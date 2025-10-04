@@ -48,6 +48,7 @@ brew "ansible"
 
 # hashicorp
 brew "terraform"
+brew "pulumi"
 
 # aws
 brew "aws-sam-cli"

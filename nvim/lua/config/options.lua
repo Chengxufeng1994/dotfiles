@@ -114,5 +114,6 @@ vim.opt.scrolljump = 5
 -- Foldes
 vim.opt.foldenable = true
 vim.opt.foldlevel = 99
-vim.opt.foldmethod = "expr" -- or 'syntax'
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- Treesitter folding
+vim.wo.foldmethod = "expr"
+vim.wo.foldexpr = "nvim_treesitter#foldexpr()"

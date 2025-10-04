@@ -75,10 +75,7 @@ return {
   },
 
   -- nerd font supported icons
-  {
-    "nvim-tree/nvim-web-devicons",
-    lazy = true,
-  },
+  { "nvim-tree/nvim-web-devicons", lazy = true, opts = {} },
 
   -- color highlighter
   {
@@ -133,9 +130,6 @@ return {
     end,
   },
 
-  -- lazy calls setup() by itself
-  { "danilamihailov/beacon.nvim" },
-
   -- Neovim plugin to improve the default vim.ui interfaces
   {
     "stevearc/dressing.nvim",
@@ -182,6 +176,7 @@ return {
 
   {
     "nvim-mini/mini.cursorword",
+    event = "VeryLazy",
     version = "*",
     config = function()
       require("mini.cursorword").setup()
@@ -189,52 +184,7 @@ return {
   },
 
   {
-    "folke/flash.nvim",
+    "danilamihailov/beacon.nvim",
     event = "VeryLazy",
-    vscode = true,
-    ---@type Flash.Config
-    opts = {},
-    keys = {
-      {
-        "s",
-        mode = { "n", "x", "o" },
-        function()
-          require("flash").jump()
-        end,
-        desc = "Flash",
-      },
-      {
-        "S",
-        mode = { "n", "o", "x" },
-        function()
-          require("flash").treesitter()
-        end,
-        desc = "Flash Treesitter",
-      },
-      {
-        "r",
-        mode = "o",
-        function()
-          require("flash").remote()
-        end,
-        desc = "Remote Flash",
-      },
-      {
-        "R",
-        mode = { "o", "x" },
-        function()
-          require("flash").treesitter_search()
-        end,
-        desc = "Treesitter Search",
-      },
-      {
-        "<c-s>",
-        mode = { "c" },
-        function()
-          require("flash").toggle()
-        end,
-        desc = "Toggle Flash Search",
-      },
-    },
   },
 }

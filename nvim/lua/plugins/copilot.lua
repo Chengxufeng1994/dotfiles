@@ -19,8 +19,6 @@ return {
         panel = { enabled = false }, -- 關閉 Copilot side panel
         filetypes = {
           ["*"] = true,
-          -- markdown = true,
-          -- help = true,
         },
       }
     end,

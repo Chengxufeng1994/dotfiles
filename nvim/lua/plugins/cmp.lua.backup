@@ -2,31 +2,53 @@ return {
   {
     "hrsh7th/nvim-cmp",
     enabled = true,
-    event = "InsertEnter",
+    event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
       "hrsh7th/cmp-nvim-lsp", -- nvim-cmp source for neovim's built-in LSP
+      "hrsh7th/cmp-nvim-lua", -- nvim-cmp-lua source for neovim's built-in LSP
       "hrsh7th/cmp-nvim-lsp-signature-help",
-      "hrsh7th/cmp-buffer", -- nvim-cmp source for buffer words
       "hrsh7th/cmp-path", -- nvim-cmp source for path words
+      "hrsh7th/cmp-buffer", -- nvim-cmp source for buffer words
+      "petertriho/cmp-git",
       "onsails/lspkind-nvim", -- lspkind (VS pictograms)
       "zbirenbaum/copilot-cmp",
-      -- Snippet engine - 使用 LazyVim 2025 預設的 nvim-snippets
       {
-        "garymjr/nvim-snippets",
-        opts = {
-          friendly_snippets = true,
-        },
-        dependencies = { "rafamadriz/friendly-snippets" },
+        "saadparwaiz1/cmp_luasnip",
+        enabled = true,
+      },
+      -- Snippet engine
+      {
+        "L3MON4D3/LuaSnip",
+        version = "v2.*",
+        build = "make install_jsregexp",
+        dependencies = { "rafamadriz/friendly-snippets" }, -- Set of preconfigured snippets for different languages
+        config = function()
+          require("luasnip.loaders.from_vscode").lazy_load()
+        end,
       },
     },
     config = function()
       local cmp = require("cmp")
       local lspkind = require("lspkind")
+      local luasnip = require("luasnip")
+      local types = require("luasnip.util.types")
+
+      -- Display virtual text to indicate snippet has more nodes
+      luasnip.config.setup({
+        ext_opts = {
+          [types.choiceNode] = {
+            active = { virt_text = { { "⇥", "DiagnosticError" } } },
+          },
+          [types.insertNode] = {
+            active = { virt_text = { { "⇥", "DiagnosticInfo" } } },
+          },
+        },
+      })
 
       cmp.setup({
         snippet = {
           expand = function(args)
-            vim.snippet.expand(args.body) -- 使用原生 vim.snippet
+            luasnip.lsp_expand(args.body)
           end,
         },
         window = {
@@ -44,8 +66,8 @@ return {
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif vim.snippet.active({ direction = 1 }) then
-              vim.snippet.jump(1)
+            elseif luasnip.locally_jumpable(1) then
+              luasnip.jump(1)
             else
               fallback()
             end
@@ -53,26 +75,28 @@ return {
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif vim.snippet.active({ direction = -1 }) then
-              vim.snippet.jump(-1)
+            elseif luasnip.locally_jumpable(-1) then
+              luasnip.jump(-1)
             else
               fallback()
             end
           end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
-          { name = "snippets", priority = 1000 }, -- 最高優先級：Snippets
-          { name = "nvim_lsp", priority = 900 }, -- LSP 建議
-          { name = "nvim_lsp_signature_help", priority = 850 }, -- 函數簽名
-          { name = "path", priority = 800 }, -- 路徑補全
-          { name = "copilot", priority = 600 }, -- AI 建議
+          { name = "path" }, -- 路徑補全
+          { name = "nvim_lsp" }, -- LSP 建議（最高優先級）
+          { name = "nvim_lsp_signature_help" }, -- 函數簽名
+          { name = "luasnip" }, -- Snippets
+          { name = "copilot" }, -- AI 建議
+          { name = "nvim_lua" }, -- Neovim Lua API
+          { name = "git" }, -- Git 補全
         }, {
-          { name = "buffer", keyword_length = 2, priority = 400 }, -- Buffer 文字
+          { name = "buffer", keyword_length = 3 }, -- Buffer 文字（需 3+ 字元）
         }),
         formatting = {
           fields = { "kind", "abbr", "menu" },
           format = function(entry, vim_item)
-            local kind = lspkind.cmp_format({
+            local kind = require("lspkind").cmp_format({
               mode = "symbol_text",
               maxwidth = 70,
               show_labelDetails = false,
@@ -81,7 +105,6 @@ return {
 
             -- 來源名稱映射
             local menu_icon = {
-              snippets = "⋗",
               nvim_lsp = "λ",
               buffer = "Ω",
             }
