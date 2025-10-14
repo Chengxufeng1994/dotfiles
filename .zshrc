@@ -208,8 +208,10 @@ if [ -f "$HOME/Development/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME
 # fnm setup
 eval "$(fnm env --use-on-cd)"
 
+# thefuch setup
+eval $(thefuck --alias)
+
 autoload -U +X bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
-
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"

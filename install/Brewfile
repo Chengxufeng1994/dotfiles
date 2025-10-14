@@ -1,76 +1,124 @@
 tap "hashicorp/tap"
 tap 'homebrew/bundle'
 
-# fs/network
-brew "tree"
+# ============================================================
+# 🗂️ File system / Network tools
+# ============================================================
+brew "tree"                # 檔案樹狀結構顯示
+brew "rsync"               # 檔案同步
+brew "rclone"              # 雲端同步 (Google Drive, S3, GCS...)
 
-# search/grep/diff
-brew "bat"
-brew "fzf"
-brew "jq"
-brew "autojump"
-brew "ripgrep"
+# ============================================================
+# 🔍 Search / Diff / JSON tools
+# ============================================================
+brew "bat"                 # cat 增強版（語法高亮、行號）
+brew "fzf"                 # 模糊搜尋
+brew "jq"                  # JSON 處理
+brew "yq"                  # YAML 處理
+brew "autojump"            # 快速跳轉目錄
+brew "ripgrep"             # 高效全文搜尋 (比 grep 快)
+brew "ctags"               # 產生程式碼索引標籤
 
-# sync data
-brew "rsync"
+# ============================================================
+# 🧠 Programming languages / Toolchains
+# ============================================================
+brew "oven-sh/bun/bun"    # bun 工具包管理
+brew "fnm"                 # Node.js 版本管理
+brew "go"                  # Golang
+brew "pyenv"               # Python 版本管理
+brew "pipx"                # 安裝/隔離 Python CLI 工具
+brew "uv"                  # Python 套件管理（pip 替代方案）
+# brew "asdf"
+brew "mise"                # 統一管理 runtime（pyenv, fnm, go 等）
 
-# ctags
-brew "ctags"
+# ============================================================
+# 💻 Terminal / Shell
+# ============================================================
+# brew "zellij"
+brew "tmux"                # 多窗格終端
+brew "tmux-mem-cpu-load"   # 顯示系統負載的 tmux 插件
+brew "neovim"              # 現代化 Vim
+brew "starship"            # 現代化 prompt
+brew "thefuck"             # 自動修正上一個錯誤指令
 
-# languages/tools
-brew "fnm"
-brew "go"
-brew "pyenv"
-brew "pipx"
-brew "uv"
+# ============================================================
+# 🧪 Testing / Benchmark
+# ============================================================
+brew "k6"                  # 負載測試
+brew "hey"                 # HTTP 壓測工具
+brew "vegeta"              # HTTP 壓測 / 負載測試
+brew "wrk"                 # 高性能 HTTP 壓測工具
 
-# terminal
-brew "tmux"
-brew "tmux-mem-cpu-load"
+# ============================================================
+# ☸️ Kubernetes / Deployment / DevOps
+# ============================================================
+brew "k9s"                 # k8s CLI 介面
+brew "kubectl"             # Kubernetes CLI
+brew "kubectx"             # 快速切換 context / namespace
+brew "kubespy"             # 監控 K8s 資源事件
+brew "kustomize"           # Kubernetes YAML 組合
+brew "k8sgpt"              # K8s AI Debug 工具
+brew "helm"                # K8s 套件管理
+brew "minikube"            # 本地 Kubernetes
+brew "skaffold"            # CI/CD 自動化部署
+brew "stern"               # 多 Pod log 即時查看
+# brew "colima"            # 可選：本地容器執行環境
+brew "argocd"              # GitOps 工具
+brew "ansible"             # 自動化佈署
 
-# test
-brew "k6"
 
-# kubernetes
-brew "k9s"
-brew "kubectl"
-brew "kubectx"
-brew "kubespy"
-brew "kustomize"
-brew "k8sgpt"
-brew "helm"
-brew "minikube"
-brew "skaffold"
-brew "stern"
-# brew "colima"
+# ============================================================
+# ☁️ Cloud / Infrastructure / IaC
+# ============================================================
+## 🧱 HashiCorp stack
+brew "terraform"           # 基礎設施即程式
+brew "tfsec"               # Terraform 安全掃描
+brew "tflint"              # Terraform Linter
 
-brew "ansible"
+## 🌩️ Pulumi / Serverless / AWS
+brew "pulumi"              # 程式化 IaC（TypeScript / Python）
+brew "aws-sam-cli"         # AWS Serverless 開發
+brew "s5cmd"               # 高速 S3 CLI，比 awscli 快 10 倍
 
-# hashicorp
-brew "terraform"
-brew "pulumi"
+# ============================================================
+# ☁️ Databases / Data exchange
+# ============================================================
+brew "protobuf"            # Protocol Buffer 編譯器
+brew "buf"                 # Protocol Buffer 工具
+brew "grpcurl"             # gRPC CLI 測試工具
+brew "mongosh"             # MongoDB CLI
 
-# aws
-brew "aws-sam-cli"
+# ============================================================
+# 🧩 Git / SCM / Hooks
+# ============================================================
+brew "gh"                  # GitHub CLI
+brew "git-delta"           # 改善 git diff 輸出
+brew "lazygit"             # 終端 Git UI
+# brew "gitui"
+brew "pre-commit"          # pre-commit hook 管理
 
-# argocd
-brew "argocd"
+# ============================================================
+# 🛠️ Productivity / Shell utilities
+# ============================================================
+# brew "zoxide"              # 智慧目錄跳轉，比 autojump 更強
+# brew "eza"                 # 現代化 ls，支援 icon、git 狀態
+# brew "dust"                # 現代化 du，磁碟用量樹狀顯示
+# brew "procs"               # 現代化 ps
+# brew "gping"               # 視覺化 ping
+# brew "atuin"               # 可搜尋、同步 shell history
 
-# protocol buffer
-brew "protobuf"
+# ============================================================
+# 📚 Documentation / Cheatsheet
+# ============================================================
+# brew "tldr"                # 常用命令簡表
+brew "glow"                # 終端內顯示 Markdown
+brew "cheat"               # 可自訂 CLI cheat sheet
+brew "tealdeer"            # tldr 加強版（快取、自動更新）
 
-# mongodb
-brew "mongosh"
-
-brew "buf"
-brew "hugo"
-brew "fd"
-brew "lazygit"
-brew "pre-commit"
-brew "tldr"
-brew "wrk"
-brew "watch"
-brew "glances"
-brew "grpcurl"
-brew "neovim"
-brew "starship"
+# ============================================================
+# 👀 Monitoring / Misc Utilities
+# ============================================================
+brew "btop"                # 系統資源監控，比 glances 快
+brew "glances"             # 系統監控 (可替換為 btop)
+brew "fd"                  # find 的現代化替代
+brew "watch"               # 重複執行命令觀察輸出

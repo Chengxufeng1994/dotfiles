@@ -1,12 +1,10 @@
-tap "homebrew/cask-fonts"
-
 cask "font-fira-code"
 cask "font-meslo-lg-nerd-font"
+
 cask "google-chrome"
 cask "iterm2"
 cask "obsidian"
 cask "postman"
-cask "raycast"
 cask "spotify"
 cask "visual-studio-code"
 cask "jordanbaird-ice"
