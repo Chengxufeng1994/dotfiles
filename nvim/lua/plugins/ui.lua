@@ -74,9 +74,6 @@ return {
     end,
   },
 
-  -- nerd font supported icons
-  { "nvim-tree/nvim-web-devicons", lazy = true, opts = {} },
-
   -- color highlighter
   {
     "NvChad/nvim-colorizer.lua",
@@ -99,12 +96,6 @@ return {
     event = "LspAttach",
     config = function()
       require("fidget").setup({
-        -- text = {
-        --   spinner = "meter",
-        -- },
-        -- window = {
-        --   blend = 0, -- set 0 if using transparent background, otherwise set 100
-        -- },
         progress = {
           poll_rate = 200,
           ignore_done_already = true,

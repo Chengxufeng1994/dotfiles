@@ -8,6 +8,7 @@ return {
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-buffer", -- nvim-cmp source for buffer words
       "hrsh7th/cmp-path", -- nvim-cmp source for path words
+      -- "hrsh7th/cmp-cmdline", -- nvim-cmp source for command line
       "onsails/lspkind-nvim", -- lspkind (VS pictograms)
       "zbirenbaum/copilot-cmp",
       -- Snippet engine - 使用 LazyVim 2025 預設的 nvim-snippets

@@ -3,7 +3,7 @@ return {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     build = ":Copilot auth",
-    event = "BufReadPost",
+    event = "InsertEnter",
     opts = function()
       return {
         suggestion = {
@@ -41,7 +41,7 @@ return {
     config = function(_, opts)
       local copilot_cmp = require("copilot_cmp")
       copilot_cmp.setup(opts)
-      LazyVim.lsp.on_attach(function()
+      Snacks.util.lsp.on(function()
         copilot_cmp._on_insert_enter({})
       end, "copilot")
     end,

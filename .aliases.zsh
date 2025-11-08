@@ -5,6 +5,7 @@ alias l='ls -l --color=auto'      # lists files/directories
 alias ll='ls -alh --color=auto'   # lists files/directories with additional information
 alias lh='ls -alths --color=auto' # lists files/directories with additional information
 alias lt='ls -lhtrF --color=auto'
+alias lst='tree -a -s -t -C -L 1'
 
 alias grep='grep --color=auto'
 alias mygrep='grep -rnIi --color'
@@ -34,6 +35,9 @@ alias duh='du -h'
 alias duhs='du -h -s'
 alias duhd='du -h -d 1'
 alias ducks='du -cks * | sort -rn | head'
+
+alias view='bat'
+# alias dotf='chezmoi'
 
 #
 # ripgrep

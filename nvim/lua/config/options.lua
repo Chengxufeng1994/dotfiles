@@ -2,23 +2,11 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
--- LazyVim completion engine to use.
--- Can be one of: nvim-cmp, blink.cmp
--- Leave it to "auto" to automatically use the completion engine
--- enabled with `:LazyExtras`
-vim.g.lazyvim_cmp = "nvim-cmp"
-
--- LSP Server to use for Python.
--- Set to "basedpyright" to use basedpyright instead of pyright.
-vim.g.lazyvim_python_lsp = "pyright"
--- Set to "ruff_lsp" to use the old LSP implementation version.
-vim.g.lazyvim_python_ruff = "ruff_lsp"
--- Set to false to disable auto format
-vim.g.lazyvim_eslint_auto_format = true
+vim.g.mapleader = " "
 
 -- utf8
 vim.g.encoding = "UTF-8"
-vim.o.fileencoding = "UTF-8"
+vim.opt.fileencoding = "UTF-8"
 
 vim.g.completeopt = "menu,menuone,noselect,noinsert"
 
@@ -74,6 +62,7 @@ vim.opt.laststatus = 3 -- show statusline in last window
 vim.opt.linebreak = true -- Wrap long lines at 'breakat' (if 'wrap' is set)
 vim.opt.list = true -- show helpful character indicators
 vim.o.listchars = "space:·,tab:>-"
+vim.opt.wildoptions = "pum"
 vim.opt.pumblend = 0 -- make builtin completion menus slightly transparent
 vim.opt.pumheight = 10 -- make popup menu smaller
 vim.opt.ruler = false -- don't show cursor position
@@ -82,7 +71,8 @@ vim.opt.winblend = 0 -- make floating windows transparent
 vim.opt.wrap = false -- display long lines as just one line
 vim.wo.wrap = false
 vim.opt.showmode = false -- we are experienced, wo don't need the "-- INSERT --" mode hint
-vim.opt.cmdheight = 2 --
+vim.opt.cmdheight = 1
+vim.opt.showcmd = true
 vim.opt.showtabline = 2 -- alway showt tabline
 
 -- Title
@@ -97,19 +87,24 @@ vim.opt.termguicolors = true -- enable gui colors
 -- Searching
 vim.opt.incsearch = true -- search as characters are entered
 vim.opt.hlsearch = false -- do not highlight matches
+-- 在分割窗口中進行增量搜尋
+vim.opt.inccommand = "split" --
 -- 搜尋大小寫不敏感, 除非包含大寫
 vim.opt.ignorecase = true -- ignore case in searches by default
 vim.opt.smartcase = true -- but make it case sensitive if an uppercase is entered
 vim.opt.wildmenu = true
 -- Dont' pass messages to |ins-completin menu|
 vim.o.shortmess = vim.o.shortmess .. "c"
-vim.o.pumheight = 10
+vim.opt.path:append({ "**" }) -- Finding files - Search down into subfolders
+vim.opt.wildignore:append({ "*/node_modules/*" })
 
 -- Scrolling
 -- jk 移動時 Cursor 上下方保留行數
-vim.opt.scrolloff = 8
-vim.opt.sidescrolloff = 8
+vim.opt.scrolloff = 10
+vim.opt.sidescrolloff = 10
 vim.opt.scrolljump = 5
+
+vim.opt.shell = "zsh"
 
 -- Foldes
 vim.opt.foldenable = true
@@ -117,3 +112,33 @@ vim.opt.foldlevel = 99
 -- Treesitter folding
 vim.wo.foldmethod = "expr"
 vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+
+-- Undercurl
+vim.cmd([[let &t_Cs = "\e[4:3m"]])
+vim.cmd([[let &t_Ce = "\e[4:0m"]])
+
+-- Add asterisks in block comments
+vim.opt.formatoptions:append({ "r" })
+
+-- File types
+vim.filetype.add({
+  extension = {
+    mdx = "mdx",
+  },
+})
+
+-- LazyVim completion engine to use.
+-- Can be one of: nvim-cmp, blink.cmp
+-- Leave it to "auto" to automatically use the completion engine
+-- enabled with `:LazyExtras`
+vim.g.lazyvim_cmp = "nvim-cmp"
+-- LSP Server to use for Python.
+-- Set to "basedpyright" to use basedpyright instead of pyright.
+vim.g.lazyvim_python_lsp = "pyright"
+-- Set to "ruff_lsp" to use the old LSP implementation version.
+vim.g.lazyvim_python_ruff = "ruff_lsp"
+-- Enable the option to require a Prettier config file
+-- If no prettier config file is found, the formatter will not be used
+vim.g.lazyvim_prettier_needs_config = true
+-- Set to false to disable auto format
+vim.g.lazyvim_eslint_auto_format = true
