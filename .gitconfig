@@ -1,5 +1,6 @@
 [alias]
   aa = add -A .
+  ba = branch -a
   br = branch
   brd = branch -d
   brD = branch -D
@@ -16,9 +17,11 @@
   l = log --oneline
   lo = log --oneline --graph --decorate
   ll = log --pretty=format:'%h %ad | %s%d [%Cgreen%an%Creset]' --graph --date=short
-#  lg = log --pretty=format:'%Cred%h%Cre %ad |%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --graph --abbrev-commit --date=short
+  ; lg = log --pretty=format:'%Cred%h%Cre %ad |%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --graph --abbrev-commit --date=short
   lg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --color --graph --
   alg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --color --graph --all --
+  hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
+  llog = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
   # Go to root of git repo.
   grt = "!cd $(git rev-parse --show-toplevel)"
   # Sync local and remote commits.
@@ -27,6 +30,8 @@
   sync-tags = "!git fetch --tags && git push --tags"
   # Sync local and remote commits and tags.
   sync-all = "!git pull --rebase && git push --progress && git push --tags"
+  type = cat-file -t
+  dump = cat-file -p
 [color]
   diff = auto
   status = auto
