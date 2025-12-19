@@ -1,11 +1,18 @@
 #
 # Unix
 #
-alias l='ls -l --color=auto'      # lists files/directories
-alias ll='ls -alh --color=auto'   # lists files/directories with additional information
-alias lh='ls -alths --color=auto' # lists files/directories with additional information
-alias lt='ls -lhtrF --color=auto'
-alias lst='tree -a -s -t -C -L 1'
+# alias l='ls -l --color=auto'      # lists files/directories
+# alias ll='ls -alh --color=auto'   # lists files/directories with additional information
+# alias lh='ls -alths --color=auto' # lists files/directories with additional information
+# alias lt='ls -althrF --color=auto'
+# alias lst='tree -a -s -t -C -L 1'
+
+alias l='eza -l --icons --color=auto'          # lists files/directories
+alias ll='eza -l --icons --color=auto --git'   # lists files/directories with additional information
+alias la='eza -lah --icons --color=auto --git' # lists files/directories with additional information
+alias lh='eza -lah --icons --color=auto --git --sort=modified'
+alias lt='eza -lahrF --icons --color=auto --git --sort=modified'
+alias lst='eza --tree -ah --icons --git-ignore --sort=modified'
 
 alias grep='grep --color=auto'
 alias mygrep='grep -rnIi --color'
@@ -13,8 +20,19 @@ alias rmrf="rm -rf"
 alias mkdir="mkdir -p"
 alias tf="tail -f"
 
+alias mv="mv -iv"
+alias rm="rm -i"
+
 # alias fd="find . -type d -name"
-alias ff="find . -type f -name"
+# alias ff="find . -type f -name"
+
+# EXTRACTING Stuff
+alias tgz='tar -cvvzf'
+alias tbz2='tar -cvvjf'
+alias utgz='tar -xvvzf'
+alias utbz2='tar -xvvjf'
+alias mktar='tar -cvvf'
+alias untar='tar -xvvf'
 
 alias ports="netstat -tulanp"
 alias ntlp="netstat -tlnp"

@@ -1,3 +1,38 @@
+export HISTFILE=~/.zsh_history
+export HISTSIZE=200000                 # huge internal buffer
+export SAVEHIST=200000                 # huge history file
+
+# 歷史記錄設定
+setopt append_history           # 將歷史追加到檔案而非覆蓋
+setopt inc_append_history       # 每次命令後立即寫入歷史
+setopt extended_history         # 記錄時間戳記和執行時間
+setopt hist_expire_dups_first   # 歷史滿時優先刪除重複項目
+setopt hist_ignore_all_dups     # 忽略所有重複的歷史項目
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt share_history            # 多個終端機共享歷史記錄
+
+# 目錄導航
+setopt auto_cd                  # 直接輸入目錄名稱即可切換
+setopt auto_pushd               # cd 時自動將舊目錄推入堆疊
+setopt pushd_ignore_dups        # 目錄堆疊中不重複儲存
+setopt pushd_minus
+setopt pushd_silent
+
+# 其他便利設定
+setopt no_beep                  # 關閉所有提示音
+setopt interactive_comments     # 允許在互動模式使用 # 註解
+
+# Job 控制設定
+setopt hup
+setopt long_list_jobs
+setopt notify
+
+# Shell 行為設定
+setopt prompt_subst
+
+unsetopt nomatch
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -72,6 +107,31 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# 補全系統進階設定
+zstyle ':completion:*' rehash true                          # 自動偵測新安裝的命令
+zstyle ':completion:*' menu select                          # 啟用互動式選單
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # 大小寫不敏感匹配
+
+# 更完整的補全配置
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*' use-cache on                     # 啟用補全快取
+zstyle ':completion:*' cache-path ~/.zsh/cache          # 快取路徑
+zstyle ':completion:*:match:*' original only            # 精確匹配優先
+zstyle ':completion:*:approximate:*' max-errors 1 numeric  # 容許 1 個拼寫錯誤
+
+# 補全選單美化
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  # 使用 ls 顏色
+zstyle ':completion:*' group-name ''                    # 補全項目分組
+zstyle ':completion:*:descriptions' format '%B%d%b'     # 分組標題格式
+
+# 特定命令的補全優化
+zstyle ':completion:*:cd:*' ignore-parents parent pwd   # cd 時忽略當前目錄
+zstyle ':completion:*:*:kill:*' menu yes select         # kill 命令使用選單
+zstyle ':completion:*:kill:*' force-list always         # 總是顯示程序列表
+
+zstyle :omz:plugins:ssh-agent identities id_rsa_github_personal id_rsa_github_vivotek id_rsa_gitlab_benny
+zstyle :omz:plugins:ssh-agent lifetime 24h
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -86,7 +146,6 @@ plugins=(
   extract
   git
   kubectl
-  poetry
   ssh-agent
   z
   zsh-autosuggestions
@@ -94,8 +153,11 @@ plugins=(
   zsh-syntax-highlighting
 )
 
-zstyle :omz:plugins:ssh-agent identities id_rsa_github_personal id_rsa_github_vivotek id_rsa_gitlab_benny
-zstyle :omz:plugins:ssh-agent lifetime 24h
+autoload -U +X bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 source $ZSH/oh-my-zsh.sh
 
@@ -153,10 +215,10 @@ export PATH=$CARGO_HOME:$PATH
 export ISTIO_HOME=$HOME/Development/istio-1.15.3
 export PATH=$ISTIO_HOME/bin:$PATH
 
-[ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
+# 使用 fd 作為預設命令
+export FZF_DEFAULT_COMMAND="fd --type f"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
 
 # atuojump setup
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
@@ -172,15 +234,15 @@ if [ -x "$HOMEBREW_PREFIX/bin/pyenv" ]; then
 fi
 # >>>> pyenv(python version manager) (end)
 
+# >>>> Kubectl command completion (start)
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+# <<<< Kubectl command completion (end)
+
 # >>>> terraform (start)
 if [ -f "$HOMEBREW_PREFIX/bin/terraform" ]; then
     complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
 fi
 # >>>> terraform (end)
-
-# >>>> Kubectl command completion (start)
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
-# <<<< Kubectl command completion (end)
 
 # >>>> Vagrant command completion (start)
 if [ -f '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.sh' ]; then
@@ -210,8 +272,5 @@ eval "$(fnm env --use-on-cd)"
 
 # thefuch setup
 eval $(thefuck --alias)
-
-autoload -U +X bashcompinit && bashcompinit
-autoload -Uz compinit && compinit
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"

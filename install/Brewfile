@@ -101,16 +101,18 @@ brew "pre-commit"          # pre-commit hook 管理
 # 🛠️ Productivity / Shell utilities
 # ============================================================
 # brew "zoxide"              # 智慧目錄跳轉，比 autojump 更強
-# brew "eza"                 # 現代化 ls，支援 icon、git 狀態
+brew "eza"                   # 現代化 ls，支援 icon、git 狀態
+# brew "lsd"                   # 現代化 ls，支援 icon、git 狀態
 # brew "dust"                # 現代化 du，磁碟用量樹狀顯示
 # brew "procs"               # 現代化 ps
 # brew "gping"               # 視覺化 ping
 # brew "atuin"               # 可搜尋、同步 shell history
+brew "yazi"                  # 終端內顯示圖片
 
 # ============================================================
 # 📚 Documentation / Cheatsheet
 # ============================================================
-# brew "tldr"                # 常用命令簡表
+# brew "tldr"              # 常用命令簡表
 brew "glow"                # 終端內顯示 Markdown
 brew "cheat"               # 可自訂 CLI cheat sheet
 brew "tealdeer"            # tldr 加強版（快取、自動更新）

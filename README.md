@@ -17,3 +17,4 @@
 - [再見了 pip！最佳 Python 套件管理器——Poetry 完全入門指南](https://blog.kyomind.tw/python-poetry/)
 - [medium - 客製我的 CLI](https://spreered.medium.com/客製我的-cli-終於稍微搞懂-iterm-zsh-d3feed27f664)
 - [逐步搭建现代大一统终端](https://zhuanlan.zhihu.com/p/436024560)
+- [The Terminal Way](https://the-terminal-way.netlify.app/)
