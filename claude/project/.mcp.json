@@ -30,10 +30,6 @@
     "sequential-thinking": {
       "command": "docker",
       "args": ["run", "--rm", "-i", "mcp/sequentialthinking"]
-    },
-    "deepwiki": {
-      "command": "npx",
-      "args": ["-y", "mcp-deepwiki@latest"]
     }
   }
 }

@@ -1,3 +1,10 @@
+# OPENSPEC:START
+# OpenSpec shell completions configuration
+fpath=("/Users/bennycheng/.oh-my-zsh/custom/completions" $fpath)
+autoload -Uz compinit
+compinit
+# OPENSPEC:END
+
 export HISTFILE=~/.zsh_history
 export HISTSIZE=200000                 # huge internal buffer
 export SAVEHIST=200000                 # huge history file
@@ -215,6 +222,9 @@ export PATH=$CARGO_HOME:$PATH
 export ISTIO_HOME=$HOME/Development/istio-1.15.3
 export PATH=$ISTIO_HOME/bin:$PATH
 
+# Added by Antigravity
+export PATH="/Users/bennycheng/.antigravity/antigravity/bin:$PATH"
+
 # 使用 fd 作為預設命令
 export FZF_DEFAULT_COMMAND="fd --type f"
 
@@ -273,4 +283,3 @@ eval "$(fnm env --use-on-cd)"
 # thefuch setup
 eval $(thefuck --alias)
 
-[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
