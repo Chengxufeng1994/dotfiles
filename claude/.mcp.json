@@ -19,14 +19,6 @@
       "type": "sse",
       "url": "https://mcp.context7.com/sse"
     },
-    "serena": {
-      "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/oraios/serena",
-        "serena-mcp-server"
-      ]
-    },
     "sequential-thinking": {
       "command": "docker",
       "args": ["run", "--rm", "-i", "mcp/sequentialthinking"]

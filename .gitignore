@@ -1,5 +1,3 @@
-.DS_Store
-
 # Lazy.nvim plugin manager directory
 lazy-lock.json
 
@@ -17,3 +15,29 @@ node_modules/
 
 # Optional: LuaLS metadata
 .lua_ls/
+
+# Claude
+claude/cache/*
+claude/debug/*
+claude/file-history/*
+claude/history.jsonl
+claude/ide/*
+claude/paste-cache/*
+claude/plans/*
+claude/plugins/*
+claude/projects/*
+claude/session-env/*
+claude/shell-snapshots/*
+claude/stats-cache.json
+claude/statsig/*
+claude/telemetry/*
+claude/todos/*
+
+# Gemini
+gemini/antigravity/annotations/*
+gemini/antigravity/code_tracker/*
+gemini/antigravity/conversations/*
+gemini/antigravity/implicit/*
+gemini/antigravity/knowledge/*
+gemini/antigravity/installation_id
+
