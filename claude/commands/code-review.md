@@ -1,16 +1,40 @@
-# 程式碼審查
+# Code Review
 
-## Context
+Comprehensive security and quality review of uncommitted changes:
 
-請對以下程式碼進行全面審查：
-檔案：$FILES
+1. Get changed files: git diff --name-only HEAD
 
-## 審查流程
+2. For each changed file, check for:
 
-1. 程式碼品質
-2. 效能考量
-3. 安全性問題
-4. 最佳實踐遵循
-5. 測試覆蓋率
+**Security Issues (CRITICAL):**
+- Hardcoded credentials, API keys, tokens
+- SQL injection vulnerabilities
+- XSS vulnerabilities  
+- Missing input validation
+- Insecure dependencies
+- Path traversal risks
 
-請提供具體的改進建議。
+**Code Quality (HIGH):**
+- Functions > 50 lines
+- Files > 800 lines
+- Nesting depth > 4 levels
+- Missing error handling
+- console.log statements
+- TODO/FIXME comments
+- Missing JSDoc for public APIs
+
+**Best Practices (MEDIUM):**
+- Mutation patterns (use immutable instead)
+- Emoji usage in code/comments
+- Missing tests for new code
+- Accessibility issues (a11y)
+
+3. Generate report with:
+   - Severity: CRITICAL, HIGH, MEDIUM, LOW
+   - File location and line numbers
+   - Issue description
+   - Suggested fix
+
+4. Block commit if CRITICAL or HIGH issues found
+
+Never approve code with security vulnerabilities!
