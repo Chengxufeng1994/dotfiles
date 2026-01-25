@@ -1,9 +1,6 @@
-# OPENSPEC:START
-# OpenSpec shell completions configuration
-fpath=("/Users/bennycheng/.oh-my-zsh/custom/completions" $fpath)
-autoload -Uz compinit
-compinit
-# OPENSPEC:END
+# Init zsh completions
+autoload -U +X bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
 
 export HISTFILE=~/.zsh_history
 export HISTSIZE=200000                 # huge internal buffer
@@ -15,6 +12,7 @@ setopt inc_append_history       # 每次命令後立即寫入歷史
 setopt extended_history         # 記錄時間戳記和執行時間
 setopt hist_expire_dups_first   # 歷史滿時優先刪除重複項目
 setopt hist_ignore_all_dups     # 忽略所有重複的歷史項目
+setopt hist_reduce_blanks       # 合併多個空格為一個
 setopt hist_ignore_dups
 setopt hist_ignore_space
 setopt share_history            # 多個終端機共享歷史記錄
@@ -40,12 +38,41 @@ setopt prompt_subst
 
 unsetopt nomatch
 
+# 補全系統進階設定
+zstyle ':completion:*' rehash true                          # 自動偵測新安裝的命令
+zstyle ':completion:*' menu select                          # 啟用互動式選單
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# 更完整的補全配置
+zstyle ':completion:*' completer _complete _approximate     # 補全器順序
+zstyle ':completion:*:approximate:*' max-errors 1 numeric   # 容許 1 個拼寫錯誤
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
+zstyle ':completion:*' use-cache on                         # 啟用補全快取
+zstyle ':completion:*' cache-path ~/.zsh/cache              # 快取路徑
+zstyle ':completion:*:match:*' original only                # 精確匹配優先
+
+# 補全選單美化
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01' # 使用 ls 顏色
+zstyle ':completion:*' group-name ''                    # 補全項目分組
+zstyle ':completion:*:descriptions' format '%B%d%b'     # 分組標題格式
+
+# 特定命令的補全優化
+zstyle ':completion:*:cd:*' ignore-parents parent pwd   # cd 時忽略當前目錄
+zstyle ':completion:*:*:kill:*' menu yes select         # kill 命令使用選單
+zstyle ':completion:*:kill:*' force-list always         # 總是顯示程序列表
+
+zstyle :omz:plugins:ssh-agent identities id_rsa_github_personal id_rsa_github_vivotek id_rsa_gitlab_benny
+zstyle :omz:plugins:ssh-agent lifetime 24h
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -114,30 +141,15 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# 補全系統進階設定
-zstyle ':completion:*' rehash true                          # 自動偵測新安裝的命令
-zstyle ':completion:*' menu select                          # 啟用互動式選單
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # 大小寫不敏感匹配
+# zsh-autosuggestions settings
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=30'
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
-# 更完整的補全配置
-zstyle ':completion:*' completer _complete _match _approximate
-zstyle ':completion:*' use-cache on                     # 啟用補全快取
-zstyle ':completion:*' cache-path ~/.zsh/cache          # 快取路徑
-zstyle ':completion:*:match:*' original only            # 精確匹配優先
-zstyle ':completion:*:approximate:*' max-errors 1 numeric  # 容許 1 個拼寫錯誤
-
-# 補全選單美化
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}  # 使用 ls 顏色
-zstyle ':completion:*' group-name ''                    # 補全項目分組
-zstyle ':completion:*:descriptions' format '%B%d%b'     # 分組標題格式
-
-# 特定命令的補全優化
-zstyle ':completion:*:cd:*' ignore-parents parent pwd   # cd 時忽略當前目錄
-zstyle ':completion:*:*:kill:*' menu yes select         # kill 命令使用選單
-zstyle ':completion:*:kill:*' force-list always         # 總是顯示程序列表
-
-zstyle :omz:plugins:ssh-agent identities id_rsa_github_personal id_rsa_github_vivotek id_rsa_gitlab_benny
-zstyle :omz:plugins:ssh-agent lifetime 24h
+# you-should-use settings
+export YSU_MESSAGE_POSITION="after"
+export YSU_MODE=ALL
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -151,6 +163,7 @@ plugins=(
   docker
   docker-compose
   extract
+  fnm
   git
   kubectl
   ssh-agent
@@ -158,13 +171,9 @@ plugins=(
   zsh-autosuggestions
   zsh-history-substring-search
   zsh-syntax-highlighting
+  you-should-use
+  web-search
 )
-
-autoload -U +X bashcompinit && bashcompinit
-autoload -Uz compinit && compinit
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 source $ZSH/oh-my-zsh.sh
 
@@ -194,47 +203,44 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Easy way to check for command_existing in shell scripts
-command_exists () {
-  command -v "$1" >/dev/null 2>&1
-}
-
-# zsh plugins
-# zsh-history-substring-search
+# keybindings
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk/Contents/Home
-export MAVEN_HOME=$HOME/Development/apache-maven-3.8.5
-export PATH=$MAVEN_HOME/bin:$PATH
+# Easy way to check for command_existing in shell scripts
+command_exists () {
+  command -v "$1" >/dev/null 2>&1
+}
 
-export POETRY_HOME=$HOME/.local
-export PATH="$POETRY_HOME/bin:$PATH"
-
+# Go Path
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 
+# Rust Path
 export CARGO_HOME=$HOME/.cargo/bin
 export PATH=$CARGO_HOME:$PATH
 
-export ISTIO_HOME=$HOME/Development/istio-1.15.3
-export PATH=$ISTIO_HOME/bin:$PATH
-
-# Added by Antigravity
+# Antigravity Path
 export PATH="/Users/bennycheng/.antigravity/antigravity/bin:$PATH"
-
-# 使用 fd 作為預設命令
-export FZF_DEFAULT_COMMAND="fd --type f"
-
-[ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
 
 # atuojump setup
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # fzf setup
+if type fd &> /dev/null; then
+    export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
+fi
 [[ -s $(brew --prefix)/bin/fzf ]] && source <($(brew --prefix)/bin/fzf --zsh)
+
+# fnm setup
+eval "$(fnm env --use-on-cd)"
+
+# thefuch setup
+eval $(thefuck --alias)
 
 # >>>> pyenv(python version manager) (start)
 if [ -x "$HOMEBREW_PREFIX/bin/pyenv" ]; then
@@ -248,11 +254,11 @@ fi
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 # <<<< Kubectl command completion (end)
 
-# >>>> terraform (start)
+# >>>> Terraform (start)
 if [ -f "$HOMEBREW_PREFIX/bin/terraform" ]; then
     complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
 fi
-# >>>> terraform (end)
+# >>>> Terraform (end)
 
 # >>>> Vagrant command completion (start)
 if [ -f '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.sh' ]; then
@@ -274,12 +280,6 @@ if [ -f "$HOME/Development/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Devel
 if [ -f "$HOME/Development/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Development/google-cloud-sdk/completion.zsh.inc"; fi
 # >>>> GCP command completion (end)
 
-# starship setup
-# eval "$(starship init zsh)"
-
-# fnm setup
-eval "$(fnm env --use-on-cd)"
-
-# thefuch setup
-eval $(thefuck --alias)
+# Aliases
+[ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
 

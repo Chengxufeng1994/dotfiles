@@ -115,9 +115,12 @@ alias krh="kubectl rollout history"
 alias krs="kubectl rollout status -w"
 alias krr="kubectl rollout restart"
 
+alias kc="kubectl config"
 alias kcv="kubectl config view"            # show Merged kubeconfig settings.
 alias kcc="kubectl config current-context" # display the current context
 alias kcgc="kubectl config get-contexts"   # display list of contexts.
+alias kcuc="kubectl config use-context"    # set the current-context
+alias kcdc='kubectl config delete-context' # delete context
 
 # short alias to set/show context/namespace (only works for bash and bash-compatible shells, current context to be set before using kn to set namespace)
 alias kx='f() { [ "$1" ] && kubectl config use-context $1 || kubectl config current-context ; } ; f'
