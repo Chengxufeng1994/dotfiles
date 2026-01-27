@@ -6,15 +6,19 @@
   brD = branch -D
   merged = branch --merged
   ca = commit -a
+  cf = commit --fixup
   ci = commit -a -v
   cm = commit -m
   amd = commit --amend --no-edit
+	clean = clean -fd
+	nuke = clean -fdn
   co = checkout
   cob = checkout -b
   d = diff
+  s = status -s
   st = status
   pu = push
-  l = log --oneline
+  l = log --oneline --graph -n 20 --abbrev-commit
   lo = log --oneline --graph --decorate
   ll = log --pretty=format:'%h %ad | %s%d [%Cgreen%an%Creset]' --graph --date=short
   ; lg = log --pretty=format:'%Cred%h%Cre %ad |%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --graph --abbrev-commit --date=short
@@ -22,6 +26,7 @@
   alg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --color --graph --all --
   hist = log --pretty=format:\"%Cgreen%h %Creset%cd %Cblue[%cn] %Creset%s%C(yellow)%d%C(reset)\" --graph --date=relative --decorate --all
   llog = log --graph --name-status --pretty=format:\"%C(red)%h %C(reset)(%cd) %C(green)%an %Creset%s %C(yellow)%d%Creset\" --date=relative
+  wip = !git add -A && git commit -m 'WIP'
   # Go to root of git repo.
   grt = "!cd $(git rev-parse --show-toplevel)"
   # Sync local and remote commits.
@@ -32,24 +37,69 @@
   sync-all = "!git pull --rebase && git push --progress && git push --tags"
   type = cat-file -t
   dump = cat-file -p
+
+[apply]
+
+	# Detect whitespace errors when applying a patch.
+	whitespace = fix
+
+[branch]
+
+	# Show most recently changed branches first.
+	sort = -committerdate
+
+[core]
+  pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    dark = true      # or light = true, or omit for auto-detection
+
+[merge]
+    conflictStyle = zdiff3
+
 [color]
+	# Use colors in Git commands that are capable of colored output when
+	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
+  branch = auto
   diff = auto
+  grep = auto
+  interactive = auto
   status = auto
   ui = true
+
+[color "status"]
+    added = green bold
+    changed = yellow bold
+    untracked = red bold
+
 [commit]
 	cleanup = strip
-  template = ~/.gitmessage.txt
+  template = ~/.git-commit-message
+
 [init]
   defaultBranch = main
+
 [merge]
   log = true
+
 [user]
   name = Benny Cheng
   email = benny12628@gmail.com
   username = benny.cheng
+
 [diff]
   tool = vscode
+  mnemonicPrefix = true
+  algorithm = histogram  # 更好的 diff 比對算法
+  colorMoved = default
+  colorMovedWS = allow-indentation-change
+
 [difftool "vscode"]
   cmd = code --wait --diff $LOCAL $REMOTE
+
 [difftool]
   prompt = false

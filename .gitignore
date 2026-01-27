@@ -30,6 +30,7 @@ claude/session-env/*
 claude/shell-snapshots/*
 claude/stats-cache.json
 claude/statsig/*
+claude/tasks/*
 claude/telemetry/*
 claude/todos/*
 

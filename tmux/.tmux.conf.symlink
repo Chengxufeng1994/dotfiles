@@ -1,19 +1,22 @@
 # Add binding to reload tmux.conf for fast, iterative development
-bind r source-file ~/.tmux.conf \; display "~/.tmux.conf reloaded!"
+bind r source-file ~/.tmux.conf \; display "~/.tmux.conf reloaded!🦎"
 
 
-# -- display -------------------------------------------------------------------
+# -- general -------------------------------------------------------------------
 
 # tst-keys -t vi-copyell tmux to use 256 colour terminal
 set -g default-terminal "screen-256color"
-set -as terminal-features ",xterm-256color:RGB"
 
-# xterm-style function key sequences
-setw -g xterm-keys on
+## Pass through terminal environment variables for image support (WezTerm, iTerm2, Kitty)
+set -g update-environment "TERM_PROGRAM TERM_PROGRAM_VERSION"
+
+# -- display -------------------------------------------------------------------
 
 # control automatic window renaming
-setw -g automatic-rename off
-set-option -g allow-rename off
+# setw -g automatic-rename off
+# set-option -g allow-rename off
+set-option -g automatic-rename on
+set-option -g automatic-rename-format '#{b:pane_current_path}'
 
 # enable mouse
 set-option -g mouse on
@@ -27,6 +30,7 @@ set -g escape-time 0
 # numbering windows and panes
 set -g base-index 1
 setw -g pane-base-index 1
+
 # renumber windows sequentially after closing
 set -g renumber-windows on
 
@@ -58,6 +62,9 @@ bind-key - split-window -v -c '#{pane_current_path}'
 bind-key = select-layout even-vertical
 bind-key _ select-layout even-horizontal
 
+# Open new panes and splits in the same working directory.
+bind c new-window -c "#{pane_current_path}"
+
 # <prefix> or Ctrl- or <prefix> Ctrl-
 #   k --- previous pane
 # h   l --- previous window / next window
@@ -71,9 +78,6 @@ bind -r k select-pane -U  # move up
 bind -r l select-pane -R  # move right
 bind > swap-pane -D       # swap current pane with the next one
 bind < swap-pane -U       # swap current pane with the previous one
-
-# Open new panes and splits in the same working directory.
-bind c new-window -c "#{pane_current_path}"
 
 # move the split line (resize pane)
 # <prefix> shift-
@@ -93,6 +97,7 @@ unbind p
 # bind -r p previous-window
 bind -n M-h previous-window
 bind -n M-l next-window
+bind Tab last-window                                    # move to last active window
 
 bind -r ( switch-client -p
 bind -r ) switch-client -n
@@ -109,13 +114,15 @@ bind v copy-mode \; set mouse off
 
 # select and copy like vi in vi-mode
 bind -T copy-mode-vi v send -X begin-selection
-bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
-bind -T copy-mode-vi C-v send -X rectangle-toggle \; send -X begin-selection
-bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
+bind -T copy-mode-vi C-v send -X rectangle-toggle
+bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel
+bind -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel 
 bind -T copy-mode-vi q send -X cancel \; set mouse on
 bind -T copy-mode-vi Escape send -X cancel \; set mouse on
 
-# buffers
+# 
+# --  buffers  -------------------------------------------------------------------
+#
 bind b list-buffers     # list paste buffers
 bind ] paste-buffer
 bind p paste-buffer -p  # paste from the top paste buffer
