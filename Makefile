@@ -55,10 +55,10 @@ install-p10k: install-ohmyzsh
 	@sed -i.bak 's/^ZSH_THEME=.*/ZSH_THEME="powerlevel10k\/powerlevel10k"/' $$HOME/.zshrc || true
 
 brew-packages: install-brew
-	@brew bundle --file=$(DOTFILES_DIR)/install/Brewfile || true
+	@brew bundle --file=$(DOTFILES_DIR)/brewfile/Brewfile || true
 
 cask-apps: install-brew
-	@brew bundle --file=$(DOTFILES_DIR)/install/Caskfile || true
+	@brew bundle --file=$(DOTFILES_DIR)/brewfile/Caskfile || true
 
 npm: brew-packages
 	@fnm install --lts
