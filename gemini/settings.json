@@ -14,7 +14,12 @@
     },
     "fetch": {
       "command": "docker",
-      "args": ["run", "-i", "--rm", "mcp/fetch"]
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/fetch"
+      ]
     },
     "context7": {
       "httpUrl": "https://mcp.context7.com/mcp"
@@ -29,11 +34,24 @@
     },
     "sequentialthinking": {
       "command": "docker",
-      "args": ["run", "--rm", "-i", "mcp/sequentialthinking"]
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "mcp/sequentialthinking"
+      ]
     },
     "deepwiki": {
       "command": "npx",
-      "args": ["-y", "mcp-deepwiki@latest"]
+      "args": [
+        "-y",
+        "mcp-deepwiki@latest"
+      ]
+    }
+  },
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
     }
   }
 }
