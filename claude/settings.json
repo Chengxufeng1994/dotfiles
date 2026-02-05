@@ -17,13 +17,29 @@
     "type": "command",
     "command": "node \"/Users/bennycheng/.claude/hooks/gsd-statusline.js\""
   },
+  "extraKnownMarketplaces": {
+    "everything-claude-code": {
+      "source": {
+        "source": "github",
+        "repo": "affaan-m/everything-claude-code"
+      }
+    },
+    "superpowers-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": " obra/superpowers-marketplace"
+      }
+    }
+  },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
     "ralph-loop@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
-    "playground@claude-plugins-official": true
+    "playground@claude-plugins-official": true,
+    "everything-claude-code@everything-claude-code": true,
+    "superpowers@superpowers-marketplace": true
   },
   "feedbackSurveyState": {
     "lastShownTime": 1754086595077
