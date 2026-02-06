@@ -1,6 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
@@ -17,6 +16,16 @@
     "type": "command",
     "command": "node \"/Users/bennycheng/.claude/hooks/gsd-statusline.js\""
   },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "playground@claude-plugins-official": true,
+    "everything-claude-code@everything-claude-code": true,
+    "superpowers@superpowers-marketplace": true
+  },
   "extraKnownMarketplaces": {
     "everything-claude-code": {
       "source": {
@@ -31,17 +40,8 @@
       }
     }
   },
-  "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "playground@claude-plugins-official": true,
-    "everything-claude-code@everything-claude-code": true,
-    "superpowers@superpowers-marketplace": true
-  },
   "feedbackSurveyState": {
     "lastShownTime": 1754086595077
-  }
+  },
+  "effortLevel": "low"
 }

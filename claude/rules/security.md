@@ -1,36 +1,28 @@
-# Security Guidelines
+# Go Security
 
-## Mandatory Security Checks
-
-Before ANY commit:
-- [ ] No hardcoded secrets (API keys, passwords, tokens)
-- [ ] All user inputs validated
-- [ ] SQL injection prevention (parameterized queries)
-- [ ] XSS prevention (sanitized HTML)
-- [ ] CSRF protection enabled
-- [ ] Authentication/authorization verified
-- [ ] Rate limiting on all endpoints
-- [ ] Error messages don't leak sensitive data
+> This file extends [common/security.md](../common/security.md) with Go specific content.
 
 ## Secret Management
 
-```typescript
-// NEVER: Hardcoded secrets
-const apiKey = "sk-proj-xxxxx"
-
-// ALWAYS: Environment variables
-const apiKey = process.env.OPENAI_API_KEY
-
-if (!apiKey) {
-  throw new Error('OPENAI_API_KEY not configured')
+```go
+apiKey := os.Getenv("OPENAI_API_KEY")
+if apiKey == "" {
+    log.Fatal("OPENAI_API_KEY not configured")
 }
 ```
 
-## Security Response Protocol
+## Security Scanning
 
-If security issue found:
-1. STOP immediately
-2. Use **security-reviewer** agent
-3. Fix CRITICAL issues before continuing
-4. Rotate any exposed secrets
-5. Review entire codebase for similar issues
+- Use **gosec** for static security analysis:
+  ```bash
+  gosec ./...
+  ```
+
+## Context & Timeouts
+
+Always use `context.Context` for timeout control:
+
+```go
+ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+defer cancel()
+```

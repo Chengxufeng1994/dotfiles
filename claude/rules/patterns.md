@@ -1,55 +1,39 @@
-# Common Patterns
+# Go Patterns
 
-## API Response Format
+> This file extends [common/patterns.md](../common/patterns.md) with Go specific content.
 
-```typescript
-interface ApiResponse<T> {
-  success: boolean
-  data?: T
-  error?: string
-  meta?: {
-    total: number
-    page: number
-    limit: number
-  }
+## Functional Options
+
+```go
+type Option func(*Server)
+
+func WithPort(port int) Option {
+    return func(s *Server) { s.port = port }
+}
+
+func NewServer(opts ...Option) *Server {
+    s := &Server{port: 8080}
+    for _, opt := range opts {
+        opt(s)
+    }
+    return s
 }
 ```
 
-## Custom Hooks Pattern
+## Small Interfaces
 
-```typescript
-export function useDebounce<T>(value: T, delay: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value)
+Define interfaces where they are used, not where they are implemented.
 
-  useEffect(() => {
-    const handler = setTimeout(() => setDebouncedValue(value), delay)
-    return () => clearTimeout(handler)
-  }, [value, delay])
+## Dependency Injection
 
-  return debouncedValue
+Use constructor functions to inject dependencies:
+
+```go
+func NewUserService(repo UserRepository, logger Logger) *UserService {
+    return &UserService{repo: repo, logger: logger}
 }
 ```
 
-## Repository Pattern
+## Reference
 
-```typescript
-interface Repository<T> {
-  findAll(filters?: Filters): Promise<T[]>
-  findById(id: string): Promise<T | null>
-  create(data: CreateDto): Promise<T>
-  update(id: string, data: UpdateDto): Promise<T>
-  delete(id: string): Promise<void>
-}
-```
-
-## Skeleton Projects
-
-When implementing new functionality:
-1. Search for battle-tested skeleton projects
-2. Use parallel agents to evaluate options:
-   - Security assessment
-   - Extensibility analysis
-   - Relevance scoring
-   - Implementation planning
-3. Clone best match as foundation
-4. Iterate within proven structure
+See skill: `golang-patterns` for comprehensive Go patterns including concurrency, error handling, and package organization.
