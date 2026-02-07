@@ -43,5 +43,6 @@
   "feedbackSurveyState": {
     "lastShownTime": 1754086595077
   },
-  "effortLevel": "low"
+  "effortLevel": "low",
+  "model": "sonnet"
 }

@@ -221,6 +221,7 @@ export PATH=$GOPATH/bin:$PATH
 # Rust Path
 export CARGO_HOME=$HOME/.cargo/bin
 export PATH=$CARGO_HOME:$PATH
+export PATH="$CARGO_HOME/bin:$PATH"
 
 # Antigravity Path
 export PATH="/Users/bennycheng/.antigravity/antigravity/bin:$PATH"
