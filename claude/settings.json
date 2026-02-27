@@ -33,7 +33,9 @@
     "code-simplifier@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "playground@claude-plugins-official": true,
-    "everything-claude-code@everything-claude-code": true
+    "everything-claude-code@everything-claude-code": true,
+    "security-guidance@claude-plugins-official": true,
+    "context7@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "everything-claude-code": {
@@ -47,8 +49,16 @@
         "source": "github",
         "repo": " obra/superpowers-marketplace"
       }
+    },
+    "Mixedbread-Grep": {
+      "source": {
+        "source": "github",
+        "repo": "mixedbread-ai/mgrep"
+      }
     }
   },
+  "autoMemoryEnabled": true,
+  "skipDangerousModePermissionPrompt": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754086595077
   },
