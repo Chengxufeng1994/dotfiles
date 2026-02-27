@@ -17,6 +17,7 @@ node_modules/
 .lua_ls/
 
 # Claude
+claude/backups/*
 claude/cache/*
 claude/debug/*
 claude/file-history/*
@@ -35,6 +36,7 @@ claude/tasks/*
 claude/telemetry/*
 claude/todos/*
 claude/.credentials.json
+claude/mcp-needs-auth-cache.json
 
 # Gemini
 gemini/tmp/*
