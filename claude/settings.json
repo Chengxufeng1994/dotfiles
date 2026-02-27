@@ -33,8 +33,7 @@
     "code-simplifier@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "playground@claude-plugins-official": true,
-    "everything-claude-code@everything-claude-code": true,
-    "superpowers@superpowers-marketplace": true
+    "everything-claude-code@everything-claude-code": true
   },
   "extraKnownMarketplaces": {
     "everything-claude-code": {
