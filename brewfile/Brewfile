@@ -102,7 +102,7 @@ brew "pre-commit"          # pre-commit hook 管理
 # ============================================================
 # brew "zoxide"              # 智慧目錄跳轉，比 autojump 更強
 brew "eza"                   # 現代化 ls，支援 icon、git 狀態
-# brew "lsd"                   # 現代化 ls，支援 icon、git 狀態
+# brew "lsd"                 # 現代化 ls，支援 icon、git 狀態
 # brew "dust"                # 現代化 du，磁碟用量樹狀顯示
 # brew "procs"               # 現代化 ps
 # brew "gping"               # 視覺化 ping
@@ -124,3 +124,9 @@ brew "btop"                # 系統資源監控，比 glances 快
 brew "glances"             # 系統監控 (可替換為 btop)
 brew "fd"                  # find 的現代化替代
 brew "watch"               # 重複執行命令觀察輸出
+
+# ============================================================
+# LLM / AI Tools
+# ============================================================
+tap "AlexsJones/llmfit"
+brew "llmfit"              # LLM CLI 工具，支援多種模型（GPT-4, Claude, Gemini...）
