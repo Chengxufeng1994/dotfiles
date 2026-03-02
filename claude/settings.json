@@ -35,7 +35,10 @@
     "playground@claude-plugins-official": true,
     "everything-claude-code@everything-claude-code": true,
     "security-guidance@claude-plugins-official": true,
-    "context7@claude-plugins-official": true
+    "context7@claude-plugins-official": true,
+    "mgrep@Mixedbread-Grep": true,
+    "security-guidance@claude-code-plugins": true,
+    "explanatory-output-style@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "everything-claude-code": {
