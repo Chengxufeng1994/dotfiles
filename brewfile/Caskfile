@@ -1,8 +1,10 @@
 cask "font-fira-code"
 cask "font-meslo-lg-nerd-font"
 
+cask "antigravity"
 cask "google-chrome"
 cask "iterm2"
+cask "ghostty"
 cask "obsidian"
 cask "postman"
 cask "spotify"
