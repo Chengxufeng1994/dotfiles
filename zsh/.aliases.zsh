@@ -135,3 +135,9 @@ alias kn='f() { [ "$1" ] && kubectl config set-context --current --namespace $1 
 
 alias kctx="kubectx"
 alias kns="kubens"
+
+#
+# Claude
+#
+alias c="claude"
+alias cc="claude --dangerously-skip-permissions"
