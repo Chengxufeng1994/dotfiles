@@ -3,30 +3,30 @@ autoload -U +X bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 
 export HISTFILE=~/.zsh_history
-export HISTSIZE=200000                 # huge internal buffer
-export SAVEHIST=200000                 # huge history file
+export HISTSIZE=200000 # huge internal buffer
+export SAVEHIST=200000 # huge history file
 
 # 歷史記錄設定
-setopt append_history           # 將歷史追加到檔案而非覆蓋
-setopt inc_append_history       # 每次命令後立即寫入歷史
-setopt extended_history         # 記錄時間戳記和執行時間
-setopt hist_expire_dups_first   # 歷史滿時優先刪除重複項目
-setopt hist_ignore_all_dups     # 忽略所有重複的歷史項目
-setopt hist_reduce_blanks       # 合併多個空格為一個
+setopt append_history         # 將歷史追加到檔案而非覆蓋
+setopt inc_append_history     # 每次命令後立即寫入歷史
+setopt extended_history       # 記錄時間戳記和執行時間
+setopt hist_expire_dups_first # 歷史滿時優先刪除重複項目
+setopt hist_ignore_all_dups   # 忽略所有重複的歷史項目
+setopt hist_reduce_blanks     # 合併多個空格為一個
 setopt hist_ignore_dups
 setopt hist_ignore_space
-setopt share_history            # 多個終端機共享歷史記錄
+setopt share_history # 多個終端機共享歷史記錄
 
 # 目錄導航
-setopt auto_cd                  # 直接輸入目錄名稱即可切換
-setopt auto_pushd               # cd 時自動將舊目錄推入堆疊
-setopt pushd_ignore_dups        # 目錄堆疊中不重複儲存
+setopt auto_cd           # 直接輸入目錄名稱即可切換
+setopt auto_pushd        # cd 時自動將舊目錄推入堆疊
+setopt pushd_ignore_dups # 目錄堆疊中不重複儲存
 setopt pushd_minus
 setopt pushd_silent
 
 # 其他便利設定
-setopt no_beep                  # 關閉所有提示音
-setopt interactive_comments     # 允許在互動模式使用 # 註解
+setopt no_beep              # 關閉所有提示音
+setopt interactive_comments # 允許在互動模式使用 # 註解
 
 # Job 控制設定
 setopt hup
@@ -39,40 +39,30 @@ setopt prompt_subst
 unsetopt nomatch
 
 # 補全系統進階設定
-zstyle ':completion:*' rehash true                          # 自動偵測新安裝的命令
-zstyle ':completion:*' menu select                          # 啟用互動式選單
+zstyle ':completion:*' rehash true # 自動偵測新安裝的命令
+zstyle ':completion:*' menu select # 啟用互動式選單
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 # 更完整的補全配置
-zstyle ':completion:*' completer _complete _approximate     # 補全器順序
-zstyle ':completion:*:approximate:*' max-errors 1 numeric   # 容許 1 個拼寫錯誤
+zstyle ':completion:*' completer _complete _approximate   # 補全器順序
+zstyle ':completion:*:approximate:*' max-errors 1 numeric # 容許 1 個拼寫錯誤
 zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
-zstyle ':completion:*' use-cache on                         # 啟用補全快取
-zstyle ':completion:*' cache-path ~/.zsh/cache              # 快取路徑
-zstyle ':completion:*:match:*' original only                # 精確匹配優先
+zstyle ':completion:*' use-cache on            # 啟用補全快取
+zstyle ':completion:*' cache-path ~/.zsh/cache # 快取路徑
+zstyle ':completion:*:match:*' original only   # 精確匹配優先
 
 # 補全選單美化
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01' # 使用 ls 顏色
-zstyle ':completion:*' group-name ''                    # 補全項目分組
-zstyle ':completion:*:descriptions' format '%B%d%b'     # 分組標題格式
+zstyle ':completion:*' group-name ''                                                             # 補全項目分組
+zstyle ':completion:*:descriptions' format '%B%d%b'                                              # 分組標題格式
 
 # 特定命令的補全優化
-zstyle ':completion:*:cd:*' ignore-parents parent pwd   # cd 時忽略當前目錄
-zstyle ':completion:*:*:kill:*' menu yes select         # kill 命令使用選單
-zstyle ':completion:*:kill:*' force-list always         # 總是顯示程序列表
+zstyle ':completion:*:cd:*' ignore-parents parent pwd # cd 時忽略當前目錄
+zstyle ':completion:*:*:kill:*' menu yes select       # kill 命令使用選單
+zstyle ':completion:*:kill:*' force-list always       # 總是顯示程序列表
 
 zstyle :omz:plugins:ssh-agent identities id_rsa_github_personal id_rsa_github_vivotek id_rsa_gitlab_benny
 zstyle :omz:plugins:ssh-agent lifetime 24h
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -84,7 +74,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME=""
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -210,7 +200,7 @@ bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 
 # Easy way to check for command_existing in shell scripts
-command_exists () {
+command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
 
@@ -230,10 +220,10 @@ export PATH="/Users/bennycheng/.antigravity/antigravity/bin:$PATH"
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
 # fzf setup
-if type fd &> /dev/null; then
-    export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-    export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
+if type fd &>/dev/null; then
+  export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 fi
 [[ -s $(brew --prefix)/bin/fzf ]] && source <($(brew --prefix)/bin/fzf --zsh)
 
@@ -243,11 +233,14 @@ eval "$(fnm env --use-on-cd)"
 # thefuch setup
 eval $(thefuck --alias)
 
+# oh-my-posh setup
+eval "$(oh-my-posh init zsh --config ~/oh-my-posh/.oh-my-posh.omp.json)"
+
 # >>>> pyenv(python version manager) (start)
 if [ -x "$HOMEBREW_PREFIX/bin/pyenv" ]; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init - zsh)"
+  export PYENV_ROOT="$HOME/.pyenv"
+  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init - zsh)"
 fi
 # >>>> pyenv(python version manager) (end)
 
@@ -257,19 +250,19 @@ fi
 
 # >>>> Terraform (start)
 if [ -f "$HOMEBREW_PREFIX/bin/terraform" ]; then
-    complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+  complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
 fi
 # >>>> Terraform (end)
 
 # >>>> Vagrant command completion (start)
 if [ -f '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.sh' ]; then
-    . '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.sh';
+  . '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.sh'
 fi
 # <<<<  Vagrant command completion (end)
 
 # >>>> AWS command completion (start)
 if [ -f '/usr/local/bin/aws_completer' ]; then
-    complete -C  '/usr/local/bin/aws_completer' aws;
+  complete -C '/usr/local/bin/aws_completer' aws
 fi
 # >>>> AWS command completion (end)
 
@@ -283,4 +276,3 @@ if [ -f "$HOME/Development/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME
 
 # Aliases
 [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
-

@@ -24,7 +24,7 @@ brew "ctags"               # 產生程式碼索引標籤
 # ============================================================
 brew "oven-sh/bun/bun"    # bun 工具包管理
 brew "fnm"                 # Node.js 版本管理
-brew "go"                  # Golang
+# brew "go"                  # Golang
 brew "pyenv"               # Python 版本管理
 brew "pipx"                # 安裝/隔離 Python CLI 工具
 brew "uv"                  # Python 套件管理（pip 替代方案）
@@ -34,6 +34,7 @@ brew "mise"                # 統一管理 runtime（pyenv, fnm, go 等）
 # ============================================================
 # 💻 Terminal / Shell
 # ============================================================
+brew "jandedobbeleer/oh-my-posh/oh-my-posh"
 # brew "zellij"
 brew "tmux"                # 多窗格終端
 brew "tmux-mem-cpu-load"   # 顯示系統負載的 tmux 插件

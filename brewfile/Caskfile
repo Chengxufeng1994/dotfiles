@@ -1,5 +1,6 @@
 cask "font-fira-code"
 cask "font-meslo-lg-nerd-font"
+cask "font-fira-code-nerd-font"
 
 cask "antigravity"
 cask "google-chrome"
