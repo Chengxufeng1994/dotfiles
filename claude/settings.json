@@ -17,7 +17,9 @@
     "explanatory-output-style@claude-plugins-official": true,
     "superpowers@superpowers-marketplace": true,
     "mgrep@Mixedbread-Grep": true,
-    "obsidian@obsidian-skills": true
+    "obsidian@obsidian-skills": true,
+    "skill-creator@claude-plugins-official": true,
+    "figma@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
