@@ -47,13 +47,13 @@ if git rev-parse --git-dir >/dev/null 2>&1; then
   [ "$MODIFIED" -gt 0 ] && GIT_STATUS="${GIT_STATUS}${YELLOW}~${MODIFIED}${RESET}"
 fi
 
-DISPLAY="${CYAN}[$MODEL]${RESET} 📁 ${DIR##*/}"
+DISPLAY="🤖 ${CYAN}[$MODEL]${RESET} | 📁 ${DIR##*/}"
 if [ -n "$BRANCH" ]; then
   DISPLAY+=" | 🌿 $BRANCH $GIT_STATUS"
 fi
 
-DISPLAY+=" | ${BAR_COLOR}${BAR}${RESET} ${PCT}%"
-DISPLAY+=" | ${YELLOW}${COST_FMT}${RESET} | ⏱️ ${MINS}m ${SECS}s"
+DISPLAY+="\n🧠 ${BAR_COLOR}${BAR}${RESET} ${PCT}%"
+DISPLAY+=" | 💰 ${YELLOW}${COST_FMT}${RESET} | ⏱️ ${MINS}m ${SECS}s"
 DISPLAY+=" | ${LIGHT_GREY}${DATETIME}${RESET}"
 
 echo -e "$DISPLAY"

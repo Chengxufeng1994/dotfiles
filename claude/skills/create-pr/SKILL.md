@@ -1,185 +1,117 @@
 ---
 name: create-pr
-description: Creates GitHub pull requests with properly formatted titles. Use when creating PRs, submitting changes for review, or when the user says /pr or asks to create a pull request.
+description: Creates GitHub pull requests with properly formatted conventional commits titles and focused descriptions. Use this skill whenever the user says /pr, "create a PR", "open a pull request", "submit for review", "push for review", or when they've just finished committing changes and want to get them reviewed. Trigger even if they just say "submit" or "push" in a coding context — they likely want a PR.
 allowed-tools: Bash(git:*), Bash(gh:*), Read, Grep, Glob
 ---
 
 # Create Pull Request
 
-Create GitHub pull requests with properly formatted titles and detailed descriptions.
+Create a GitHub pull request with a properly formatted title and a clear, focused description.
 
-## Steps
+## Step 1: Gather context
 
-### 1. **Check current state**:
-
-To get the latest staged changes and understand the context of your modifications.
+Run these in parallel:
 
 ```bash
-git status
-git diff --stat
-git log origin/master..HEAD --oneline
+# What's the default base branch?
+gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name'
+
+# What commits will be in the PR?
+git log $(git rev-parse --abbrev-ref HEAD) --not $(git for-each-ref --format='%(refname:short)' refs/remotes/origin/ | grep -v HEAD) --oneline 2>/dev/null | head -20
+
+# Is the branch pushed to remote?
+git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "not-pushed"
 ```
 
-Ensure:
+## Step 2: Analyze all changes
 
-- All changes are committed
-- Branch is up to date with remote
-- Changes are rebased on main if needed
-
-### 2. **Analyze changes** to determine:
-
-Review what will be included in the PR:
+Read the full diff — not just the latest commit, but everything that will land in the PR:
 
 ```bash
-# See all commits that will be in the PR
-git log main..HEAD
-
-# See the full diff
-git diff main...HEAD
+BASE=$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')
+git log $BASE..HEAD --format="%h %s"
+git diff $BASE...HEAD
 ```
 
-Understand the scope and purpose of all changes before writing the description.
+Understand:
 
-- Type: What kind of change is this?
-- Scope: Which package/area is affected?
-- Summary: What does the change do?
+- **What** changed (the diff shows this)
+- **Why** these changes were made (this is what the PR description should explain)
+- **Scope**: which area or package is primarily affected
 
-### 3. **Write the PR Description**
+## Step 3: Push if needed
 
-Follow this structure:
+If the branch isn't tracking a remote yet:
+
+```bash
+git push -u origin HEAD
+```
+
+## Step 4: Create the PR
+
+### Title format
+
+```
+<type>(<scope>): <Summary starting with capital letter, no trailing period>
+```
+
+| Type       | When to use                         |
+| ---------- | ----------------------------------- |
+| `feat`     | New feature                         |
+| `fix`      | Bug fix                             |
+| `perf`     | Performance improvement             |
+| `refactor` | Code change with no behavior change |
+| `test`     | Adding or fixing tests              |
+| `docs`     | Documentation only                  |
+| `chore`    | Maintenance, dependencies, tooling  |
+| `ci`       | CI/CD configuration                 |
+| `build`    | Build system changes                |
+
+For breaking changes, add `!` before the colon: `feat(api)!: Remove deprecated endpoints`
+
+**Validation:** `^(feat|fix|perf|test|docs|refactor|build|ci|chore|revert)(\([a-zA-Z0-9 ]+\))?!?: [A-Z].+[^.]$`
+
+### Body format
 
 ```markdown
-<brief description of what the PR does>
+## Summary
 
-<why these changes are being made - the motivation>
+<One or two sentences: what this PR does and why.>
 
-<alternative approaches considered, if any>
+## Changes
 
-<any additional context reviewers need>
+- <What changed and why — group by concern if there are many>
+- ...
+
+## Notes
+
+<Optional: anything reviewers should pay special attention to, tricky trade-offs, or context not obvious from the code. Omit this section entirely if there's nothing to flag.>
 ```
 
-**Do NOT include:**
+**Keep it lean:**
 
-- "Test plan" sections
-- Checkbox lists of testing steps
-- Redundant summaries of the diff
+- Focus on the _why_ — the diff already shows the _what_
+- No test plan sections or checkbox lists
+- No redundant summaries of the diff
+- Link to related issues if relevant: `closes #123` / `fixes #456`
 
-**Do include:**
-
-- Clear explanation of what and why
-- Links to relevant issues or tickets
-- Context that isn't obvious from the code
-- Notes on specific areas that need careful review
-
-Summarize the changes in this structure:
-
-- **High-level summary**: one sentence describing the purpose of this change.
-- **Key modifications**: bullet points grouped by file or functionality.
-- **Impact analysis**: effect on APIs, authentication logic, database, performance, tests, or security.
-
-### 4. Create a **Pull Request (PR)** draft that includes:
+### Run the command
 
 ```bash
-gh pr create --title "<type>(<scope>): <description>" --body "$(cat <<'EOF'
-<description body here>
+gh pr create --title "<title>" --body "$(cat <<'EOF'
+<body>
 EOF
 )"
 ```
 
-#### PR Title Format
-
-```
-<type>(<scope>): <summary>
-```
-
-#### Types (required)
-
-| Type       | Description                         | Changelog |
-| ---------- | ----------------------------------- | --------- |
-| `feat`     | New feature                         | Yes       |
-| `fix`      | Bug fix                             | Yes       |
-| `perf`     | Performance improvement             | Yes       |
-| `test`     | Adding/correcting tests             | No        |
-| `docs`     | Documentation only                  | No        |
-| `refactor` | Code change (no bug fix or feature) | No        |
-| `build`    | Build system or dependencies        | No        |
-| `ci`       | CI configuration                    | No        |
-| `chore`    | Routine tasks, maintenance          | No        |
-
-#### PR Body Guidelines
-
-- **Summary**:
-  - Describe what the PR does
-  - Explain why this change was made
-- **Detailed change log**:
-  - clear bullet-point list of the modifications
-- **Security improvements**:
-  - explicitly highlight how this change improves security
-- **Testing information**:
-  - explain how these changes were tested (unit tests, integration tests, manual validation, etc.)
-- **Impact/Risks**:
-  - list possible risks (security vulnerabilities, performance bottlenecks, breaking changes, maintainability issues)
-- **Checklist**:
-  - [ ] Unit tests added/updated
-  - [ ] Integration tests updated
-  - [ ] Documentation updated or follow-up ticket created
-  - [ ] Backward compatibility checked
-- **Related Links**:
-  - Link to Linear ticket: `https://linear.app/n8n/issue/[TICKET-ID]`
-  - Link to GitHub issues using keywords to auto-close:
-    - `closes #123` / `fixes #123` / `resolves #123`
-  - Link to Community forum posts if applicable
+Return the PR URL when done.
 
 ## Examples
 
-### Feature in editor
-
 ```
-feat(editor): Add workflow performance metrics display
+feat(project): Add cloud-based camera support with bandwidth calculation
+fix(auth): Resolve token refresh race condition on concurrent requests
+refactor(alarm): Extract notification dispatch into domain service
+chore: Upgrade Go to 1.25 and update dependencies
+feat(api)!: Remove deprecated v1 alarm endpoints
 ```
-
-### Bug fix in core
-
-```
-fix(core): Resolve memory leak in execution engine
-```
-
-### Node-specific change
-
-```
-fix(Slack Node): Handle rate limiting in message send
-```
-
-### Breaking change (add exclamation mark before colon)
-
-```
-feat(api)!: Remove deprecated v1 endpoints
-```
-
-### No changelog entry
-
-```
-refactor(core): Simplify error handling (no-changelog)
-```
-
-### No scope (affects multiple areas)
-
-```
-chore: Update dependencies to latest versions
-```
-
-## Validation
-
-The PR title must match this pattern:
-
-```
-^(feat|fix|perf|test|docs|refactor|build|ci|chore|revert)(\([a-zA-Z0-9 ]+( Node)?\))?!?: [A-Z].+[^.]$
-```
-
-Key validation rules:
-
-- Type must be one of the allowed types
-- Scope is optional but must be in parentheses if present
-- Exclamation mark for breaking changes goes before the colon
-- Summary must start with capital letter
-- Summary must not end with a period
