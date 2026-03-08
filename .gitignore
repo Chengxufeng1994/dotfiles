@@ -21,6 +21,7 @@ claude/backups/*
 claude/cache/*
 claude/debug/*
 claude/file-history/*
+claude/homunculus/*
 claude/history.jsonl
 claude/ide/*
 claude/paste-cache/*
@@ -34,6 +35,8 @@ claude/stats-cache.json
 claude/statsig/*
 claude/tasks/*
 claude/telemetry/*
+claude/metrics/*
+claude/usage-data/*
 claude/todos/*
 claude/.credentials.json
 claude/mcp-needs-auth-cache.json
