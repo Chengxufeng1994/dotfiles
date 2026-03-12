@@ -22,7 +22,8 @@
     "mgrep@Mixedbread-Grep": true,
     "obsidian@obsidian-skills": true,
     "compound-engineering@compound-engineering-plugin": false,
-    "planning-with-files@planning-with-files": false
+    "planning-with-files@planning-with-files": false,
+    "pua@pua-skills": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -63,6 +64,12 @@
       "source": {
         "source": "github",
         "repo": "OthmanAdi/planning-with-files"
+      }
+    },
+    "pua-skills": {
+      "source": {
+        "source": "github",
+        "repo": "tanweai/pua"
       }
     }
   },
