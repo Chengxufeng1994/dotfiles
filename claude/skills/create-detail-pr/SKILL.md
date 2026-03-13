@@ -1,5 +1,5 @@
 ---
-name: create-pr
+name: create-detail-pr
 description: Creates GitHub pull requests with properly formatted conventional commits titles and focused descriptions. Use this skill whenever the user says /pr, "create a PR", "open a pull request", "submit for review", "push for review", or when they've just finished committing changes and want to get them reviewed. Trigger even if they just say "submit" or "push" in a coding context — they likely want a PR.
 allowed-tools: Bash(git:*), Bash(gh:*), Read, Grep, Glob
 ---
