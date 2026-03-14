@@ -20,3 +20,7 @@
 - [The Terminal Way](https://the-terminal-way.netlify.app/)
 - [建立 .dotfiles 以便在任何 Macbook 上都可以擁有相同的開發環](https://hackmd.io/@lunzaizai/SJXGJa_4s)
 - [我的 Terminal + Zsh 心法](https://blog.tomy.me/zh-tw/posts/zsh-configure-mindset/)
+
+## Claude ``
+
+- [Commands、Skills、Subagents、Rules：整理139個擴充功能後學到的經驗](https://blakecrosley.com/zh-Hant/blog/claude-code-organization)

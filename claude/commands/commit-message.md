@@ -1,10 +1,12 @@
 ---
-allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*)
+allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git diff:*), Bash(git log:*), Skill
 argument-hint: [message] | --no-verify | --amend
 description: Create well-formatted commits with conventional commit format and emoji
 ---
 
 # Smart Git Commit
+
+Load the `commit-convention` skill first to get the correct commit message format and validation rules.
 
 Create well-formatted commit: $ARGUMENTS
 
