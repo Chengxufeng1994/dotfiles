@@ -23,7 +23,7 @@
     "obsidian@obsidian-skills": true,
     "compound-engineering@compound-engineering-plugin": false,
     "planning-with-files@planning-with-files": false,
-    "pua@pua-skills": true
+    "pua@pua-skills": false
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -73,6 +73,7 @@
       }
     }
   },
+  "effortLevel": "medium",
   "autoMemoryEnabled": true,
   "skipDangerousModePermissionPrompt": true,
   "feedbackSurveyState": {
