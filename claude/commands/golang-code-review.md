@@ -4,7 +4,8 @@ argument-hint: [file-path] | [PR-number] | --staged
 description: Go code review — dispatches golang-code-reviewer agent to perform a comprehensive review of Go changes
 ---
 
-Use the Agent tool with `subagent_type: golang-code-reviewer` and the following prompt:
+Use the subagent `subagent_type: golang-code-reviewer` to examine all of the changes by comparing them to the main branch. You must verify that every commit and stage on this branch is present, compare them to the main branch, and report back to me the review's outcome.
+and the following prompt
 
 ```
 Review target: $ARGUMENTS
