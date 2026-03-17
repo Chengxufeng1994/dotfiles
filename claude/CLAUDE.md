@@ -2,27 +2,17 @@
 
 ## Philosophy
 
-### Core Principles
+### Principles
 
-- **Simplicity First**: Make every change as simple as possible. Impact minimal code.
-- **No Laziness**: Find root causes. No temporary fixes. Senior developer standards.
-- **Minimal Impact**: Changes should only touch what's necessary. Avoid introducing bugs.
+- **Minimal change, maximum clarity** — Touch only what's necessary. Changes should be obvious to a reviewer unfamiliar with the context.
+- **Root cause, not symptom** — No temporary fixes. Trace the issue to its source before writing code.
+- **Scope discipline** — Don't improve what wasn't asked. A bug fix doesn't need surrounding refactors.
+- **Boring is better** — Choose the obvious, expected solution. One responsibility per function; if it needs a comment to explain what it does, split it.
+- **Learn before building** — Study 2-3 similar existing implementations before writing new code.
+- **Prefer deletable over extensible** — When two approaches are equal, choose the one easier to remove. No abstraction until 3+ concrete use cases (rule of three).
+- **Demand elegance** — For non-trivial changes, pause and ask "is there a more elegant way?" Skip for simple, obvious fixes.
 
-### Core Beliefs
-
-- **Incremental progress over big bangs** - Small changes that compile and pass tests
-- **Learning from existing code** - Study and plan before implementing
-- **Pragmatic over dogmatic** - Adapt to project reality
-- **Clear intent over clever code** - Be boring and obvious
-
-### Simplicity Means
-
-- Single responsibility per function/class
-- Avoid premature abstractions
-- No clever tricks - choose the boring solution
-- If you need to explain it, it's too complex
-
-## Process
+## Workflow Orchestration
 
 ### 1. Planning & Staging
 
@@ -30,7 +20,7 @@
 - If something goes sideways, STOP and re-plan immediately – don't keep pushing
 - Use plan mode for verification steps, not just building
 - Write detailed specs upfront to reduce ambiguity
-- Break complex work into 3-5 stages. Document in `IMPLEMENTATION_PLAN.md`:
+- Break complex work into 3-5 stages. Document in `tasks/todo.md`:
 
 ```markdown
 ## Stage N: [Name]
@@ -38,7 +28,7 @@
 **Goal**: [Specific deliverable]
 **Success Criteria**: [Testable outcomes]
 **Tests**: [Specific test cases]
-**Status**: [Not Started|In Progress|Complete]
+**Status**: [ ] Not Started → [x] Complete
 ```
 
 - Update status as you progress
@@ -129,22 +119,6 @@ When multiple valid approaches exist, choose based on:
 4. **Simplicity** - Is this the simplest solution that works?
 5. **Reversibility** - How hard to change later?
 
-## Project Integration
-
-### Learning the Codebase
-
-- Find 3 similar features/components
-- Identify common patterns and conventions
-- Use same libraries/utilities when possible
-- Follow existing test patterns
-
-### Tooling
-
-- Use project's existing build system
-- Use project's test framework
-- Use project's formatter/linter settings
-- Don't introduce new tools without strong justification
-
 ## Quality Gates
 
 ### Definition of Done
@@ -172,19 +146,3 @@ When multiple valid approaches exist, choose based on:
 - Disable tests instead of fixing them
 - Commit code that doesn't compile
 - Make assumptions - verify with existing code
-
-**ALWAYS**:
-
-- Commit working code incrementally
-- Update plan documentation as you go
-- Learn from existing implementations
-- Stop after 3 failed attempts and reassess
-
-## Task Management
-
-1. **Plan First**: Write plan to `tasks/todo.md` with checkable items
-2. **Verify Plan**: Check in before starting implementation
-3. **Track Progress**: Mark items complete as you go
-4. **Explain Changes**: High-level summary at each step
-5. **Document Results**: Add review section to `tasks/todo.md`
-6. **Capture Lessons**: Update `tasks/lessons.md` after corrections
