@@ -1,0 +1,54 @@
+# ==========================================
+#  外觀與視窗設定
+# ==========================================
+
+font-family = MesloLGL Nerd Font Mono
+font-size = 12
+
+theme = Catppuccin Macchiato
+
+# 捲動緩衝區行數上限
+scrollback-limit = 10000
+
+# 背景透明度 (0.0 ~ 1.0)
+background-opacity = 0.7
+# 背景模糊半徑 (搭配透明度產生漂亮的毛玻璃效果)
+background-blur-radius = 10
+
+# 顯示視窗裝飾 (顯示原生的 Mac 標題列與紅黃綠燈按鈕)
+window-decoration = true
+
+# ==========================================
+#  系統與鍵盤設定 
+# ==========================================
+# 將 Mac 的 Option 鍵視為終端機裡的 Alt (Meta) 鍵
+# (這對在 Tmux 或 Vim 裡面使用組合鍵非常重要)
+macos-option-as-alt = true
+
+# 桌面通知 (當耗時的指令跑完時，Mac 的 Dock 圖示會跳動提醒你)
+desktop-notifications = true
+
+# ==========================================
+#  剪貼簿設定
+# ==========================================
+# 選取文字時自動複製到剪貼簿
+copy-on-select = true
+# 貼上時若內容包含多行，顯示警告確認視窗（防止意外執行指令）
+clipboard-paste-protection = true
+
+# ==========================================
+#  游標與滑鼠設定
+# ==========================================
+# 游標樣式：block（方塊）, bar（細線）, underline（底線）
+cursor-style = block
+# 游標是否閃爍
+cursor-style-blink = true
+
+# 打字時自動隱藏滑鼠游標
+mouse-hide-while-typing = true
+
+# 網址連結支援 (按住 Cmd 鍵並點擊網址，可以直接用預設瀏覽器開啟)
+link-url = true
+
+
+
