@@ -22,9 +22,9 @@ brew "ctags"               # 產生程式碼索引標籤
 # ============================================================
 # 🧠 Programming languages / Toolchains
 # ============================================================
-brew "oven-sh/bun/bun"    # bun 工具包管理
+brew "oven-sh/bun/bun"     # bun 工具包管理
 brew "fnm"                 # Node.js 版本管理
-# brew "go"                  # Golang
+brew "go"                  # Golang
 brew "pyenv"               # Python 版本管理
 brew "pipx"                # 安裝/隔離 Python CLI 工具
 brew "uv"                  # Python 套件管理（pip 替代方案）

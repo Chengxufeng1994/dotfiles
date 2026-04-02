@@ -204,6 +204,8 @@ command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
 
+export PATH="$HOME/.local/bin:$PATH"
+
 # Go Path
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
@@ -215,6 +217,9 @@ export PATH="$CARGO_HOME/bin:$PATH"
 
 # Antigravity Path
 export PATH="/Users/bennycheng/.antigravity/antigravity/bin:$PATH"
+
+# oh-my-posh setup
+eval "$(oh-my-posh init zsh --config ~/oh-my-posh/.oh-my-posh.omp.json)"
 
 # atuojump setup
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
@@ -232,9 +237,6 @@ eval "$(fnm env --use-on-cd)"
 
 # thefuch setup
 eval $(thefuck --alias)
-
-# oh-my-posh setup
-eval "$(oh-my-posh init zsh --config ~/oh-my-posh/.oh-my-posh.omp.json)"
 
 # >>>> pyenv(python version manager) (start)
 if [ -x "$HOMEBREW_PREFIX/bin/pyenv" ]; then
