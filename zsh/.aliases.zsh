@@ -140,4 +140,7 @@ alias kns="kubens"
 # Claude
 #
 alias c="claude"
-alias cc="claude --dangerously-skip-permissions"
+alias cc="claude --chrome"
+alias cdsp="claude --dangerously-skip-permissions"
+alias ccdsp="claude --chrome --dangerously-skip-permissions"
+alias cw="claude --worktree"
