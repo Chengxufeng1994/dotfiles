@@ -24,7 +24,8 @@
     "superpowers@superpowers-marketplace": true,
     "mgrep@Mixedbread-Grep": true,
     "obsidian@obsidian-skills": true,
-    "pr-review-toolkit@claude-plugins-official": true
+    "pr-review-toolkit@claude-plugins-official": true,
+    "ecc@everything-claude-code": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
