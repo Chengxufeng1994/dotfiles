@@ -24,7 +24,7 @@
     "mgrep@Mixedbread-Grep": true,
     "obsidian@obsidian-skills": true,
     "pr-review-toolkit@claude-plugins-official": true,
-    "ecc@everything-claude-code": true
+    "everything-claude-code@everything-claude-code": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
