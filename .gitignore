@@ -37,9 +37,13 @@ claude/tasks/*
 claude/telemetry/*
 claude/metrics/*
 claude/usage-data/*
+claude/session-data/*
 claude/todos/*
 claude/.credentials.json
 claude/mcp-needs-auth-cache.json
+claude/bash-commands.log
+claude/cost-tracker.log
+
 
 # Gemini
 gemini/tmp/*
