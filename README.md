@@ -24,3 +24,4 @@
 ## Claude ``
 
 - [Commands、Skills、Subagents、Rules：整理139個擴充功能後學到的經驗](https://blakecrosley.com/zh-Hant/blog/claude-code-organization)
+- [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills/tree/main)
