@@ -16,15 +16,16 @@
     "context7@claude-plugins-official": true,
     "explanatory-output-style@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
     "figma@claude-plugins-official": false,
-    "ralph-loop@claude-plugins-official": false,
+    "ralph-loop@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
-    "superpowers@superpowers-marketplace": true,
+    "superpowers@claude-plugins-official": true,
     "mgrep@Mixedbread-Grep": true,
     "obsidian@obsidian-skills": true,
-    "pr-review-toolkit@claude-plugins-official": true,
-    "everything-claude-code@everything-claude-code": true
+    "everything-claude-code@everything-claude-code": true,
+    "planning-with-files@planning-with-files": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -67,16 +68,17 @@
         "repo": "OthmanAdi/planning-with-files"
       }
     },
-    "pua-skills": {
+    "addy-agent-skills": {
       "source": {
         "source": "github",
-        "repo": "tanweai/pua"
+        "repo": "addyosmani/agent-skills"
       }
     }
   },
   "effortLevel": "medium",
   "autoMemoryEnabled": true,
   "skipDangerousModePermissionPrompt": true,
+  "editorMode": "vim",
   "feedbackSurveyState": {
     "lastShownTime": 1754086595077
   }

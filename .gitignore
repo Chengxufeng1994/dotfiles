@@ -31,7 +31,6 @@ claude/projects/*
 claude/session-env/*
 claude/sessions/*
 claude/shell-snapshots/*
-claude/stats-cache.json
 claude/statsig/*
 claude/tasks/*
 claude/telemetry/*
@@ -40,7 +39,9 @@ claude/usage-data/*
 claude/session-data/*
 claude/todos/*
 claude/.credentials.json
+claude/daily-cost-cache.json
 claude/mcp-needs-auth-cache.json
+claude/stats-cache.json
 claude/bash-commands.log
 claude/cost-tracker.log
 
