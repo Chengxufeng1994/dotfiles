@@ -24,7 +24,7 @@
     "superpowers@claude-plugins-official": true,
     "mgrep@Mixedbread-Grep": true,
     "obsidian@obsidian-skills": true,
-    "everything-claude-code@everything-claude-code": true,
+    "everything-claude-code@everything-claude-code": false,
     "planning-with-files@planning-with-files": true
   },
   "extraKnownMarketplaces": {
