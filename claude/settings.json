@@ -25,7 +25,8 @@
     "mgrep@Mixedbread-Grep": true,
     "obsidian@obsidian-skills": true,
     "everything-claude-code@everything-claude-code": false,
-    "planning-with-files@planning-with-files": true
+    "planning-with-files@planning-with-files": true,
+    "codex@openai-codex": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -72,6 +73,12 @@
       "source": {
         "source": "github",
         "repo": "addyosmani/agent-skills"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
       }
     }
   },
