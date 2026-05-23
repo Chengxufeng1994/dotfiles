@@ -45,6 +45,15 @@ claude/stats-cache.json
 claude/bash-commands.log
 claude/cost-tracker.log
 
+# Claude runtime state (daemon, jobs, chrome native host, cleanup markers)
+claude/.last-cleanup
+claude/chrome/
+claude/daemon/
+claude/daemon.lock
+claude/daemon.log
+claude/daemon.status.json
+claude/jobs/
+
 
 # Gemini
 gemini/tmp/*

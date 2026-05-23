@@ -28,8 +28,8 @@
     "obsidian@obsidian-skills": true,
     "planning-with-files@planning-with-files": true,
     "codex@openai-codex": true,
-    "ecc@ecc": false,
-    "agent-skills@addy-agent-skills": true
+    "agent-skills@addy-agent-skills": false,
+    "ecc@ecc": false
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
