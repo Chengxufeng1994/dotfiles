@@ -73,6 +73,20 @@ For multi-step tasks, state a brief plan:
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
+### File Creation Policy
+
+- **NEVER create files unless absolutely necessary** for achieving the goal
+- **ALWAYS prefer editing existing files** to creating new ones
+- **NEVER proactively create documentation files** (\*.md) or README files
+- **Only create documentation files if explicitly requested** by the user
+
+### When to Ask Questions
+
+- Missing context or unclear requirements
+- Uncertain about architectural impact
+- Multiple valid implementation approaches (surface them, don't pick silently)
+- Before making breaking changes
+
 ## Workflow Orchestration
 
 ### 1. Planning & Staging
