@@ -139,8 +139,17 @@ alias kns="kubens"
 #
 # Claude
 #
-alias c="claude"
-alias cc="claude --chrome"
-alias cdsp="claude --dangerously-skip-permissions"
-alias ccdsp="claude --chrome --dangerously-skip-permissions"
-alias cw="claude --worktree"
+# ── Claude Code ──────────────────────────────
+alias cc="claude"
+alias ccw="claude --worktree"
+alias ccc="claude --continue"
+alias ccr="claude --resume"
+alias ccp="claude -p"
+
+# ── Claude Code: Modes ────────────────────────
+alias cc-web="claude --chrome"
+alias cc-auto="claude --permission-mode auto"
+
+# ── Claude Code: DANGER (container/VM only) ──
+alias cc-yolo="claude --dangerously-skip-permissions"
+alias cc-web-yolo="claude --chrome --dangerously-skip-permissions"
