@@ -30,7 +30,8 @@
     "planning-with-files@planning-with-files": true,
     "codex@openai-codex": true,
     "agent-skills@addy-agent-skills": true,
-    "ecc@ecc": false
+    "ecc@ecc": false,
+    "understand-anything@understand-anything": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -93,7 +94,15 @@
       "source": {
         "source": "git",
         "url": "https://github.com/affaan-m/ECC.git"
-      }
+      },
+      "autoUpdate": true
+    },
+    "understand-anything": {
+      "source": {
+        "source": "github",
+        "repo": "Lum1104/Understand-Anything"
+      },
+      "autoUpdate": true
     }
   },
   "effortLevel": "high",
