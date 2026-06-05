@@ -5,6 +5,10 @@
     "CLAUDE_CODE_TMUX_TRUECOLOR": "1"
   },
   "model": "opus",
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "enableWorkflows": true,
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh",
@@ -31,7 +35,9 @@
     "codex@openai-codex": true,
     "agent-skills@addy-agent-skills": true,
     "ecc@ecc": false,
-    "understand-anything@understand-anything": true
+    "understand-anything@understand-anything": true,
+    "hookify@claude-plugins-official": true,
+    "redis-development@redis": true
   },
   "extraKnownMarketplaces": {
     "obsidian-skills": {
@@ -103,14 +109,41 @@
         "repo": "Lum1104/Understand-Anything"
       },
       "autoUpdate": true
+    },
+    "cloudflare": {
+      "source": {
+        "source": "github",
+        "repo": "cloudflare/skills"
+      },
+      "autoUpdate": true
+    },
+    "redis": {
+      "source": {
+        "source": "github",
+        "repo": "redis/agent-skills"
+      },
+      "autoUpdate": true
     }
   },
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
   "autoMemoryEnabled": true,
   "skipDangerousModePermissionPrompt": true,
   "editorMode": "vim",
   "agentPushNotifEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754086595077
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ]
   }
 }
