@@ -5,6 +5,19 @@
     "CLAUDE_CODE_TMUX_TRUECOLOR": "1"
   },
   "model": "opus",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ]
+  },
   "worktree": {
     "baseRef": "fresh"
   },
@@ -32,7 +45,6 @@
     "mgrep@Mixedbread-Grep": true,
     "obsidian@obsidian-skills": true,
     "planning-with-files@planning-with-files": true,
-    "codex@openai-codex": true,
     "agent-skills@addy-agent-skills": true,
     "ecc@ecc": false,
     "understand-anything@understand-anything": true,
@@ -132,18 +144,5 @@
   "agentPushNotifEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754086595077
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "rtk hook claude"
-          }
-        ]
-      }
-    ]
   }
 }
