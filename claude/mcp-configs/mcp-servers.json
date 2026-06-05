@@ -12,7 +12,15 @@
     "context7": {
       "type": "sse",
       "url": "https://mcp.context7.com/sse",
+      "headers": {
+        "CONTEXT7_API_KEY": "YOUR_CONTEXT7_API_KEY_HERE"
+      },
       "description": "Live documentation lookup"
+    },
+    "context7_local": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "description": "Live documentation lookup — use with /docs command and documentation-lookup skill (resolve-library-id, query-docs)."
     },
     "cloudflare-docs": {
       "type": "http",
@@ -37,6 +45,18 @@
     "chrome-devtools": {
       "command": "npx",
       "args": ["-y", "chrome-devtools-mcp@latest"]
+    },
+    "figma": {
+      "type": "http",
+      "url": "https://mcp.figma.com/mcp",
+      "description": "Figma design search and retrieval"
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_GITHUB_PAT"
+      }
     },
     "playwright": {
       "command": "npx",
@@ -82,6 +102,10 @@
       "env": {
         "APIDOG_ACCESS_TOKEN": "your_apidog_access_token_here"
       }
+    },
+    "atlassian": {
+      "type": "sse",
+      "url": "https://mcp.atlassian.com/v1/sse"
     }
   },
   "_comments": {
