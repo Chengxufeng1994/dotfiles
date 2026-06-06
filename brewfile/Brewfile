@@ -131,3 +131,4 @@ brew "watch"               # 重複執行命令觀察輸出
 # ============================================================
 tap "AlexsJones/llmfit"
 brew "llmfit"              # LLM CLI 工具，支援多種模型（GPT-4, Claude, Gemini...）
+brew "rtk"
