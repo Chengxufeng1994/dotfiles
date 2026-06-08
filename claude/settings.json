@@ -52,6 +52,13 @@
     "redis-development@redis": true
   },
   "extraKnownMarketplaces": {
+    "knowledge-work-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/knowledge-work-plugins"
+      },
+      "autoUpdate": true
+    },
     "obsidian-skills": {
       "source": {
         "source": "github",
