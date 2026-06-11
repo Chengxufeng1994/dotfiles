@@ -74,6 +74,10 @@ git clone https://github.com/DenisSergeevitch/agents-best-practices.git \
 
 ## Use cases
 
+<p align="center">
+  <img src="assets/agents-best-practices-illustrations/01-use-cases.jpg" alt="Xiaohei sorting agent harness use cases into MVP blueprint, audit fixes, and permission map" width="760" />
+</p>
+
 Once installed, the skill activates when a conversation touches agent architecture, harness design, tool permissions, planning mode, workflow orchestration, context and memory, skills, connectors, observability, evals, prompt caching, or production readiness. Three common ways to use it:
 
 ### Case 1 - Generate an MVP agent blueprint
@@ -156,6 +160,7 @@ Use [`references/tools-and-permissions.md`](references/tools-and-permissions.md)
 - **"How do I add planning mode without making the agent passive?"** -> use [`references/planning-and-goals.md`](references/planning-and-goals.md).
 - **"When should a large task become a decomposed workflow?"** -> use [`references/workflow-orchestration.md`](references/workflow-orchestration.md).
 - **"How should auto-compaction preserve active work?"** -> use [`references/context-memory-compaction.md`](references/context-memory-compaction.md).
+- **"What is the smallest safe coding-agent harness?"** -> use [`references/coding-agents.md`](references/coding-agents.md).
 - **"How do I make prompt caching work in a long-running agent?"** -> use [`references/prompt-caching-and-cost.md`](references/prompt-caching-and-cost.md).
 - **"How do I support OpenAI, Anthropic, and OpenAI-compatible APIs?"** -> use [`references/provider-api-patterns.md`](references/provider-api-patterns.md).
 - **"What should I check before launch?"** -> use [`references/checklists.md`](references/checklists.md).
@@ -200,6 +205,7 @@ agents-best-practices/
 ├── icon.jpeg                                 # skill image used by the README
 └── references/
     ├── mvp-agent-blueprint.md                # domain-specific MVP harness blueprint
+    ├── coding-agents.md                      # repository-facing coding-agent harness overlay
     ├── architecture.md                       # component model and harness boundaries
     ├── agentic-loop.md                       # loop invariants, retries, budgets, stopping
     ├── tools-and-permissions.md              # typed tools, risk classes, approvals
