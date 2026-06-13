@@ -53,6 +53,7 @@ claude/daemon.lock
 claude/daemon.log
 claude/daemon.status.json
 claude/jobs/
+claude/security/
 
 
 # Gemini
