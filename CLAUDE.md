@@ -31,11 +31,14 @@ dotfiles/
 ├── claude/          # ~/.claude/ — Claude Code config (see below)
 ├── gemini/          # Gemini CLI config with antigravity skills
 ├── nvim/            # ~/.config/nvim/ — LazyVim-based Neovim config
+├── vim/             # Legacy ~/.vimrc
 ├── ghostty/         # Ghostty terminal config
 ├── tmux/            # tmux config
 ├── zsh/             # Zsh config and aliases
+├── oh-my-posh/      # oh-my-posh prompt theme
 ├── git/             # Git config and commit template
 ├── brewfile/        # Homebrew package lists (Brewfile, Caskfile)
+├── .mcp.json        # Project MCP servers (memory, fetch, context7, exa, sequential-thinking)
 └── Makefile         # All setup targets
 ```
 
@@ -48,7 +51,10 @@ The `claude/` directory mirrors `~/.claude/` and contains:
 | `CLAUDE.md` | Global instructions loaded for every session |
 | `CLAUDE.workflow-orchestration.md` | Workflow/task management patterns |
 | `CLAUDE.kingkongshot.md` | "Linus Torvalds" persona for code reviews |
-| `rules/*.md` | Topic-specific rules (coding-style, git-workflow, testing, patterns, security, performance, hooks, agents) |
+| `CLAUDE.andrej-karpathy.md` | Karpathy anti-mistake behavioral guidelines |
+| `CLAUDE.enhance-andrej-karpathy.md` | Karpathy 12-rule task template |
+| `RTK.md` | RTK (Rust Token Killer) proxy reference — imported by `CLAUDE.md` via `@RTK.md` |
+| `rules/*.md` | Topic-specific rules (see Rules Files below) |
 | `agents/*.md` | Custom subagent definitions (code-reviewer, backend-architect, database-architect, etc.) |
 | `commands/*.md` | Custom slash commands (e.g. `/code-review`, `/commit-message`, `/golang-code-review`) |
 | `skills/` | Custom skills installed locally |
@@ -57,15 +63,11 @@ The `claude/` directory mirrors `~/.claude/` and contains:
 
 ## Rules Files
 
-Rules in `claude/rules/` are automatically included. When modifying Claude's behavior for this repo, add to the appropriate rule file rather than creating a new one:
+Rules under `claude/rules/` use the `ecc` (everything-claude-code) layering: a shared base extended by per-language overrides. When modifying Claude's behavior, edit the appropriate existing file rather than creating a new one.
 
-- `coding-style.md` — Go formatting, design principles
-- `patterns.md` — Functional options, DI, interfaces
-- `testing.md` — Go test framework, race detection, coverage
-- `git-workflow.md` — Commit format, PR workflow
-- `security.md` — Secret management, gosec, context/timeouts
-- `performance.md` — Model selection, context window management
-- `agents.md` — Available agents and when to use them
+- `context7.md` — when to use the Context7 MCP for live library docs
+- `ecc/common/*.md` — shared rules: `coding-style`, `patterns`, `testing`, `git-workflow`, `development-workflow`, `code-review`, `security`, `performance`, `hooks`, `agents`
+- `ecc/<lang>/*.md` — overrides for `golang`, `python`, `rust`, `typescript`, `web` (each extends its `common/` counterpart)
 
 ## Adding Skills and Commands
 
@@ -76,7 +78,9 @@ Rules in `claude/rules/` are automatically included. When modifying Claude's beh
 
 ## Plugins
 
-Plugins are managed via `claude/settings.json`. Active marketplaces:
-- `superpowers-marketplace` — obra/superpowers-marketplace
-- `everything-claude-code` — affaan-m/everything-claude-code
-- `obsidian-skills` — kepano/obsidian-skills
+Plugins are enabled in `claude/settings.json` (`enabledPlugins`); marketplace sources live under `claude/plugins/marketplaces/`. This set changes often — read the source of truth rather than a static list:
+
+```bash
+ls claude/plugins/marketplaces/                 # configured marketplace sources
+jq -r '.enabledPlugins | keys[]' claude/settings.json   # currently enabled plugins
+```
