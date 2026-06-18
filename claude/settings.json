@@ -42,13 +42,14 @@
     "security-guidance@claude-plugins-official": true,
     "agent-skills@addy-agent-skills": true,
     "ecc@ecc": false,
+    "financial-analysis@claude-for-financial-services": false,
     "obsidian@obsidian-skills": true,
     "planning-with-files@planning-with-files": false,
+    "ponytail@ponytail": true,
     "redis-development@redis": true,
     "superpowers@claude-plugins-official": true,
     "mgrep@Mixedbread-Grep": true,
-    "understand-anything@understand-anything": true,
-    "financial-analysis@claude-for-financial-services": true
+    "understand-anything@understand-anything": true
   },
   "extraKnownMarketplaces": {
     "knowledge-work-plugins": {
@@ -146,7 +147,15 @@
       "source": {
         "source": "github",
         "repo": "anthropics/financial-services"
-      }
+      },
+      "autoUpdate": true
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      },
+      "autoUpdate": true
     }
   },
   "effortLevel": "xhigh",
