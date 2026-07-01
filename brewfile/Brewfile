@@ -51,6 +51,11 @@ brew "vegeta"              # HTTP 壓測 / 負載測試
 brew "wrk"                 # 高性能 HTTP 壓測工具
 
 # ============================================================
+# 🐳 Docker / Container / Podman
+# ============================================================
+brew "lazydocker"           # Docker CLI 增強工具
+
+# ============================================================
 # ☸️ Kubernetes / Deployment / DevOps
 # ============================================================
 brew "k9s"                 # k8s CLI 介面
@@ -66,7 +71,6 @@ brew "stern"               # 多 Pod log 即時查看
 # brew "colima"            # 可選：本地容器執行環境
 brew "argocd"              # GitOps 工具
 brew "ansible"             # 自動化佈署
-
 
 # ============================================================
 # ☁️ Cloud / Infrastructure / IaC
@@ -101,29 +105,34 @@ brew "pre-commit"          # pre-commit hook 管理
 # ============================================================
 # 🛠️ Productivity / Shell utilities
 # ============================================================
-# brew "zoxide"              # 智慧目錄跳轉，比 autojump 更強
+# brew "atuin"               # 可搜尋、同步 shell history
 brew "eza"                   # 現代化 ls，支援 icon、git 狀態
 # brew "lsd"                 # 現代化 ls，支援 icon、git 狀態
-# brew "dust"                # 現代化 du，磁碟用量樹狀顯示
 # brew "procs"               # 現代化 ps
 # brew "gping"               # 視覺化 ping
-# brew "atuin"               # 可搜尋、同步 shell history
+brew "fd"                    # find 的現代化替代
 brew "yazi"                  # 終端內顯示圖片
+# brew "zoxide"              # 智慧目錄跳轉，比 autojump 更強
+
+# ============================================================
+# 🧹 Disk / Storage / Cleanup
+# ============================================================
+# brew "dust"                # 現代化 du，磁碟用量樹狀顯示
 
 # ============================================================
 # 📚 Documentation / Cheatsheet
 # ============================================================
 # brew "tldr"              # 常用命令簡表
+brew "tealdeer"            # tldr 加強版（快取、自動更新）
 brew "glow"                # 終端內顯示 Markdown
 brew "cheat"               # 可自訂 CLI cheat sheet
-brew "tealdeer"            # tldr 加強版（快取、自動更新）
 
 # ============================================================
 # 👀 Monitoring / Misc Utilities
 # ============================================================
-brew "btop"                # 系統資源監控，比 glances 快
-brew "glances"             # 系統監控 (可替換為 btop)
-brew "fd"                  # find 的現代化替代
+# brew "btop"              # 系統資源監控，比 glances 快
+brew "bpytop"              # 系統資源監控，比 glances 快
+# brew "glances"           # 系統監控 (可替換為 btop)
 brew "watch"               # 重複執行命令觀察輸出
 
 # ============================================================
@@ -131,4 +140,5 @@ brew "watch"               # 重複執行命令觀察輸出
 # ============================================================
 tap "AlexsJones/llmfit"
 brew "llmfit"              # LLM CLI 工具，支援多種模型（GPT-4, Claude, Gemini...）
+
 brew "rtk"

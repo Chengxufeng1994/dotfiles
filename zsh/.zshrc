@@ -150,6 +150,7 @@ plugins=(
   autojump
   brew
   colored-man-pages
+  command-not-found
   docker
   docker-compose
   extract
