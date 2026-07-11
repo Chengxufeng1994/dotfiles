@@ -42,7 +42,7 @@
     "security-guidance@claude-plugins-official": true,
     "agent-skills@addy-agent-skills": true,
     "ecc@ecc": false,
-    "financial-analysis@claude-for-financial-services": false,
+    "financial-analysis@claude-for-financial-services": true,
     "obsidian@obsidian-skills": true,
     "planning-with-files@planning-with-files": false,
     "redis-development@redis": true,
