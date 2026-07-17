@@ -64,11 +64,11 @@ npm: brew-packages
 	@fnm install --lts
 
 softlink:
-	@ln -s -f $(BASE_DIR).zshrc ~/.zshrc
-	@ln -s -f $(BASE_DIR).aliases.zsh ~/.aliases.zsh
-	@ln -s -f $(BASE_DIR).p10k.zsh ~/.p10k.zsh
-	@ln -s -f $(BASE_DIR).vimrc ~/.vimrc
-	@ln -s -f $(BASE_DIR).tmux.conf ~/.tmux.conf
-	@ln -s -f $(BASE_DIR).gitconfig ~/.gitconfig
-	@ln -s -f $(BASE_DIR).git-commit-msg-tmpl ~/.gitmessage
+	@ln -s -f $(BASE_DIR)zsh/.zshrc ~/.zshrc
+	@ln -s -f $(BASE_DIR)zsh/.aliases.zsh ~/.aliases.zsh
+	@ln -s -f $(BASE_DIR)zsh/.p10k.zsh ~/.p10k.zsh
+	@ln -s -f $(BASE_DIR)vim/.vimrc ~/.vimrc
+	@ln -s -f $(BASE_DIR)tmux/.tmux.conf.symlink ~/.tmux.conf
+	@ln -s -f $(BASE_DIR)git/.gitconfig.symlink ~/.gitconfig
+	@ln -s -f $(BASE_DIR)git/.git-commit-message.symlink ~/.gitmessage
 	@ln -s -f $(BASE_DIR)nvim ~/.config/nvim

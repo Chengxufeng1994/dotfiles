@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Purpose
 
-Personal dotfiles repository for macOS. Config files are symlinked into place using `make softlink`. The `claude/` directory in this repo maps directly to `~/.claude/`.
+Personal dotfiles repository, macOS-first (Homebrew/cask-based) but also run on Linux/WSL2. Config files are symlinked into place using `make softlink`. The `claude/` directory in this repo maps directly to `~/.claude/`.
 
 ## Setup Commands
 
@@ -84,3 +84,9 @@ Plugins are enabled in `claude/settings.json` (`enabledPlugins`); marketplace so
 ls claude/plugins/marketplaces/                 # configured marketplace sources
 jq -r '.enabledPlugins | keys[]' claude/settings.json   # currently enabled plugins
 ```
+
+## Gotchas
+
+- **`make softlink` isn't exhaustive.** It links the `zsh/`, `vim/`, `tmux/`, `git/`, and `nvim/` configs, but several present files aren't covered (`zsh/.zshenv`, `ghostty/config`, `oh-my-posh/`, `claude/` → `~/.claude/`, `gemini/`) — symlink those manually if you need them. Also, if `~/.config/nvim` already exists as a real directory, the nvim link nests inside it instead of replacing it.
+- **`.symlink` suffix is inconsistent.** `git/` and `tmux/` configs use a `*.symlink` suffix; `zsh/` and `vim/` don't. The layout is mid-migration — don't assume one naming scheme.
+- **`claude/` is live `~/.claude/`.** Only the curated subset in the table above is tracked; everything else there (`sessions/`, `cache/`, `projects/`, logs, `.credentials.json`) is runtime state — don't `git add` it.
