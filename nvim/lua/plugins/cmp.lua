@@ -11,6 +11,7 @@ return {
       -- "hrsh7th/cmp-cmdline", -- nvim-cmp source for command line
       "onsails/lspkind-nvim", -- lspkind (VS pictograms)
       "zbirenbaum/copilot-cmp",
+      "petertriho/cmp-git", -- git completion (issues/mentions/commits) in commit buffers
       -- Snippet engine - 使用 LazyVim 2025 預設的 nvim-snippets
       {
         "garymjr/nvim-snippets",
@@ -92,6 +93,16 @@ return {
             return vim_item
           end,
         },
+      })
+
+      -- git completion (commits, issues, mentions) in commit buffers
+      require("cmp_git").setup()
+      cmp.setup.filetype("gitcommit", {
+        sources = cmp.config.sources({
+          { name = "git" },
+        }, {
+          { name = "buffer" },
+        }),
       })
     end,
   },

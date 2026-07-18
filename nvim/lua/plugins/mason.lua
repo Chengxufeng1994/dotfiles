@@ -17,7 +17,7 @@ return {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
         config = function()
           require("mason-tool-installer").setup({
-            auto_update = true,
+            auto_update = false,
             ensure_installed = {
               -- shell
               "bashls",
@@ -43,10 +43,14 @@ return {
               "vimls",
               -- rust
               "rust_analyzer",
+              "codelldb", -- debugger (used by rustaceanvim); extras' ensure is dropped by our custom config
+              -- "docker",
+              "hadolint",
               -- terraform
               "tflint",
               -- typescript
               "vtsls",
+              "js-debug-adapter", -- debugger for JS/TS (from lang.typescript ensure, not auto-installed here)
               -- code spell
               "codespell",
               "misspell",
@@ -56,6 +60,8 @@ return {
               "markdownlint-cli2",
               "markdown-toc",
               "prettier",
+              --- yaml
+              "yamlfmt",
             },
           })
         end,
