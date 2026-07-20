@@ -35,14 +35,14 @@ return {
               unusedparams = true, -- 檢查未使用的參數
               shadow = true, -- 偵測變數遮蔽問題
             },
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              constantValues = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
           },
-        },
-        hints = {
-          assignVariableTypes = true,
-          compositeLiteralFields = true,
-          constantValues = true,
-          parameterNames = true,
-          rangeVariableTypes = true,
         },
       },
       helm_ls = {},
