@@ -30,6 +30,7 @@ return {
         "yaml",
         "toml",
         "rust",
+        "ron",
         "lua",
         "terraform",
         "hcl",

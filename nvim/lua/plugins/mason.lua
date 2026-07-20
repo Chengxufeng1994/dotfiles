@@ -45,6 +45,7 @@ return {
               "rust_analyzer",
               "codelldb", -- debugger (used by rustaceanvim); extras' ensure is dropped by our custom config
               -- "docker",
+              "dockerls",
               "hadolint",
               -- terraform
               "tflint",
@@ -61,6 +62,7 @@ return {
               "markdown-toc",
               "prettier",
               --- yaml
+              "yamlls",
               "yamlfmt",
             },
           })

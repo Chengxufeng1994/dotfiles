@@ -31,7 +31,10 @@ return {
       javascriptreact = { "prettier" },
       typescriptreact = { "prettier" },
 
-      ["yaml"] = { "yamlfmt" }, -- or "yamlfix"
+      json = { "prettier" },
+      jsonc = { "prettier" },
+
+      ["yaml"] = { "yamlfmt" },
     },
     ---@type table<string, conform.FormatterConfigOverride|fun(bufnr: integer): nil|conform.FormatterConfigOverride>
     formatters = {
