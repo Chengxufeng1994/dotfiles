@@ -170,6 +170,14 @@ plugins=(
   zsh-syntax-highlighting
 )
 
+# >>>> Homebrew command completion (start)
+fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
+# <<<< Homebrew command completion (end)
+
+# >>>> Vagrant command completion (start)
+fpath=(/opt/vagrant/embedded/gems/gems/vagrant-2.4.9/contrib/zsh $fpath)
+# <<<<  Vagrant command completion (end)
+
 source $ZSH/oh-my-zsh.sh
 
 # Init zsh completions
@@ -226,10 +234,6 @@ command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
 
-# >>>> Vagrant command completion (start)
-fpath=(/opt/vagrant/embedded/gems/gems/vagrant-2.4.9/contrib/zsh $fpath)
-# <<<<  Vagrant command completion (end)
-
 # ── Prompt ───────────────────────────────────────────────────
 # oh-my-posh setup
 eval "$(oh-my-posh init zsh --config ~/oh-my-posh/.oh-my-posh.omp.json)"
@@ -239,7 +243,7 @@ eval "$(oh-my-posh init zsh --config ~/oh-my-posh/.oh-my-posh.omp.json)"
 eval "$(fnm env --use-on-cd)"
 
 # atuojump setup
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+[[ -s $HOMEBREW_PREFIX/etc/profile.d/autojump.sh ]] && . $HOMEBREW_PREFIX/etc/profile.d/autojump.sh
 
 # >>>> pyenv(python version manager) (start)
 if [ -x "$HOMEBREW_PREFIX/bin/pyenv" ]; then
@@ -254,7 +258,7 @@ if type fd &>/dev/null; then
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 fi
-[[ -s $(brew --prefix)/bin/fzf ]] && source <($(brew --prefix)/bin/fzf --zsh)
+[[ -s $HOMEBREW_PREFIX/bin/fzf ]] && source <($HOMEBREW_PREFIX/bin/fzf --zsh)
 
 # ── thefuck ──────────────────────────────────────────────────
 eval "$(thefuck --alias)"
@@ -267,10 +271,10 @@ fi
 
 # >>>> GCP command completion (start)
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/Development/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Development/google-cloud-sdk/path.zsh.inc"; fi
+if [ -f '/usr/local/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/usr/local/bin/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f "$HOME/Development/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Development/google-cloud-sdk/completion.zsh.inc"; fi
+if [ -f '/usr/local/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/bin/google-cloud-sdk/completion.zsh.inc'; fi
 # >>>> GCP command completion (end)
 
 # >>>> Kubectl command completion (start)
