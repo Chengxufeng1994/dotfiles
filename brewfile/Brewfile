@@ -1,6 +1,3 @@
-tap "hashicorp/tap"
-tap 'homebrew/bundle'
-
 # ============================================================
 # 🗂️ File system / Network tools
 # ============================================================
@@ -30,6 +27,7 @@ brew "pipx"                # 安裝/隔離 Python CLI 工具
 brew "uv"                  # Python 套件管理（pip 替代方案）
 # brew "asdf"
 brew "mise"                # 統一管理 runtime（pyenv, fnm, go 等）
+# brew "ariga/tap/atlas"   # 資料庫 schema 管理工具
 
 # ============================================================
 # 💻 Terminal / Shell
@@ -49,11 +47,15 @@ brew "k6"                  # 負載測試
 brew "hey"                 # HTTP 壓測工具
 brew "vegeta"              # HTTP 壓測 / 負載測試
 brew "wrk"                 # 高性能 HTTP 壓測工具
+brew "websocat"            # WebSocket CLI 工具
 
 # ============================================================
 # 🐳 Docker / Container / Podman
 # ============================================================
 brew "lazydocker"           # Docker CLI 增強工具
+brew "dive"                 # Docker 映像檔分析工具
+brew "hadolint"             # Dockerfile 靜態分析工具
+brew "trivy"                # Docker 映像檔漏洞掃描工具
 
 # ============================================================
 # ☸️ Kubernetes / Deployment / DevOps
@@ -65,6 +67,7 @@ brew "kubespy"             # 監控 K8s 資源事件
 brew "kustomize"           # Kubernetes YAML 組合
 brew "k8sgpt"              # K8s AI Debug 工具
 brew "helm"                # K8s 套件管理
+brew "kind"                # 本地 Kubernetes（Docker 容器）
 brew "minikube"            # 本地 Kubernetes
 brew "skaffold"            # CI/CD 自動化部署
 brew "stern"               # 多 Pod log 即時查看
@@ -76,12 +79,17 @@ brew "ansible"             # 自動化佈署
 # ☁️ Cloud / Infrastructure / IaC
 # ============================================================
 ## 🧱 HashiCorp stack
-brew "terraform"           # 基礎設施即程式
-brew "tfsec"               # Terraform 安全掃描
-brew "tflint"              # Terraform Linter
+tap "hashicorp/tap"
+brew "hashicorp/tap/terraform"        
+brew "hashicorp/tap/hashicorp-vagrant"
 
-## 🌩️ Pulumi / Serverless / AWS
-brew "pulumi"              # 程式化 IaC（TypeScript / Python）
+tap "terraform-linters/tap"
+brew "terraform-linters/tap/tflint"   
+
+## 🌩️ Pulumi / Serverless
+brew "pulumi/tap/pulumi"   # 程式化 IaC（TypeScript / Python）
+
+## AWS CLI / Serverless
 brew "aws-sam-cli"         # AWS Serverless 開發
 brew "s5cmd"               # 高速 S3 CLI，比 awscli 快 10 倍
 
@@ -89,7 +97,7 @@ brew "s5cmd"               # 高速 S3 CLI，比 awscli 快 10 倍
 # ☁️ Databases / Data exchange
 # ============================================================
 brew "protobuf"            # Protocol Buffer 編譯器
-brew "buf"                 # Protocol Buffer 工具
+brew "bufbuild/buf/buf"    # Protocol Buffer 工具
 brew "grpcurl"             # gRPC CLI 測試工具
 brew "mongosh"             # MongoDB CLI
 
@@ -122,7 +130,6 @@ brew "yazi"                  # 終端內顯示圖片
 # ============================================================
 # 📚 Documentation / Cheatsheet
 # ============================================================
-# brew "tldr"              # 常用命令簡表
 brew "tealdeer"            # tldr 加強版（快取、自動更新）
 brew "glow"                # 終端內顯示 Markdown
 brew "cheat"               # 可自訂 CLI cheat sheet
