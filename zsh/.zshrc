@@ -282,9 +282,7 @@ if [ -f '/usr/local/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/loc
 # <<<< Kubectl command completion (end)
 
 # >>>> Terraform (start)
-if [ -f "$HOMEBREW_PREFIX/bin/terraform" ]; then
-  complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
-fi
+[[ -f "$HOMEBREW_PREFIX/bin/terraform" ]] && complete -o nospace -C "$HOMEBREW_PREFIX/bin/terraform" terraform
 # >>>> Terraform (end)
 
 # Aliases
