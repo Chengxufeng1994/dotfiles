@@ -1,6 +1,11 @@
-# Init zsh completions
-autoload -U +X bashcompinit && bashcompinit
-autoload -Uz compinit && compinit
+# ============================================================
+# ~/.zshrc — interactive shell
+# 職責：prompt / alias / completion / 需要 hook 的 runtime
+# 系統 PATH 與 brew 初始化在 ~/.zprofile；此處只 prepend 使用者工具鏈路徑
+# ============================================================
+
+# 子 shell 不繼承 typeset 屬性，需重新宣告
+typeset -U path PATH
 
 export HISTFILE=~/.zsh_history
 export HISTSIZE=200000 # huge internal buffer
@@ -154,19 +159,22 @@ plugins=(
   docker
   docker-compose
   extract
-  fnm
   git
   kubectl
   ssh-agent
+  web-search
+  you-should-use
   z
   zsh-autosuggestions
   zsh-history-substring-search
   zsh-syntax-highlighting
-  you-should-use
-  web-search
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# Init zsh completions
+autoload -U +X bashcompinit && bashcompinit
+# autoload -Uz compinit && compinit
 
 # User configuration
 
@@ -200,32 +208,47 @@ bindkey '^[[B' history-substring-search-down
 bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 
-# Easy way to check for command_existing in shell scripts
-command_exists() {
-  command -v "$1" >/dev/null 2>&1
-}
-
 export PATH="$HOME/.local/bin:$PATH"
 
 # Go Path
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 
-# Rust Path
-export CARGO_HOME=$HOME/.cargo/bin
-export PATH=$CARGO_HOME:$PATH
+# Pyenv Path
+export PYENV_ROOT="$HOME/.pyenv"
+
+# Cargo Path
+export CARGO_HOME=$HOME/.cargo
 export PATH="$CARGO_HOME/bin:$PATH"
 
-# Antigravity Path
-export PATH="/Users/bennycheng/.antigravity/antigravity/bin:$PATH"
+# Easy way to check for command_existing in shell scripts
+command_exists() {
+  command -v "$1" >/dev/null 2>&1
+}
 
+# >>>> Vagrant command completion (start)
+fpath=(/opt/vagrant/embedded/gems/gems/vagrant-2.4.9/contrib/zsh $fpath)
+# <<<<  Vagrant command completion (end)
+
+# ── Prompt ───────────────────────────────────────────────────
 # oh-my-posh setup
 eval "$(oh-my-posh init zsh --config ~/oh-my-posh/.oh-my-posh.omp.json)"
+
+# ── Runtime ───────────────────────────────────────────────────
+# fnm setup
+eval "$(fnm env --use-on-cd)"
 
 # atuojump setup
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
-# fzf setup
+# >>>> pyenv(python version manager) (start)
+if [ -x "$HOMEBREW_PREFIX/bin/pyenv" ]; then
+  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init - zsh)"
+fi
+# >>>> pyenv(python version manager) (end)
+
+# ── fzf ──────────────────────────────────────────────────────
 if type fd &>/dev/null; then
   export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -233,35 +256,8 @@ if type fd &>/dev/null; then
 fi
 [[ -s $(brew --prefix)/bin/fzf ]] && source <($(brew --prefix)/bin/fzf --zsh)
 
-# fnm setup
-eval "$(fnm env --use-on-cd)"
-
-# thefuch setup
-eval $(thefuck --alias)
-
-# >>>> pyenv(python version manager) (start)
-if [ -x "$HOMEBREW_PREFIX/bin/pyenv" ]; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init - zsh)"
-fi
-# >>>> pyenv(python version manager) (end)
-
-# >>>> Kubectl command completion (start)
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
-# <<<< Kubectl command completion (end)
-
-# >>>> Terraform (start)
-if [ -f "$HOMEBREW_PREFIX/bin/terraform" ]; then
-  complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
-fi
-# >>>> Terraform (end)
-
-# >>>> Vagrant command completion (start)
-if [ -f '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.sh' ]; then
-  . '/opt/vagrant/embedded/gems/gems/vagrant-2.3.7/contrib/bash/completion.sh'
-fi
-# <<<<  Vagrant command completion (end)
+# ── thefuck ──────────────────────────────────────────────────
+eval "$(thefuck --alias)"
 
 # >>>> AWS command completion (start)
 if [ -f '/usr/local/bin/aws_completer' ]; then
@@ -276,6 +272,16 @@ if [ -f "$HOME/Development/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/Devel
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME/Development/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/Development/google-cloud-sdk/completion.zsh.inc"; fi
 # >>>> GCP command completion (end)
+
+# >>>> Kubectl command completion (start)
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+# <<<< Kubectl command completion (end)
+
+# >>>> Terraform (start)
+if [ -f "$HOMEBREW_PREFIX/bin/terraform" ]; then
+  complete -o nospace -C $HOMEBREW_PREFIX/bin/terraform terraform
+fi
+# >>>> Terraform (end)
 
 # Aliases
 [ -f ~/.aliases.zsh ] && source ~/.aliases.zsh
