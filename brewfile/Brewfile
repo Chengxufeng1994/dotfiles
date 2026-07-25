@@ -1,20 +1,55 @@
 # ============================================================
 # 🗂️ File system / Network tools
 # ============================================================
-brew "tree"                # 檔案樹狀結構顯示
-brew "rsync"               # 檔案同步
-brew "rclone"              # 雲端同步 (Google Drive, S3, GCS...)
+brew "bat"                  # 現代化 cat，支援語法高亮、git 狀態
+brew "eza"                  # 現代化 ls，支援 icon、git 狀態
+brew "tree"                 # 檔案樹狀結構顯示
+brew "rsync"                # 檔案同步
+brew "rclone"               # 雲端同步 (Google Drive, S3, GCS...)
 
 # ============================================================
 # 🔍 Search / Diff / JSON tools
 # ============================================================
-brew "bat"                 # cat 增強版（語法高亮、行號）
-brew "fzf"                 # 模糊搜尋
-brew "jq"                  # JSON 處理
-brew "yq"                  # YAML 處理
-brew "autojump"            # 快速跳轉目錄
-brew "ripgrep"             # 高效全文搜尋 (比 grep 快)
-brew "ctags"               # 產生程式碼索引標籤
+brew "fzf"                  # 模糊搜尋
+brew "jq"                   # JSON 處理
+brew "yq"                   # YAML 處理
+brew "ripgrep"              # 高效全文搜尋 (比 grep 快)
+brew "ctags"                # 產生程式碼索引標籤
+
+# ============================================================
+# 🛠️ Productivity / Shell utilities
+# ============================================================
+# brew "atuin"              # 可搜尋、同步 shell history
+# brew "lsd"                # 現代化 ls，支援 icon、git 狀態
+brew "procs"                # 現代化 ps
+# brew "gping"              # 視覺化 ping
+brew "fd"                   # find 的現代化替代
+brew "yazi"                 # 終端內顯示圖片
+# brew "autojump"           # 目錄跳轉
+brew "zoxide"               # 智慧目錄跳轉
+
+# ============================================================
+# 🧹 Disk / Storage / Cleanup
+# ============================================================
+# brew "duf"                # 現代化 df，磁碟用量樹狀顯示
+# brew "dust"               # 現代化 du，磁碟用量樹狀顯示
+# brew "dua-cli"            # 現代化磁碟分析 
+
+# ============================================================
+# 📚 Documentation / Cheatsheet
+# ============================================================
+brew "tealdeer"             # tldr 加強版（快取、自動更新）
+brew "glow"                 # 終端內顯示 Markdown
+brew "cheat"                # 可自訂 CLI cheat sheet
+
+# ============================================================
+# 👀 Monitoring / Misc Utilities
+# ============================================================
+brew "btop"                 # 系統資源監控，比 glances 快
+# brew "bpytop"             # 系統資源監控，比 glances 快
+# brwe "ctop"               # 系統資源監控，比 glances 快
+# brew "glances"            # 系統監控 (可替換為 btop)
+brew "watch"                # 重複執行命令觀察輸出
 
 # ============================================================
 # 🧠 Programming languages / Toolchains
@@ -109,38 +144,6 @@ brew "git-delta"           # 改善 git diff 輸出
 brew "lazygit"             # 終端 Git UI
 # brew "gitui"
 brew "pre-commit"          # pre-commit hook 管理
-
-# ============================================================
-# 🛠️ Productivity / Shell utilities
-# ============================================================
-# brew "atuin"               # 可搜尋、同步 shell history
-brew "eza"                   # 現代化 ls，支援 icon、git 狀態
-# brew "lsd"                 # 現代化 ls，支援 icon、git 狀態
-# brew "procs"               # 現代化 ps
-# brew "gping"               # 視覺化 ping
-brew "fd"                    # find 的現代化替代
-brew "yazi"                  # 終端內顯示圖片
-# brew "zoxide"              # 智慧目錄跳轉，比 autojump 更強
-
-# ============================================================
-# 🧹 Disk / Storage / Cleanup
-# ============================================================
-# brew "dust"                # 現代化 du，磁碟用量樹狀顯示
-
-# ============================================================
-# 📚 Documentation / Cheatsheet
-# ============================================================
-brew "tealdeer"            # tldr 加強版（快取、自動更新）
-brew "glow"                # 終端內顯示 Markdown
-brew "cheat"               # 可自訂 CLI cheat sheet
-
-# ============================================================
-# 👀 Monitoring / Misc Utilities
-# ============================================================
-# brew "btop"              # 系統資源監控，比 glances 快
-brew "bpytop"              # 系統資源監控，比 glances 快
-# brew "glances"           # 系統監控 (可替換為 btop)
-brew "watch"               # 重複執行命令觀察輸出
 
 # ============================================================
 # LLM / AI Tools

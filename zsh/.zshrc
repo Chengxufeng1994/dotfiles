@@ -152,7 +152,6 @@ export YSU_MODE=ALL
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  autojump
   brew
   colored-man-pages
   command-not-found
@@ -161,13 +160,15 @@ plugins=(
   extract
   git
   kubectl
+  ohmyzsh-full-autoupdate
   ssh-agent
   web-search
   you-should-use
-  z
   zsh-autosuggestions
   zsh-history-substring-search
   zsh-syntax-highlighting
+  # autojump
+  # z
 )
 
 # >>>> Homebrew command completion (start)
@@ -175,7 +176,7 @@ fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 # <<<< Homebrew command completion (end)
 
 # >>>> Vagrant command completion (start)
-fpath=(/opt/vagrant/embedded/gems/gems/vagrant-2.4.9/contrib/zsh $fpath)
+fpath=(/opt/vagrant/embedded/gems/gems/vagrant-*/contrib/zsh(N) $fpath)
 # <<<<  Vagrant command completion (end)
 
 source $ZSH/oh-my-zsh.sh
@@ -242,8 +243,8 @@ eval "$(oh-my-posh init zsh --config ~/oh-my-posh/.oh-my-posh.omp.json)"
 # fnm setup
 eval "$(fnm env --use-on-cd)"
 
-# atuojump setup
-[[ -s $HOMEBREW_PREFIX/etc/profile.d/autojump.sh ]] && . $HOMEBREW_PREFIX/etc/profile.d/autojump.sh
+# zoxide setup
+eval "$(zoxide init zsh)"
 
 # >>>> pyenv(python version manager) (start)
 if [ -x "$HOMEBREW_PREFIX/bin/pyenv" ]; then
@@ -276,10 +277,6 @@ if [ -f '/usr/local/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/usr/local/bin
 # The next line enables shell command completion for gcloud.
 if [ -f '/usr/local/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/bin/google-cloud-sdk/completion.zsh.inc'; fi
 # >>>> GCP command completion (end)
-
-# >>>> Kubectl command completion (start)
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
-# <<<< Kubectl command completion (end)
 
 # >>>> Terraform (start)
 [[ -f "$HOMEBREW_PREFIX/bin/terraform" ]] && complete -o nospace -C "$HOMEBREW_PREFIX/bin/terraform" terraform
