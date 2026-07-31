@@ -74,7 +74,9 @@
     "pulumi-delegation@pulumi-agent-skills": true,
     "pulumi-package-maintenance@pulumi-agent-skills": true,
     "planning-with-files@planning-with-files": false,
-    "understand-anything@understand-anything": false
+    "understand-anything@understand-anything": false,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
+    "impeccable@impeccable": true
   },
   "extraKnownMarketplaces": {
     "knowledge-work-plugins": {
@@ -186,6 +188,20 @@
       "source": {
         "source": "github",
         "repo": "pulumi/agent-skills"
+      },
+      "autoUpdate": true
+    },
+    "impeccable": {
+      "source": {
+        "source": "github",
+        "repo": "pbakaus/impeccable"
+      },
+      "autoUpdate": true
+    },
+    "ui-ux-pro-max-skill": {
+      "source": {
+        "source": "github",
+        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
       },
       "autoUpdate": true
     }
