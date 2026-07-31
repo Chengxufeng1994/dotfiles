@@ -9,6 +9,11 @@
       "command": "uvx",
       "args": ["mcp-server-fetch"]
     },
+    "firecrawl": {
+      "type": "http",
+      "url": "https://mcp.firecrawl.dev/YOUR_FIRECRAWL_API_KEY_HERE/v2/mcp",
+      "description": "Web scraping, crawling, search, and content extraction"
+    },
     "context7": {
       "type": "sse",
       "url": "https://mcp.context7.com/sse",
