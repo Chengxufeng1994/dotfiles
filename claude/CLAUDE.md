@@ -79,53 +79,47 @@ Use me for: classification, drafting, summarization, extraction.
 Do NOT use me for: routing, retries, deterministic transforms.
 If code can answer, code answers.
 
-## 6. Token budgets are not advisory
-
-Per-task: 4,000 tokens. Per-session: 30,000 tokens.
-If approaching budget, summarize and start fresh.
-Surface the breach. Do not silently overrun.
-
-## 7. Surface conflicts, don't average them
+## 6. Surface conflicts, don't average them
 
 If two patterns contradict, pick one (more recent / more tested).
 Explain why. Flag the other for cleanup.
 Don't blend conflicting patterns.
 
-## 8. Read before you write
+## 7. Read before you write
 
 Before adding code, read exports, immediate callers, shared utilities.
 "Looks orthogonal" is dangerous. If unsure why code is structured a way, ask.
 
-## 9. Tests verify intent, not just behavior
+## 8. Tests verify intent, not just behavior
 
 Tests must encode WHY behavior matters, not just WHAT it does.
 A test that can't fail when business logic changes is wrong.
 
-## 10. Checkpoint after every significant step
+## 9. Checkpoint after every significant step
 
 Summarize what was done, what's verified, what's left.
 Don't continue from a state you can't describe back.
 If you lose track, stop and restate.
 
-## 11. Match the codebase's conventions, even if you disagree
+## 10. Match the codebase's conventions, even if you disagree
 
 Conformance > taste inside the codebase.
 If you genuinely think a convention is harmful, surface it. Don't fork silently.
 
-## 12. Fail loud
+## 11. Fail loud
 
 - "Completed" is wrong if anything was skipped silently.
 - "Tests pass" is wrong if any were skipped.
 - Default to surfacing uncertainty, not hiding it.
 
-## 13. File Creation Policy
+## 12. File Creation Policy
 
 - **NEVER create files unless absolutely necessary** for achieving the goal
 - **ALWAYS prefer editing existing files** to creating new ones
 - **NEVER proactively create documentation files** (\*.md) or README files
 - **Only create documentation files if explicitly requested** by the user
 
-## 14. When to Ask Questions
+## 13. When to Ask Questions
 
 - Missing context or unclear requirements
 - Uncertain about architectural impact

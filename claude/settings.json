@@ -40,17 +40,21 @@
     "ralph-loop@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
+    "financial-analysis@claude-for-financial-services": false,
     "agent-skills@addy-agent-skills": false,
-    "mattpocock-skills@mattpocock": true,
     "ecc@ecc": false,
-    "financial-analysis@claude-for-financial-services": true,
+    "mattpocock-skills@mattpocock": true,
     "obsidian@obsidian-skills": true,
-    "planning-with-files@planning-with-files": false,
     "redis-development@redis": true,
     "superpowers@claude-plugins-official": true,
     "mgrep@Mixedbread-Grep": true,
-    "understand-anything@understand-anything": true,
-    "codex@openai-codex": true
+    "codex@openai-codex": true,
+    "pulumi-migration@pulumi-agent-skills": true,
+    "pulumi@pulumi-agent-skills": true,
+    "pulumi-delegation@pulumi-agent-skills": true,
+    "pulumi-package-maintenance@pulumi-agent-skills": true,
+    "planning-with-files@planning-with-files": false,
+    "understand-anything@understand-anything": false
   },
   "extraKnownMarketplaces": {
     "knowledge-work-plugins": {
@@ -155,6 +159,13 @@
       "source": {
         "source": "github",
         "repo": "mattpocock/skills"
+      },
+      "autoUpdate": true
+    },
+    "pulumi-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "pulumi/agent-skills"
       },
       "autoUpdate": true
     }
