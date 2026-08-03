@@ -89,7 +89,7 @@ spec 內容與章節標題，跟著使用者當下溝通的語言走（預設繁
 
 ### 第四步：撰寫 spec
 
-讀 `assets/spec-template.md` 作為骨架，逐節填寫：
+讀 `templates/spec-template.md` 作為骨架，逐節填寫：
 
 - 守住 spec 邊界：只寫 WHAT／WHY，不寫架構／資料模型／API／實作細節（見上方「範圍」）
 - 每節都要處理：沒有內容的章節用一句話說明「本功能不適用」，而非留白
