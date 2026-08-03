@@ -1,0 +1,19 @@
+# 開發指令集。注意：沒有 `just test`，單元與整合測試分開跑。
+default:
+    @just --list
+
+fmt:
+    ruff format src tests
+
+check:
+    ruff check src tests
+    mypy src
+
+test-unit:
+    pytest tests/unit -q
+
+test-integration:
+    pytest tests/integration -q -m integration
+
+cov:
+    pytest tests/unit --cov=notifier --cov-fail-under=80

@@ -1,0 +1,85 @@
+{
+  "skill_name": "writing-a-plan",
+  "evals": [
+    {
+      "id": 0,
+      "name": "go-repo-full-spec-invoice-export",
+      "prompt": "docs/billing/invoice-export/spec.md 已經定稿了，幫我把它拆成實作計畫。直接寫不用問我，趕著這週開工。",
+      "fixture": "evals/fixtures/go-billing",
+      "expected_output": "在 docs/billing/invoice-export/plan.md 產出單一計畫檔：任務照 repo 既有的 internal/billing/{domain,application,infrastructure,interfaces} 分層與命名，verify 使用 Makefile 裡真實存在的指令，P0 需求全數有任務對應，spec 的兩個開放問題進入風險與未定。",
+      "files": [],
+      "expectations": [
+        "輸出是單一 markdown 檔，路徑為 docs/billing/invoice-export/plan.md（與來源 spec 同層）",
+        "包含核心章節：前置確認、任務、執行順序、驗收對照、風險與未定",
+        "每個任務都有 verify，且 verify 是可判定完成與否的（指令或具體可觀察結果），沒有「確認功能正常」這類無法判定的寫法",
+        "verify 引用的指令真實存在於 fixture 的 Makefile（如 make test-billing / make lint / go test ./internal/billing/...），未編造不存在的指令或 script",
+        "任務列出的檔案路徑沿用既有分層 internal/billing/{domain,application,infrastructure,interfaces}，未自創一套不同的目錄結構",
+        "計畫呼應既有慣例：出站埠定義在 application/port/outbound、查詢處理器在 application/query、持久化實作在 infrastructure/persistence/postgres",
+        "驗收對照表涵蓋全部 P0 需求（FR-1～FR-4），每列都對應到具體任務編號",
+        "非 P0 需求（FR-5～FR-7）有明確處置：對應到任務，或標示為本次不做並附理由，未被默默省略",
+        "spec 的兩個開放問題（zip 保留期限、沿用既有 job 機制與否）出現在風險與未定並標 [待確認]",
+        "任務有相依關係標示，且執行順序與相依一致（被依賴的任務排在前面）",
+        "不含大段實作程式碼——plan 描述要改什麼，而非貼上完整實作",
+        "不重述 spec 的 WHAT/WHY（無背景與問題、目標、使用者情境等章節），僅引用 spec",
+        "需要有人動手才會成立的前提（如 go mod tidy、補缺的設定檔、補完空實作）是帶 verify 的編號任務，而非只寫在前置確認章節",
+        "已標為未決的事項未在別處被悄悄選一個預設值當定案；若採用暫定值，明確註明確認後可能返工",
+        "任務中指涉的既有檔案／模組／註冊點真實存在於 repo；推測而未經確認的一律標 [待確認]，未以「對齊既有慣例」這類含糊說法帶過",
+        "若引入新依賴套件、新目錄或新工具，明確標示為新增而非沿用"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "ts-repo-frontend-autocomplete",
+      "prompt": "搜尋自動完成的 spec 在 docs/search/autocomplete/spec.md，幫我拆成可以照著做的步驟。我趕時間，直接產出。",
+      "fixture": "evals/fixtures/ts-storefront",
+      "expected_output": "在 docs/search/autocomplete/plan.md 產出計畫：任務照 src/features/<feature>/ 與 use<Feature> hook 慣例，verify 使用 package.json 真實 scripts（vitest / typecheck / lint），FR-4 競態需求有對應任務，P2 明確標示處置。",
+      "files": [],
+      "expectations": [
+        "輸出是單一 markdown 檔，路徑為 docs/search/autocomplete/plan.md（與來源 spec 同層）",
+        "包含核心章節：前置確認、任務、執行順序、驗收對照、風險與未定",
+        "每個任務都有 verify，且 verify 是可判定完成與否的",
+        "verify 引用 package.json 中真實存在的 script（test / typecheck / lint / build），未出現 go test、make 等此 repo 不存在的指令",
+        "任務路徑沿用既有前端慣例：新檔放在 src/features/<feature>/ 下，資料抓取封裝成 use<Feature> hook，沿用 src/lib/api-client",
+        "前置確認明確指出參考了既有的 product-filter feature 作為結構範本",
+        "驗收對照表涵蓋全部 P0 需求（FR-1～FR-3），每列對應到具體任務編號",
+        "FR-4（過期回應不得覆蓋新結果）有對應任務，未被當成實作細節略過",
+        "FR-5（P2 粗體標示）有明確處置：對應任務或標示本次不做",
+        "非功能需求（200ms、無障礙 combobox、中英文）至少有對應的任務或 verify，未整組消失",
+        "spec 的開放問題（無建議時的空狀態）出現在風險與未定並標 [待確認]",
+        "不含大段實作程式碼",
+        "不重述 spec 的 WHAT/WHY 章節",
+        "需要有人動手才會成立的前提（如 go mod tidy、補缺的設定檔、補完空實作）是帶 verify 的編號任務，而非只寫在前置確認章節",
+        "已標為未決的事項未在別處被悄悄選一個預設值當定案；若採用暫定值，明確註明確認後可能返工",
+        "任務中指涉的既有檔案／模組／註冊點真實存在於 repo；推測而未經確認的一律標 [待確認]，未以「對齊既有慣例」這類含糊說法帶過",
+        "若引入新依賴套件、新目錄或新工具，明確標示為新增而非沿用"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "py-repo-reuse-and-open-questions-webhook",
+      "prompt": "webhook 通知管道的 spec 在 docs/notification/webhook-channel/spec.md，幫我排成實作計畫。直接產出不用問我。",
+      "fixture": "evals/fixtures/py-notifier",
+      "expected_output": "在 docs/notification/webhook-channel/plan.md 產出計畫。此 repo 已有完整的通知骨架（NotificationChannel Protocol、RetryPolicy／with_retry、OutboxRepository、Dispatcher 註冊表），新管道應複用而非重寫；驗證指令必須來自 justfile 的實際 recipe（此 repo 沒有 `just test`）；spec 的三個開放問題皆為 load-bearing，不得被單方面拍板；channels/sms.py 是 NotImplementedError 半成品，不可當成可依賴的既有實作。",
+      "files": [],
+      "expectations": [
+        "輸出是單一 markdown 檔，路徑為 docs/notification/webhook-channel/plan.md（與來源 spec 同層）",
+        "包含核心章節：前置確認、任務、執行順序、驗收對照、風險與未定",
+        "每個任務都有 verify，且 verify 是可判定完成與否的",
+        "verify 只引用 justfile 中真實存在的 recipe（check／test-unit／test-integration／cov／fmt）或 pyproject 支援的 pytest 呼叫；未出現 `just test`、`just lint`、`make` 等此 repo 不存在的指令",
+        "前置確認明確指出可複用的既有骨架：NotificationChannel Protocol、RetryPolicy／with_retry、OutboxRepository、Dispatcher.register 至少三項被點名",
+        "沒有任何任務在重新實作重試／指數退避或 outbox 佇列——既有的 retry.py 與 outbox.py 被複用而非取代",
+        "新管道實作放在 src/notifier/channels/ 下並註冊到 Dispatcher，沿用 email.py 的 NotificationChannel 實作形狀（name／validate_target／send）",
+        "spec 的三個開放問題（簽章演算法與標頭格式、重試參數是否沿用 email、連續失敗後的自動停用）全部保留為未決並標 [待確認]，未在任務中被悄悄拍板成定案",
+        "FR-6（P2 送達統計）有明確處置：對應任務或標示本次不做並附理由",
+        "未把 src/notifier/channels/sms.py 當成可依賴或可參考的完成實作（它只丟 NotImplementedError）；若提及則明確指出它是半成品",
+        "安全非功能需求有對應任務：SSRF 防護（禁止對內網位址發請求）與密鑰不落日誌，兩者皆未消失",
+        "任務中指涉的既有檔案／模組真實存在於 repo；推測而未經確認的一律標 [待確認]",
+        "若引入新依賴套件、新目錄或新工具，明確標示為新增而非沿用",
+        "不含大段實作程式碼",
+        "不重述 spec 的 WHAT/WHY 章節",
+        "需要有人動手才會成立的前提（如 go mod tidy、補缺的設定檔、補完空實作）是帶 verify 的編號任務，而非只寫在前置確認章節",
+        "已標為未決的事項未在別處被悄悄選一個預設值當定案；若採用暫定值，明確註明確認後可能返工"
+      ]
+    }
+  ]
+}
