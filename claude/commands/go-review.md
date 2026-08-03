@@ -73,7 +73,7 @@ This command MUST use:
 
 - **Skill** `golang-patterns` — idiomatic Go conventions, error wrapping, context propagation, interface design.
 - **Skill** `golang-testing` — test coverage expectations for review purposes.
-- **Agent** `go-reviewer` — defined in `claude/agents/go-code-reviewer.md` (frontmatter `name: go-reviewer`). Expert reviewer for concurrency safety, error handling, security, and Go idioms.
+- **Agent** `go-reviewer` — defined in `claude/agents/go-reviewer.md` (frontmatter `name: go-reviewer`). Expert reviewer for concurrency safety, error handling, security, and Go idioms.
 
 The command runs static analysis itself (shell state required); the agent runs the conceptual review.
 
@@ -131,7 +131,7 @@ The agent returns the structured findings. Do not re-review on top of it.
 ### Phase 5 — DECIDE
 
 | Condition | Decision |
-|---|---|
+| --- | --- |
 | Zero CRITICAL/HIGH, static analysis passes | **APPROVE** |
 | Only MEDIUM/LOW, static analysis passes | **APPROVE WITH COMMENTS** |
 | Any HIGH, or static analysis failures | **REQUEST CHANGES** |

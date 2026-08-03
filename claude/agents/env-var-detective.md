@@ -70,7 +70,7 @@ git check-ignore .env >/dev/null 2>&1 || echo "RISK: .env not gitignored"
 ## Gap Categories
 
 | Category | Symptom | Fix |
-|----------|---------|-----|
+| ---------- | --------- | ----- |
 | Used, not declared | `process.env.X` read but absent from `.env`/example | Add key (placeholder) to `.env.example`; flag for human to set real value |
 | Declared, not used | Key in `.env.example` no code reads | Report as stale; remove only if confirmed dead |
 | `.env` ↔ example drift | Real `.env` has keys the example lacks (or vice versa) | Sync **keys** into `.env.example` with placeholders |
@@ -114,7 +114,7 @@ Final line: `Audit: COMPLETE | Gaps: K | Fixed: F | Needs human: H`
 ## When NOT to Use
 
 - Compile/type/build failures → use `build-error-resolver` (or `go-build-resolver` for Go)
-- Secret rotation, vault/secret-manager setup, deeper threat review → use `security-auditor`
+- Secret rotation, vault/secret-manager setup, deeper threat review → use `security-reviewer`
 - App-logic bug unrelated to config → use `test-engineer`
 
 ---
