@@ -76,7 +76,8 @@
     "planning-with-files@planning-with-files": false,
     "understand-anything@understand-anything": false,
     "ui-ux-pro-max@ui-ux-pro-max-skill": true,
-    "impeccable@impeccable": true
+    "impeccable@impeccable": true,
+    "cc-skills-golang@samber": true
   },
   "extraKnownMarketplaces": {
     "knowledge-work-plugins": {
@@ -202,6 +203,13 @@
       "source": {
         "source": "github",
         "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
+      },
+      "autoUpdate": true
+    },
+    "samber": {
+      "source": {
+        "source": "github",
+        "repo": "samber/cc"
       },
       "autoUpdate": true
     }
