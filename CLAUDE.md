@@ -63,13 +63,11 @@ The `claude/` directory mirrors `~/.claude/` and contains:
 
 ## Rules Files
 
-Rules under `claude/rules/` use the `ecc` (everything-claude-code) layering: a shared base extended by per-language overrides. When modifying Claude's behavior, edit the appropriate existing file rather than creating a new one.
+Files under `claude/rules/` are injected into context automatically — unconditionally, or scoped to matching files via `paths:` frontmatter. That makes them the place for constraints that must hold no matter which skill happens to load, and a bad place for anything a skill already covers.
 
 - `context7.md` — when to use the Context7 MCP for live library docs
-- `ecc/common/*.md` — shared rules: `coding-style`, `patterns`, `testing`, `git-workflow`, `development-workflow`, `code-review`, `security`, `performance`, `hooks`, `agents`
-- `ecc/<lang>/*.md` — overrides for `python`, `rust`, `typescript`, `web` (each extends its `common/` counterpart)
 
-There is deliberately no `ecc/golang/`. Go guidance comes from the `cc-skills-golang@samber` plugin (46 skills) plus the local `golang-generics` skill. The other language layers still duplicate what their skills cover and are due the same treatment.
+The `ecc/` layer (33 files, ~14.6k tokens, a `common/` base plus `python`/`rust`/`typescript`/`web`/`golang` overrides) was removed. Its content duplicated installed skills — `commit-convention`, `code-review-and-quality`, `testing-strategy`, `security-and-hardening`, `refactor-convention`, the `cc-skills-golang@samber` plugin — while carrying the cost of always being loaded. Re-adding rules is fine; keep them to imperative constraints with no code examples.
 
 ## Adding Skills and Commands
 

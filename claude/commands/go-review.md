@@ -115,7 +115,7 @@ Capture pass/fail per check. Any tool not installed → record as "skipped", don
 
 ### Phase 3 — CONTEXT
 
-1. Read `CLAUDE.md` and `claude/rules/ecc/**/*.md` for project conventions.
+1. Read `CLAUDE.md` and any `claude/rules/*.md` for project conventions.
 2. Load `golang-code-style`, `golang-safety`, `golang-error-handling`, and `golang-testing` skills via the Skill tool.
 
 ### Phase 4 — DELEGATE
