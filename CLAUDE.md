@@ -66,8 +66,12 @@ The `claude/` directory mirrors `~/.claude/` and contains:
 Files under `claude/rules/` are injected into context automatically — unconditionally, or scoped to matching files via `paths:` frontmatter. That makes them the place for constraints that must hold no matter which skill happens to load, and a bad place for anything a skill already covers.
 
 - `context7.md` — when to use the Context7 MCP for live library docs
+- `common/*.md` — shared rules, loaded in every session: `coding-style`, `patterns`, `testing`, `git-workflow`, `development-workflow`, `code-review`, `security`, `performance`, `hooks`, `agents`
+- `<lang>/*.md` — `golang`, `python`, `rust`, `typescript`; each extends its `common/` counterpart and carries `paths:` frontmatter so it loads only for matching files
 
-The `ecc/` layer (33 files, ~14.6k tokens, a `common/` base plus `python`/`rust`/`typescript`/`web`/`golang` overrides) was removed. Its content duplicated installed skills — `commit-convention`, `code-review-and-quality`, `testing-strategy`, `security-and-hardening`, `refactor-convention`, the `cc-skills-golang@samber` plugin — while carrying the cost of always being loaded. Re-adding rules is fine; keep them to imperative constraints with no code examples.
+These come from ECC (everything-claude-code). They were previously nested under `rules/ecc/`; that wrapper directory is gone and the layers sit directly under `rules/`. ECC also ships a `web/` layer, which is not installed here.
+
+Rules overlap the installed skills in places (`git-workflow` vs the `commit-convention` skill, `testing` vs `testing-strategy`, `golang/*` vs the `cc-skills-golang@samber` plugin). The tradeoff is deliberate: rules load unconditionally, skills load only when the model picks them. Prefer rules for constraints that must hold regardless, and keep new ones to imperative statements rather than code examples.
 
 ## Adding Skills and Commands
 
