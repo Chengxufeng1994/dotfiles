@@ -6,7 +6,7 @@ allowed-tools: Read, Bash, Grep, Glob, Task
 
 # Go Code Review
 
-> Orchestrates the `go-reviewer` agent with the `golang-patterns` and `golang-testing` skills for Go-specific code review.
+> Orchestrates the `go-reviewer` agent with the `golang-code-style`, `golang-safety`, `golang-error-handling`, and `golang-testing` skills for Go-specific code review.
 
 **Input**: $ARGUMENTS
 
@@ -55,7 +55,7 @@ The command briefs the agent with these Go-specific severity buckets. Phase 4 pa
 
 ### MEDIUM (Consider → APPROVE WITH COMMENTS)
 
-- Non-idiomatic code patterns (vs `golang-patterns` skill)
+- Non-idiomatic code patterns (vs `golang-code-style` and `golang-naming` skills)
 - Missing godoc comments on exported identifiers
 - Inefficient string concatenation (use `strings.Builder` in loops)
 - Slice not preallocated when length is known
@@ -71,7 +71,9 @@ The command briefs the agent with these Go-specific severity buckets. Phase 4 pa
 
 This command MUST use:
 
-- **Skill** `golang-patterns` — idiomatic Go conventions, error wrapping, context propagation, interface design.
+- **Skill** `golang-code-style` — formatting, comment, and style conventions.
+- **Skill** `golang-safety` — nil safety, append aliasing, concurrent map access, and other panic sources.
+- **Skill** `golang-error-handling` — error wrapping, `errors.Is`/`As`, the single handling rule.
 - **Skill** `golang-testing` — test coverage expectations for review purposes.
 - **Agent** `go-reviewer` — defined in `claude/agents/go-reviewer.md` (frontmatter `name: go-reviewer`). Expert reviewer for concurrency safety, error handling, security, and Go idioms.
 
@@ -114,7 +116,7 @@ Capture pass/fail per check. Any tool not installed → record as "skipped", don
 ### Phase 3 — CONTEXT
 
 1. Read `CLAUDE.md` and `claude/rules/ecc/**/*.md` for project conventions.
-2. Load `golang-patterns` and `golang-testing` skills via the Skill tool.
+2. Load `golang-code-style`, `golang-safety`, `golang-error-handling`, and `golang-testing` skills via the Skill tool.
 
 ### Phase 4 — DELEGATE
 

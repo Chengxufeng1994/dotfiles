@@ -6,7 +6,7 @@ allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Task
 
 # Go Build and Fix
 
-> Orchestrates the `go-build-resolver` agent with the `golang-patterns` skill to incrementally fix Go build errors with minimal changes.
+> Orchestrates the `go-build-resolver` agent with the `golang-code-style` and `golang-error-handling` skills to incrementally fix Go build errors with minimal changes.
 
 **Input**: $ARGUMENTS
 
@@ -36,7 +36,8 @@ Use `/go-build` when:
 
 This command MUST use:
 
-- **Skill** `golang-patterns` — idiomatic Go conventions used to inform fix choices (no premature refactors).
+- **Skill** `golang-code-style` — idiomatic Go conventions used to inform fix choices (no premature refactors).
+- **Skill** `golang-error-handling` — correct wrapping and `errors.Is`/`As` usage when a fix touches error paths.
 - **Agent** `go-build-resolver` — defined in `claude/agents/go-build-resolver.md`. Specialist in minimal, surgical fixes for build / vet / lint errors. Stops after 3 failed attempts on the same error.
 
 The command runs the build/lint commands itself; the agent proposes and applies the fixes.
@@ -75,7 +76,7 @@ Fix order: **Build → Vet → Lint → Module** (compilation first, then correc
 
 ### Phase 3 — CONTEXT
 
-Load the `golang-patterns` skill via the Skill tool so the agent's fixes follow project idioms.
+Load the `golang-code-style` and `golang-error-handling` skills via the Skill tool so the agent's fixes follow project idioms.
 
 ### Phase 4 — DELEGATE (per error)
 

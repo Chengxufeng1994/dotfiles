@@ -162,4 +162,5 @@ This prevents the command from silently merging "wrote a test" and "wrote a fix"
 
 - `/go-build` — fix build errors before running tests.
 - `/go-review` — review the implementation after this command completes.
-- Skill `golang-patterns` — broader Go idioms beyond testing.
+- Skill `golang-code-style` — broader Go idioms beyond testing.
+- Skill `golang-benchmark` — profiling and benchmark comparison when a test surfaces a performance question.

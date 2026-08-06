@@ -29,4 +29,7 @@ if err != nil {
 
 ## Reference
 
-See skill: `golang-patterns` for comprehensive Go idioms and patterns.
+See skills: `golang-code-style` (gofmt, goimports, comment conventions),
+`golang-naming` (identifier conventions), `golang-error-handling` (wrapping,
+`errors.Is`/`As`, the single handling rule), and `golang-structs-interfaces`
+(accept interfaces, return structs; interface segregation).

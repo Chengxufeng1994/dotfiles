@@ -12,7 +12,7 @@ Read the target file, identify the language, then load skills accordingly:
 
 | Language   | Skills to load                              |
 |------------|---------------------------------------------|
-| Go (`.go`) | `refactor-convention` + `golang-pro`        |
+| Go (`.go`) | `refactor-convention` + `golang-refactoring` |
 | Other      | `refactor-convention`                       |
 
 ## Step 2 — Refactor

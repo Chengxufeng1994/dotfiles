@@ -86,7 +86,7 @@ func ClampAll[T cmp.Ordered](values []T, lo, hi T) []T {
 
 ## Generic Containers
 
-The clearest justified use: the element type is fixed at construction and preserved on the way out.
+The clearest justified use: the element type is fixed at construction and preserved on the way out. These examples exist to show the type-parameter mechanics (`var zero T`, `comparable` keys, receivers restating the parameter) — for *choosing* the underlying structure, and for `container/list`/`heap`/`ring`, see the `golang-data-structures` skill.
 
 ```go
 type Stack[T any] struct {
