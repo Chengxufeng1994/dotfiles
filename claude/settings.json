@@ -67,7 +67,6 @@
     "obsidian@obsidian-skills": true,
     "redis-development@redis": true,
     "superpowers@claude-plugins-official": true,
-    "mgrep@Mixedbread-Grep": true,
     "codex@openai-codex": true,
     "pulumi-migration@pulumi-agent-skills": true,
     "pulumi@pulumi-agent-skills": true,
@@ -98,13 +97,6 @@
       "source": {
         "source": "github",
         "repo": "obra/superpowers-marketplace"
-      },
-      "autoUpdate": true
-    },
-    "Mixedbread-Grep": {
-      "source": {
-        "source": "github",
-        "repo": "mixedbread-ai/mgrep"
       },
       "autoUpdate": true
     },
