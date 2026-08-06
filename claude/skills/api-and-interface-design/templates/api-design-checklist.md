@@ -70,11 +70,15 @@ Work through this before implementation, and again before shipping a breaking ch
 
 ### Error Handling
 
-- [ ] Consistent error response format across every endpoint
-- [ ] Machine-readable `code` alongside the human-readable `message`
-- [ ] Field-level validation errors
-- [ ] Timestamps and request path in error responses
-- [ ] 5xx responses never leak internal details or stack traces
+- [ ] Every error is an RFC 7807 Problem Details document — no second "simpler" shape
+- [ ] Served as `Content-Type: application/problem+json`
+- [ ] Every `type` is a stable, documented URI, registered in one catalogue
+- [ ] `title` is fixed per `type`; `detail` is specific and actionable per occurrence
+- [ ] Field-level validation failures in the `errors[]` extension, all reported at once
+- [ ] Request ID in `instance`, and in the server-side log for the same failure
+- [ ] All failures routed through one handler, not per-route response calls
+- [ ] 5xx responses never leak stack traces, SQL, internal paths, or config
+- [ ] Retryability signalled via `Retry-After` and the `retry` extension
 
 ### Validation
 
@@ -102,9 +106,11 @@ Work through this before implementation, and again before shipping a breaking ch
 ### Documentation
 
 - [ ] OpenAPI spec generated from the same schemas that validate requests
+- [ ] `npx @redocly/cli lint openapi.yaml` passes with no errors
+- [ ] Spec serves a working mock: `npx @stoplight/prism-cli mock openapi.yaml`
 - [ ] All endpoints documented
 - [ ] Request/response examples provided
-- [ ] Error responses documented
+- [ ] Every error an endpoint can emit is documented, `$ref`-ing a single shared `Problem` schema
 - [ ] Authentication flow documented
 
 ### Testing

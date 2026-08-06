@@ -541,6 +541,8 @@ type Mutation {
 
 ## Error Handling
 
+RFC 7807 does not apply here — a GraphQL response is `200 OK` with a possibly-partial result, so there is no HTTP status to describe. Expected failures belong in the payload as typed values instead. Reuse the REST error slugs as the `code` values (`resource-not-found` → `RESOURCE_NOT_FOUND`) so one taxonomy covers both surfaces; see `error-handling.md` for the catalogue.
+
 ### Union Error Pattern
 
 Makes every failure mode part of the type system — clients cannot forget to handle one, because the compiler demands a branch.

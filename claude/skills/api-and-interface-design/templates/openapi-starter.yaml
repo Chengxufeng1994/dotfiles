@@ -1,0 +1,131 @@
+# OpenAPI 3.1 starter — a paginated collection, a single resource, and the
+# RFC 7807 error responses every endpoint in the API shares.
+#
+# Validate:  npx @redocly/cli lint openapi.yaml
+# Mock:      npx @stoplight/prism-cli mock openapi.yaml
+#
+# Wire format is camelCase throughout, regardless of backend language.
+
+openapi: "3.1.0"
+info:
+  title: Example API
+  version: "1.0.0"
+
+paths:
+  /users:
+    get:
+      summary: List users
+      operationId: listUsers
+      tags: [Users]
+      parameters:
+        - name: cursor
+          in: query
+          schema: { type: string }
+          description: Opaque cursor for pagination
+        - name: limit
+          in: query
+          schema: { type: integer, default: 20, maximum: 100 }
+      responses:
+        "200":
+          description: Paginated list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data, pagination]
+                properties:
+                  data:
+                    type: array
+                    items: { $ref: "#/components/schemas/User" }
+                  pagination:
+                    $ref: "#/components/schemas/CursorPage"
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "429": { $ref: "#/components/responses/TooManyRequests" }
+
+  /users/{id}:
+    get:
+      summary: Get a user
+      operationId: getUser
+      tags: [Users]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: User found
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/User" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+components:
+  schemas:
+    User:
+      type: object
+      required: [id, email, createdAt]
+      properties:
+        id:        { type: string, format: uuid, readOnly: true }
+        email:     { type: string, format: email }
+        name:      { type: string }
+        createdAt: { type: string, format: date-time, readOnly: true }
+
+    CursorPage:
+      type: object
+      required: [nextCursor, hasMore]
+      properties:
+        nextCursor: { type: string, nullable: true }
+        hasMore:    { type: boolean }
+
+    Problem:                       # RFC 7807 Problem Details
+      type: object
+      required: [type, title, status]
+      properties:
+        type:     { type: string, format: uri, example: "https://api.example.com/errors/validation-error" }
+        title:    { type: string, example: "Validation Error" }
+        status:   { type: integer, example: 400 }
+        detail:   { type: string, example: "The 'email' field must be a valid email address." }
+        instance: { type: string, format: uri, example: "/users/req-abc123" }
+        errors:   # extension — field-level validation failures
+          type: array
+          items:
+            type: object
+            required: [field, message]
+            properties:
+              field:   { type: string, example: "email" }
+              message: { type: string, example: "Must be a valid email address." }
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    Unauthorized:
+      description: Missing or invalid authentication
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    NotFound:
+      description: Resource not found
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    TooManyRequests:
+      description: Rate limit exceeded
+      headers:
+        Retry-After: { schema: { type: integer } }
+      content:
+        application/problem+json:
+          schema: { $ref: "#/components/schemas/Problem" }
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - BearerAuth: []

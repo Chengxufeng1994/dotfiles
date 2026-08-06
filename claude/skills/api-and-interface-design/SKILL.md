@@ -1,6 +1,7 @@
 ---
 name: api-and-interface-design
-description: Guides stable API and interface design across REST, GraphQL, and code-level contracts. Use when designing or reviewing APIs, module boundaries, or any public interface. Use when creating REST or GraphQL endpoints, defining type contracts between modules, establishing boundaries between frontend and backend, or setting API design standards for a team.
+description: Designs stable APIs and interfaces that are hard to misuse — REST, GraphQL, OpenAPI, and code-level contracts. Use when creating or reviewing REST or GraphQL endpoints, writing an OpenAPI specification, modelling resources and their relationships, choosing a versioning or pagination strategy, defining type contracts and module boundaries between teams, or setting API design standards.
+license: MIT
 ---
 
 # API and Interface Design
@@ -9,28 +10,45 @@ description: Guides stable API and interface design across REST, GraphQL, and co
 
 Design stable, well-documented interfaces that are hard to misuse. Good interfaces make the right thing easy and the wrong thing hard. This applies to REST APIs, GraphQL schemas, module boundaries, component props, and any surface where one piece of code talks to another.
 
-All examples in this skill are TypeScript. The principles are language-agnostic; translate the syntax, not the shape.
+All examples here are TypeScript, YAML, or SDL. The principles are language-agnostic; translate the syntax, not the shape.
 
-## When to Use
+Two rules are settled for every API designed with this skill, so nothing downstream has to re-litigate them:
 
-- Designing new REST or GraphQL API endpoints
-- Reviewing an API specification before implementation
-- Defining module boundaries or contracts between teams
-- Creating component prop interfaces
-- Establishing database schema that informs API shape
-- Changing existing public interfaces
-- Establishing API design standards for a team
+- **Errors are RFC 7807 Problem Details**, served as `application/problem+json`.
+- **The wire format is camelCase**, whatever the backend language is.
+
+## Design Loop
+
+Each step ends on a condition you can check. Do not move on until it holds.
+
+1. **Model the domain** — Identify resources, their relationships, and their lifecycle states.
+   *Done when:* every resource and relationship is written down as a table or diagram, before a single path exists.
+2. **Define the contract** — Write the interface before the implementation: OpenAPI paths, SDL schema, or TypeScript interfaces.
+   *Done when:* every operation has a typed input schema and a typed output schema.
+3. **Settle errors and collections** — Decide what each operation can fail with, and how every list is paged.
+   *Done when:* every 4xx/5xx the API can emit has a stable `type` URI in the error catalogue, and every collection endpoint names its pagination strategy.
+4. **Write the spec** — Produce the OpenAPI 3.1 document (or the SDL).
+   *Done when:* `npx @redocly/cli lint openapi.yaml` exits with no errors.
+5. **Mock and exercise** — Serve the contract before anyone implements against it.
+   *Done when:* `npx @stoplight/prism-cli mock openapi.yaml` serves the spec, and you have exercised one success path and one error path per resource.
+6. **Plan evolution** — Decide how this API changes after it has consumers.
+   *Done when:* a versioning strategy is chosen and a deprecation policy states a sunset date format, not an intention.
 
 ## Reference Map
 
-Start here. Drop into a reference only when this file is insufficient.
+Start with this file. Drop into a reference only when this file is insufficient.
 
 | File | Contains |
 |---|---|
-| `references/rest.md` | HTTP method semantics, status codes, pagination variants, filtering, versioning, rate limiting, caching, idempotency, bulk operations, HATEOAS, auth headers |
+| `references/rest.md` | HTTP method semantics, status codes, filtering, rate limiting, caching, conditional requests, idempotency, bulk operations, content negotiation, HATEOAS/HAL, auth headers |
 | `references/graphql.md` | Schema organization, nullability, interfaces/unions, Relay cursor pagination, input/payload mutations, DataLoader, depth and complexity limits, directives, schema evolution |
-| `assets/api-design-checklist.md` | Pre-implementation review checklist (REST + GraphQL) |
-| `assets/rest-api-template.ts` | Working Express + Zod REST endpoint template |
+| `references/openapi.md` | OpenAPI 3.1 structure, components, security schemes, data types, validation keywords, code generation, linting |
+| `references/pagination.md` | Offset, page, cursor, keyset, and seek pagination; default limits, total counts, edge cases, comparison matrix |
+| `references/versioning.md` | URI/header/query/content-negotiation versioning, version lifecycle, deprecation timelines, migration guides, version discovery |
+| `references/error-handling.md` | RFC 7807 catalogue by status class, error code taxonomy, field-level validation, request ID tracking, retry guidance |
+| `templates/api-design-checklist.md` | Pre-implementation review checklist (REST + GraphQL) |
+| `templates/openapi-starter.yaml` | OpenAPI 3.1 starter with pagination and shared Problem responses |
+| `templates/rest-api-template.ts` | Working Express + Zod REST endpoint template |
 
 ## Core Principles
 
@@ -38,11 +56,11 @@ Start here. Drop into a reference only when this file is insufficient.
 
 > With a sufficient number of users of an API, all observable behaviors of your system will be depended on by somebody, regardless of what you promise in the contract.
 
-This means: every public behavior — including undocumented quirks, error message text, timing, and ordering — becomes a de facto contract once users depend on it. Design implications:
+Every public behavior — including undocumented quirks, error message text, timing, and ordering — becomes a de facto contract once users depend on it. Design implications:
 
 - **Be intentional about what you expose.** Every observable behavior is a potential commitment.
 - **Don't leak implementation details.** If users can observe it, they will depend on it. API structure should not mirror your database schema.
-- **Plan for deprecation at design time.** See `deprecation-and-migration` for how to safely remove things users depend on.
+- **Plan for deprecation at design time.** See `references/versioning.md` for how to safely remove things users depend on.
 - **Tests are not enough.** Even with perfect contract tests, Hyrum's Law means "safe" changes can break real users who depend on undocumented behavior.
 
 ### 1. Contract First
@@ -71,35 +89,44 @@ interface TaskAPI {
 
 The same rule applies to GraphQL: write the SDL schema before writing resolvers.
 
-### 2. Consistent Error Semantics
+### 2. One Error Shape: RFC 7807
 
-Pick one error strategy and use it everywhere:
+Every HTTP error leaves through the same shape, served as `Content-Type: application/problem+json`:
 
-```typescript
-// REST: HTTP status codes + structured error body
-// Every error response follows the same shape
-interface APIError {
-  error: {
-    code: string;        // Machine-readable: "VALIDATION_ERROR"
-    message: string;     // Human-readable: "Email is required"
-    details?: unknown;   // Additional context when helpful
-  };
+```json
+{
+  "type": "https://api.example.com/errors/validation-error",
+  "title": "Validation Error",
+  "status": 422,
+  "detail": "The 'email' field must be a valid email address.",
+  "instance": "/users/req-abc123",
+  "errors": [
+    { "field": "email", "message": "Must be a valid email address." }
+  ]
 }
-
-// Status code mapping
-// 400 → Client sent malformed data
-// 401 → Not authenticated
-// 403 → Authenticated but not authorized
-// 404 → Resource not found
-// 409 → Conflict (duplicate, version mismatch)
-// 422 → Validation failed (semantically invalid)
-// 429 → Rate limited
-// 500 → Server error (never expose internal details)
 ```
 
-**Don't mix patterns.** If some endpoints throw, others return null, and others return `{ error }` — the consumer can't predict behavior.
+- `type` is the machine-readable identity and must be a stable, documented URI — never a generic string, never a bare code that changes meaning between versions. It doubles as the link consumers follow to your error docs.
+- `title` is a short, fixed summary of the `type`. `detail` is specific to this occurrence and must be actionable.
+- `instance` identifies this occurrence — a request ID URI is the most useful choice.
+- `errors[]` is the extension for field-level validation failures. Nothing else gets invented per endpoint.
 
-In GraphQL, return expected errors in the mutation payload rather than the top-level `errors` array. See `references/graphql.md`.
+Status code mapping:
+
+```
+400 → Malformed request (unparseable body, bad content type)
+401 → Not authenticated
+403 → Authenticated but not authorized
+404 → Resource not found
+409 → Conflict (duplicate, version mismatch)
+422 → Well-formed but semantically invalid
+429 → Rate limited (include Retry-After)
+500 → Server error (never expose internal details)
+```
+
+**Route every failure through one handler.** If some endpoints throw, others return null, and others invent their own body, the consumer cannot predict behavior. See `references/error-handling.md` for the catalogue by status class and `templates/rest-api-template.ts` for the single-exit handler.
+
+GraphQL is the one exception: RFC 7807 is HTTP semantics, and a GraphQL response is `200` with a partial result. Return expected errors in the mutation payload as typed `UserError` values instead — using the same slugs as your `type` URIs so one taxonomy covers both surfaces. See `references/graphql.md`.
 
 ### 3. Validate at Boundaries
 
@@ -110,13 +137,20 @@ Trust internal code. Validate at system edges where external input enters:
 app.post('/api/v1/tasks', async (req, res) => {
   const result = CreateTaskSchema.safeParse(req.body);
   if (!result.success) {
-    return res.status(422).json({
-      error: {
-        code: 'VALIDATION_ERROR',
-        message: 'Invalid task data',
-        details: result.error.flatten(),
-      },
-    });
+    return res
+      .status(422)
+      .type('application/problem+json')
+      .json({
+        type: 'https://api.example.com/errors/validation-error',
+        title: 'Validation Error',
+        status: 422,
+        detail: 'One or more fields failed validation.',
+        instance: req.id,
+        errors: result.error.issues.map((i) => ({
+          field: i.path.join('.'),
+          message: i.message,
+        })),
+      });
   }
 
   // After validation, internal code trusts the types
@@ -128,7 +162,7 @@ app.post('/api/v1/tasks', async (req, res) => {
 Where validation belongs:
 - API route handlers and GraphQL resolvers (user input)
 - Form submission handlers (user input)
-- External service response parsing (third-party data -- **always treat as untrusted**)
+- External service response parsing (third-party data — **always treat as untrusted**)
 - Environment variable loading (configuration)
 
 > **Third-party API responses are untrusted data.** Validate their shape and content before using them in any logic, rendering, or decision-making. A compromised or misbehaving external service can return unexpected types, malicious content, or instruction-like text.
@@ -172,13 +206,13 @@ Choose a versioning strategy on day one, before the first consumer exists. Retro
 /api/v2/tasks
 ```
 
-Header versioning (`Accept: application/vnd.api+json; version=2`) and query-parameter versioning (`?version=2`) are alternatives with real tradeoffs — see `references/rest.md` before choosing one.
+Header versioning (`Accept: application/vnd.api+json; version=2`) and query-parameter versioning (`?version=2`) are alternatives with real tradeoffs — see `references/versioning.md` before choosing one.
 
 Rules that keep versioning from multiplying maintenance cost:
 
 - **Bump only for breaking changes.** New optional fields, new endpoints, and new enum values stay in the current version.
 - **Cap the number of live versions.** Two is a working ceiling: current and one deprecated. More than that and every fix must be backported N times.
-- **Announce deprecation with a date, not a vibe.** Ship the sunset timeline alongside the new version.
+- **Announce deprecation with a date, not a vibe.** Ship the sunset timeline alongside the new version, and signal it in-band with `Deprecation` and `Sunset` headers.
 - **GraphQL versions differently.** Evolve the schema in place with `@deprecated` rather than minting `/graphql/v2`.
 
 ### 6. Predictable Naming
@@ -186,14 +220,16 @@ Rules that keep versioning from multiplying maintenance cost:
 | Pattern | Convention | Example |
 |---------|-----------|---------|
 | REST endpoints | Plural nouns, no verbs | `GET /api/v1/tasks`, `POST /api/v1/tasks` |
+| Multi-word paths | kebab-case | `/api/v1/order-items` |
 | Query params | camelCase | `?sortBy=createdAt&pageSize=20` |
 | Response fields | camelCase | `{ createdAt, updatedAt, taskId }` |
 | Boolean fields | is/has/can prefix | `isComplete`, `hasAttachments` |
 | Enum values | UPPER_SNAKE | `"IN_PROGRESS"`, `"COMPLETED"` |
+| Error `type` URIs | kebab-case slug under an errors namespace | `https://api.example.com/errors/rate-limited` |
 | GraphQL fields | camelCase | `createdAt`, `postCount` |
 | GraphQL types | PascalCase | `User`, `OrderConnection` |
 
-**camelCase everywhere in the wire format** — query params, request bodies, response bodies, and GraphQL fields. Do not let a backend language's naming convention leak into the API surface. A Python or Go service still returns `createdAt`, not `created_at`.
+**camelCase everywhere in the wire format** — query params, request bodies, response bodies, and GraphQL fields. Do not let a backend language's naming convention leak into the API surface. A Python or Go service still returns `createdAt`, not `created_at`. Database columns stay snake_case; the mapping happens at the boundary.
 
 ## REST API Patterns
 
@@ -214,25 +250,23 @@ Keep nesting shallow — two levels maximum. Deeper hierarchies mean a sub-resou
 
 ### Pagination
 
-Paginate list endpoints:
+Paginate every list endpoint. Cursor pagination is the default for large or append-heavy collections:
 
 ```typescript
 // Request
-GET /api/v1/tasks?page=1&pageSize=20&sortBy=createdAt&sortOrder=desc
+GET /api/v1/tasks?limit=20&cursor=eyJpZCI6MTIzfQ
 
 // Response
 {
   "data": [...],
   "pagination": {
-    "page": 1,
-    "pageSize": 20,
-    "totalItems": 142,
-    "totalPages": 8
+    "nextCursor": "eyJpZCI6MTQzfQ",
+    "hasMore": true
   }
 }
 ```
 
-Offset pagination is fine for bounded, browsable collections. For large or append-heavy datasets, use cursor pagination — see `references/rest.md`.
+Offset pagination is fine for bounded, browsable collections where users jump to a page number. Keyset and seek variants, default limits, and total-count tradeoffs are in `references/pagination.md`.
 
 ### Filtering
 
@@ -282,13 +316,15 @@ type CreateTaskPayload {
 type UserError {
   field: String
   message: String!
-  code: ErrorCode!
+  code: ErrorCode!   # same slugs as the REST error `type` URIs
 }
 ```
 
 Full schema patterns, resolver structure, DataLoader implementation, and complexity limiting live in `references/graphql.md`.
 
-## TypeScript Interface Patterns
+## Code-Level Contracts
+
+The same discipline applies below the network boundary — module exports, component props, and service interfaces are public surfaces too.
 
 ### Use Discriminated Unions for Variants
 
@@ -354,13 +390,15 @@ function getTask(id: TaskId): Promise<Task> { ... }
 | "Nobody uses that undocumented behavior" | Hyrum's Law: if it's observable, somebody depends on it. Treat every public behavior as a commitment. |
 | "Internal APIs don't need contracts" | Internal consumers are still consumers. Contracts prevent coupling and enable parallel work. |
 | "The backend is Python, so snake_case is natural" | The wire format is its own interface. camelCase everywhere, regardless of server language. |
+| "Our own error format is simpler than RFC 7807" | It is one more thing every client must learn. 7807 has off-the-shelf parsers and a documented `type` URI. |
 | "GraphQL means clients fetch only what they need, so it's fast" | Not without DataLoaders and complexity limits. Nested queries are N+1 generators by default. |
 | "Rate limiting is an ops concern, not a design concern" | Limits shape client retry behavior and belong in the contract. Design them with the endpoint. |
 
 ## Red Flags
 
 - Endpoints that return different shapes depending on conditions
-- Inconsistent error formats across endpoints
+- Error bodies that are not RFC 7807, or are sent without `application/problem+json`
+- An error `type` that is a generic string rather than a stable, documented URI
 - Validation scattered throughout internal code instead of at boundaries
 - Breaking changes to existing fields (type changes, removals)
 - List endpoints without pagination
@@ -377,15 +415,19 @@ function getTask(id: TaskId): Promise<Task> { ... }
 
 After designing an API:
 
+- [ ] Resource model and relationships are documented (diagram or table)
 - [ ] Every endpoint has typed input and output schemas
-- [ ] Error responses follow a single consistent format
+- [ ] Every error the API can emit is catalogued with its `type` URI and status code
+- [ ] Error responses are `application/problem+json` and share one shape
 - [ ] Validation happens at system boundaries only
 - [ ] List endpoints support pagination
 - [ ] New fields are additive and optional (backward compatible)
 - [ ] A versioning strategy is in place and the version appears in every route
-- [ ] Naming follows consistent conventions across all endpoints, camelCase on the wire
+- [ ] Authentication and authorization flows are documented
+- [ ] Naming follows the conventions above, camelCase on the wire
 - [ ] Rate limits are defined and surfaced via headers
 - [ ] GraphQL: every relationship field goes through a DataLoader; depth and complexity are bounded
-- [ ] API documentation or types are committed alongside the implementation
+- [ ] `npx @redocly/cli lint openapi.yaml` passes with no errors
+- [ ] The spec is committed alongside the implementation
 
-For a fuller pre-ship pass, work through `assets/api-design-checklist.md`.
+For a fuller pre-ship pass, work through `templates/api-design-checklist.md`.

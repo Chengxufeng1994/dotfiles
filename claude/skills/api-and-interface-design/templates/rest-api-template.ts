@@ -2,7 +2,8 @@
  * Production-shaped REST API template — Express + Zod.
  *
  * Demonstrates: URL versioning, camelCase wire format, boundary validation,
- * a single error shape, pagination, PATCH semantics, and rate limiting.
+ * RFC 7807 errors through a single exit, pagination, PATCH semantics, and
+ * rate limiting.
  *
  * Data access is stubbed. Replace the `db` calls with a real repository.
  */
@@ -12,13 +13,31 @@ import express, {
   type Request,
   type Response,
 } from 'express';
+import { randomUUID } from 'node:crypto';
 import cors from 'cors';
 import helmet from 'helmet';
 import { z } from 'zod';
 
+declare module 'express-serve-static-core' {
+  interface Request {
+    requestId: string;
+  }
+}
+
 const app = express();
 app.use(express.json({ limit: '1mb' }));
 app.use(helmet());
+
+// Request ID on every response, echoed into each error's `instance`. Without
+// it, "it failed around 3pm" is an unactionable bug report.
+app.use((req: Request, res: Response, next: NextFunction) => {
+  // An inbound ID is untrusted input that ends up in headers and log lines.
+  // Accept it only if it is already a safe token; otherwise mint our own.
+  const inbound = req.get('X-Request-ID') ?? '';
+  req.requestId = /^[A-Za-z0-9-]{1,64}$/.test(inbound) ? inbound : randomUUID();
+  res.setHeader('X-Request-ID', req.requestId);
+  next();
+});
 
 // CORS: enumerate origins. '*' with credentials is rejected by browsers and
 // defeats the point of CORS anyway.
@@ -33,30 +52,39 @@ app.use(
 );
 
 // ---------------------------------------------------------------------------
-// Errors — one shape for every failure
+// Errors — RFC 7807 Problem Details, one shape for every failure
 // ---------------------------------------------------------------------------
 
-interface ErrorDetail {
+// Namespace for every `type` URI. These URIs are as public as endpoint paths:
+// clients branch on them, so they can be added to but never repurposed.
+const ERRORS = 'https://api.example.com/errors';
+
+interface FieldError {
   field?: string;
+  code: string;
   message: string;
-  value?: unknown;
+  valueProvided?: unknown; // never set this for passwords, tokens, or card numbers
 }
 
 class APIError extends Error {
   constructor(
     readonly status: number,
-    readonly code: string,
-    message: string,
-    readonly details?: ErrorDetail[],
+    readonly slug: string, // e.g. 'resource-not-found' → `${ERRORS}/resource-not-found`
+    readonly title: string, // fixed per slug; `detail` is what varies per occurrence
+    detail: string,
+    readonly errors?: FieldError[],
   ) {
-    super(message);
+    super(detail);
   }
 }
 
 const notFound = (resource: string, id: string) =>
-  new APIError(404, 'NOT_FOUND', `${resource} not found`, [
-    { field: 'id', message: 'No such resource', value: id },
-  ]);
+  new APIError(
+    404,
+    'resource-not-found',
+    'Resource Not Found',
+    `${resource} with ID ${id} does not exist.`,
+  );
 
 // ---------------------------------------------------------------------------
 // Schemas — the same definitions validate requests and describe the contract
@@ -126,10 +154,14 @@ const validate =
       return next(
         new APIError(
           422,
-          'VALIDATION_ERROR',
-          'Request validation failed',
+          'validation-error',
+          'Validation Error',
+          `${result.error.issues.length} field(s) failed validation.`,
+          // Report every failure at once — one field per round-trip makes the
+          // client walk a form back and forth.
           result.error.issues.map((issue) => ({
             field: issue.path.join('.'),
+            code: issue.code.toUpperCase(),
             message: issue.message,
           })),
         ),
@@ -161,7 +193,14 @@ function rateLimit({ limit, windowMs }: { limit: number; windowMs: number }) {
 
     if (recent.length >= limit) {
       res.setHeader('Retry-After', Math.ceil(windowMs / 1000));
-      return next(new APIError(429, 'RATE_LIMITED', 'Too many requests'));
+      return next(
+        new APIError(
+          429,
+          'rate-limited',
+          'Rate Limited',
+          `Rate limit of ${limit} requests per ${windowMs / 1000}s exceeded.`,
+        ),
+      );
     }
 
     recent.push(now);
@@ -220,9 +259,13 @@ v1.post(
     const input = req.body as z.infer<typeof CreateUserSchema>;
 
     if (await db.users.findByEmail(input.email)) {
-      throw new APIError(409, 'DUPLICATE_EMAIL', 'Email already registered', [
-        { field: 'email', message: 'Already in use', value: input.email },
-      ]);
+      throw new APIError(
+        409,
+        'resource-already-exists',
+        'Resource Already Exists',
+        `A user with email '${input.email}' already exists.`,
+        [{ field: 'email', code: 'DUPLICATE', message: 'Already in use.' }],
+      );
     }
 
     const { password, ...rest } = input;
@@ -250,7 +293,12 @@ v1.patch(
   handle(async (req, res) => {
     const patch = req.body as z.infer<typeof UpdateUserSchema>;
     if (Object.keys(patch).length === 0) {
-      throw new APIError(422, 'EMPTY_PATCH', 'No fields to update');
+      throw new APIError(
+        422,
+        'validation-error',
+        'Validation Error',
+        'A PATCH must contain at least one field to update.',
+      );
     }
 
     const updated = await db.users.update(req.params.userId, patch);
@@ -287,27 +335,39 @@ app.get('/health/ready', async (_req, res) => {
 });
 
 // ---------------------------------------------------------------------------
-// Error handler — must be registered last
+// Error handler — the single exit. Must be registered last.
+//
+// Consistency that relies on discipline at each `res.status(...).json(...)`
+// call site drifts within a week. One handler makes it structural.
 // ---------------------------------------------------------------------------
 
 app.use((err: unknown, req: Request, res: Response, _next: NextFunction) => {
   const e =
     err instanceof APIError
       ? err
-      : new APIError(500, 'INTERNAL_ERROR', 'An unexpected error occurred');
+      : new APIError(
+          500,
+          'internal-error',
+          'Internal Error',
+          'An unexpected error occurred. Quote the instance ID when reporting this.',
+        );
 
-  // Log the real error; never send internals to the client.
-  if (e.status >= 500) console.error({ err, path: req.path });
+  // Log the real error under the same ID the client sees; never send internals.
+  if (e.status >= 500) {
+    console.error({ err, requestId: req.requestId, path: req.path });
+  }
 
-  res.status(e.status).json({
-    error: {
-      code: e.code,
-      message: e.message,
-      details: e.details,
-      timestamp: new Date().toISOString(),
-      path: req.path,
-    },
-  });
+  res
+    .status(e.status)
+    .type('application/problem+json')
+    .json({
+      type: `${ERRORS}/${e.slug}`,
+      title: e.title,
+      status: e.status,
+      detail: e.message,
+      instance: `/requests/${req.requestId}`,
+      ...(e.errors && { errors: e.errors }),
+    });
 });
 
 app.listen(Number(process.env.PORT ?? 8000));

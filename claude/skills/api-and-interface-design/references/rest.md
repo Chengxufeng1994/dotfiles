@@ -36,6 +36,18 @@ GET /api/v1/order-items/{id}/reviews
 
 ## HTTP Methods and Status Codes
 
+*Safe* means the method never mutates state. *Idempotent* means N identical requests leave the same end state as one. Clients and proxies retry safe and idempotent methods automatically — so putting a mutation behind GET invites duplicate side effects from a retry you never see.
+
+| Method | Safe | Idempotent | Use Case |
+|--------|------|------------|----------|
+| GET | Yes | Yes | Retrieve resource(s) |
+| HEAD | Yes | Yes | Get metadata only |
+| OPTIONS | Yes | Yes | Get allowed methods |
+| POST | No | No | Create resource, non-idempotent operations |
+| PUT | No | Yes | Replace entire resource |
+| PATCH | No | No | Partial update |
+| DELETE | No | Yes | Remove resource |
+
 ### GET — Retrieve Resources
 
 Safe and idempotent. Never mutates state.
@@ -59,7 +71,9 @@ POST /api/v1/users
 
 POST /api/v1/users (validation error)
   → 422 Unprocessable Entity
-  Body: { "error": { "code": "VALIDATION_ERROR", "details": [...] } }
+  Content-Type: application/problem+json
+  Body: { "type": ".../errors/validation-error", "title": "Validation Error",
+          "status": 422, "errors": [...] }
 ```
 
 ### PUT — Replace Resources
@@ -113,119 +127,27 @@ GET /api/v1/users?fields=id,name,email
 
 ## Pagination Patterns
 
-### Offset-Based Pagination
-
-Good for bounded, browsable collections where users jump to a page number.
-
-```
-GET /api/v1/users?page=2&pageSize=20
-
-Response:
-{
-  "data": [...],
-  "pagination": {
-    "page": 2,
-    "pageSize": 20,
-    "totalItems": 150,
-    "totalPages": 8
-  }
-}
-```
-
-Cost: `OFFSET` scans grow linearly, and rows inserted mid-scroll shift every subsequent page.
-
-### Cursor-Based Pagination
-
-Use for large or append-heavy datasets, and for infinite scroll.
+Every list endpoint is paginated. Cursor pagination is the default for large or append-heavy collections; offset pagination is fine for bounded collections users browse by page number.
 
 ```
 GET /api/v1/users?limit=20&cursor=eyJpZCI6MTIzfQ
 
-Response:
 {
   "data": [...],
-  "nextCursor": "eyJpZCI6MTQzfQ",
-  "hasMore": true
+  "pagination": {
+    "nextCursor": "eyJpZCI6MTQzfQ",
+    "hasMore": true
+  }
 }
 ```
 
-Stable under concurrent inserts; cannot jump to an arbitrary page.
-
-```typescript
-// Encode the cursor so clients treat it as opaque
-const encodeCursor = (id: string): string =>
-  Buffer.from(JSON.stringify({ id })).toString('base64url');
-
-const decodeCursor = (cursor: string): { id: string } =>
-  JSON.parse(Buffer.from(cursor, 'base64url').toString());
-
-async function listUsers(limit: number, cursor?: string) {
-  const after = cursor ? decodeCursor(cursor).id : undefined;
-
-  // Fetch one extra row to determine hasMore without a second query
-  const rows = await db.users.findMany({
-    take: limit + 1,
-    ...(after && { cursor: { id: after }, skip: 1 }),
-    orderBy: { id: 'asc' },
-  });
-
-  const hasMore = rows.length > limit;
-  const data = hasMore ? rows.slice(0, limit) : rows;
-
-  return {
-    data,
-    nextCursor: hasMore ? encodeCursor(data[data.length - 1].id) : null,
-    hasMore,
-  };
-}
-```
-
-### Link Header Pagination
-
-```
-GET /api/v1/users?page=2
-
-Response Headers:
-Link: <https://api.example.com/api/v1/users?page=3>; rel="next",
-      <https://api.example.com/api/v1/users?page=1>; rel="prev",
-      <https://api.example.com/api/v1/users?page=1>; rel="first",
-      <https://api.example.com/api/v1/users?page=8>; rel="last"
-```
+Keyset and seek variants, default and maximum limits, total-count tradeoffs, Link-header pagination, empty/last/out-of-range edge cases, and the cursor encode/decode implementation live in `pagination.md`.
 
 ## Versioning Strategies
 
-### URL Versioning (default choice)
+URL versioning (`/api/v1/users`) is the default: visible in logs, bug reports, and browser history, and trivial to route side by side. Header versioning (`Accept: application/vnd.api+json; version=2`) and query-parameter versioning (`?version=2`) trade that visibility for one canonical URL per resource.
 
-```
-/api/v1/users
-/api/v2/users
-```
-
-Pros: visible in logs, bug reports, and browser history; trivial to route; easy to run two versions side by side.
-Cons: the same resource has multiple URLs, which weakens cache keys and link sharing.
-
-### Header Versioning
-
-```
-GET /api/v1/users
-Accept: application/vnd.api+json; version=2
-```
-
-Pros: one canonical URL per resource.
-Cons: invisible in logs and bug reports; harder to test from a browser or curl one-liner; easy for a client to omit and silently get the default.
-
-### Query Parameter Versioning
-
-```
-GET /api/users?version=2
-```
-
-Pros: easy to test and toggle.
-Cons: optional parameters get forgotten, so a missing version silently resolves to a default that may drift.
-
-### Deprecation Mechanics
-
-Announce a sunset date, then enforce it. Signal deprecation in-band so clients notice without reading a changelog:
+Keep at most two live versions — current plus one deprecated — and signal deprecation in-band so clients notice without reading a changelog:
 
 ```
 Deprecation: true
@@ -233,7 +155,7 @@ Sunset: Sat, 01 Nov 2025 00:00:00 GMT
 Link: <https://docs.example.com/migrations/v2>; rel="deprecation"
 ```
 
-Keep at most two live versions — current plus one deprecated. Every additional version multiplies the surface you must patch, test, and security-review.
+Strategy tradeoffs, the full version lifecycle, deprecation timelines, migration guides, and version discovery endpoints live in `versioning.md`.
 
 ## Rate Limiting
 
@@ -277,9 +199,16 @@ function rateLimit({ limit, windowMs }: RateLimitOptions) {
 
     if (recent.length >= limit) {
       res.setHeader('Retry-After', Math.ceil(windowMs / 1000));
-      return res.status(429).json({
-        error: { code: 'RATE_LIMITED', message: 'Too many requests' },
-      });
+      return res
+        .status(429)
+        .type('application/problem+json')
+        .json({
+          type: 'https://api.example.com/errors/rate-limited',
+          title: 'Rate Limited',
+          status: 429,
+          detail: `Rate limit of ${limit} requests per ${windowMs / 1000}s exceeded.`,
+          instance: `/requests/${req.requestId}`,
+        });
     }
 
     recent.push(now);
@@ -314,75 +243,22 @@ Never accept credentials in the query string — URLs land in access logs, proxy
 
 ## Error Response Format
 
-### Consistent Structure
+Every error is an RFC 7807 Problem Details document served as `application/problem+json`:
 
 ```json
 {
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "Request validation failed",
-    "details": [
-      {
-        "field": "email",
-        "message": "Invalid email format",
-        "value": "not-an-email"
-      }
-    ],
-    "timestamp": "2025-10-16T12:00:00Z",
-    "path": "/api/v1/users"
-  }
+  "type": "https://api.example.com/errors/validation-error",
+  "title": "Validation Error",
+  "status": 422,
+  "detail": "The 'email' field must be a valid email address.",
+  "instance": "/requests/req-abc123",
+  "errors": [
+    { "field": "email", "message": "Must be a valid email address." }
+  ]
 }
 ```
 
-```typescript
-interface APIErrorBody {
-  error: {
-    code: string;
-    message: string;
-    details?: Array<{ field?: string; message: string; value?: unknown }>;
-    timestamp: string;
-    path: string;
-  };
-}
-
-class APIError extends Error {
-  constructor(
-    readonly status: number,
-    readonly code: string,
-    message: string,
-    readonly details?: APIErrorBody['error']['details'],
-  ) {
-    super(message);
-  }
-}
-
-export const notFound = (resource: string, id: string) =>
-  new APIError(404, 'NOT_FOUND', `${resource} not found`, [
-    { field: 'id', message: 'No such resource', value: id },
-  ]);
-
-// Single error handler — every error leaves through one shape
-app.use((err: unknown, req: Request, res: Response, _next: NextFunction) => {
-  const e =
-    err instanceof APIError
-      ? err
-      : new APIError(500, 'INTERNAL_ERROR', 'An unexpected error occurred');
-
-  // Log the real error server-side; never leak internals to the client
-  if (e.status >= 500) logger.error({ err, path: req.path });
-
-  res.status(e.status).json({
-    error: {
-      code: e.code,
-      message: e.message,
-      details: e.details,
-      timestamp: new Date().toISOString(),
-      path: req.path,
-    },
-  });
-});
-```
-
+`type` is the stable, documented URI that identifies the failure; `errors[]` is the extension for field-level validation. The catalogue by status class, the `type` URI taxonomy, request-ID tracking, retry guidance, and the single-exit Express handler live in `error-handling.md`.
 ### Status Code Guidelines
 
 - `200 OK` — successful GET, PATCH, PUT
@@ -413,7 +289,33 @@ If-None-Match: "33a64df551425fcc55e4d42a148795d9f25f89d4"
 → 304 Not Modified
 ```
 
-ETags also enable optimistic concurrency: require `If-Match` on PATCH/PUT and return `409 Conflict` when the tag is stale.
+ETags also enable optimistic concurrency: require `If-Match` on PATCH/PUT so a client cannot overwrite a change it never saw.
+
+```
+PUT /api/v1/users/123
+If-Match: "33a64df551425fcc55e4d42a148795d9f25f89d4"
+
+→ 412 Precondition Failed (the ETag no longer matches)
+```
+
+Use `412` when the failure is a failed HTTP precondition header, and `409` when the conflict is in the payload itself (a stale `version` field, a duplicate unique key). Collapsing both into one status leaves the client unable to tell "refetch and retry" from "your data is wrong".
+
+## Content Negotiation
+
+The client states what it can accept; the server states what it actually sent. Always send an explicit `Content-Type` — a client that has to sniff the body will eventually sniff it wrong.
+
+```
+GET /api/v1/users/123
+Accept: application/json
+```
+
+```
+Content-Type: application/json; charset=utf-8   # normal responses
+Content-Type: application/problem+json          # every error response
+Content-Type: application/hal+json              # hypermedia representations
+```
+
+Serving errors as `application/json` instead of `application/problem+json` is the most common miss: RFC 7807 parsers key off the media type, so the body is correct but nothing picks it up.
 
 ## Bulk Operations
 
@@ -432,12 +334,23 @@ Response: 207 Multi-Status
 {
   "results": [
     { "index": 0, "status": "created", "id": "1" },
-    { "index": 1, "status": "failed", "error": { "code": "DUPLICATE_EMAIL", "message": "Email already exists" } }
+    {
+      "index": 1,
+      "status": "failed",
+      "problem": {
+        "type": "https://api.example.com/errors/duplicate-email",
+        "title": "Duplicate Email",
+        "status": 409,
+        "detail": "Email already registered."
+      }
+    }
   ],
   "successCount": 1,
   "errorCount": 1
 }
 ```
+
+Per-item failures carry the same Problem Details document a single-item request would have returned, so a client parses one error shape whether it called the batch endpoint or the individual one.
 
 ## Idempotency
 
@@ -556,3 +469,20 @@ const toUserResponse = (user: User, baseUrl: string): UserResponse => ({
 ```
 
 Only emit links for transitions the current caller is actually authorized to perform — otherwise the links become a lie and clients build retry loops around 403s.
+
+HAL (`application/hal+json`) is the standardized form of the same idea, adding `_embedded` so a response can inline related resources instead of forcing a follow-up request:
+
+```json
+{
+  "id": "123",
+  "name": "John Doe",
+  "_links": { "self": { "href": "/api/v1/users/123" } },
+  "_embedded": {
+    "orders": [
+      { "id": "456", "total": 99.99, "_links": { "self": { "href": "/api/v1/orders/456" } } }
+    ]
+  }
+}
+```
+
+Embedding is a cache tradeoff, not a free win: the parent representation now changes whenever any embedded child does.
