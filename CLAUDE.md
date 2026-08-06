@@ -67,7 +67,9 @@ Rules under `claude/rules/` use the `ecc` (everything-claude-code) layering: a s
 
 - `context7.md` — when to use the Context7 MCP for live library docs
 - `ecc/common/*.md` — shared rules: `coding-style`, `patterns`, `testing`, `git-workflow`, `development-workflow`, `code-review`, `security`, `performance`, `hooks`, `agents`
-- `ecc/<lang>/*.md` — overrides for `golang`, `python`, `rust`, `typescript`, `web` (each extends its `common/` counterpart)
+- `ecc/<lang>/*.md` — overrides for `python`, `rust`, `typescript`, `web` (each extends its `common/` counterpart)
+
+There is deliberately no `ecc/golang/`. Go guidance comes from the `cc-skills-golang@samber` plugin (46 skills) plus the local `golang-generics` skill. The other language layers still duplicate what their skills cover and are due the same treatment.
 
 ## Adding Skills and Commands
 
