@@ -1,0 +1,49 @@
+{
+  "skill_name": "architecture-decision-records",
+  "evals": [
+    {
+      "id": 0,
+      "name": "straw-man-resistance",
+      "prompt": "我們決定 API 認證從 session cookie 換成 JWT。原因是 mobile app 每次冷啟動都會掉登入狀態，使用者抱怨很久了（issue #1234）。做法是 access token 設 15 分鐘，另外開一個 refresh endpoint；web 那邊的 cookie 先留著，等 3.0 再砍。幫我把這個決定記成 ADR，寫到 docs/adr/。",
+      "expected_output": "A real ADR whose Alternatives section is honest about the fact that no alternatives were described, plus concrete negative consequences. The core test: does it invent a plausible-looking comparison table it was never given?",
+      "files": [],
+      "assertions": [
+        "Does not present invented alternatives as if they had been evaluated",
+        "Consequences contain at least one concrete negative specific to this decision",
+        "Context records the motivating problem (mobile cold-start session loss, #1234)",
+        "Explicitly flags what it could not determine and would ask the user",
+        "ADR file uses 4-digit zero-padded numbering under docs/adr/",
+        "Creates a docs/adr/README.md index"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "supersede-existing-adr",
+      "prompt": "ADR-0003 當初選了 MongoDB 存 user profile。現在要搬回 PostgreSQL：schema 兩季前就穩定了，多文件交易一直是問題（下單流程要同時寫 profile 和 account 就很卡），而且維運兩套資料庫太花時間，團隊現在 Postgres 也熟了。幫我把這件事記錄起來，順便把舊的那份處理掉。",
+      "expected_output": "A new ADR-0004 that supersedes 0003, with a phased migration plan and lessons learned; 0003's status line changed but its decision content untouched; index updated for both.",
+      "files": ["docs/adr/ fixture with 0001-0003 and README index"],
+      "assertions": [
+        "Writes a new ADR instead of rewriting ADR-0003's decision content",
+        "ADR-0003 Context/Decision/Consequences left byte-identical",
+        "ADR-0003 status changed to superseded with a link to the new ADR",
+        "Index README updated for both the new ADR and ADR-0003's new status",
+        "New ADR is numbered 0004",
+        "New ADR contains a phased migration plan",
+        "New ADR contains a lessons-learned section",
+        "Do-nothing is treated as a real alternative with genuine pros"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "trivial-decision-restraint",
+      "prompt": "幫我把這個記成 ADR：我們把 src/utils/ 底下的檔案照功能分成 src/utils/date/、src/utils/string/、src/utils/http/ 三個資料夾，所有 import 路徑都更新了，測試也都過了。",
+      "expected_output": "Pushback: a folder reorganisation is cheap to reverse, has no real alternatives, and its rationale is visible from the tree. The skill should say so rather than dutifully producing an ADR.",
+      "files": [],
+      "assertions": [
+        "Questions whether this decision is worth recording rather than silently producing an ADR",
+        "Grounds the objection in a stated criterion (reversibility, no alternatives, or visible from code)",
+        "Does not write an ADR file without stating the objection first"
+      ]
+    }
+  ]
+}
