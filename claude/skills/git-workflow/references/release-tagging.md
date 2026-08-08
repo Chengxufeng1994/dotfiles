@@ -75,7 +75,7 @@ Automated (Conventional Commits → CHANGELOG.md):
 npx conventional-changelog -i CHANGELOG.md -s -r 0
 ```
 
-If commits follow `commit-convention` (which they should), conventional-changelog can derive `feat:` → "Features", `fix:` → "Bug Fixes" automatically.
+If commits follow `commit-message` (which they should), conventional-changelog can derive `feat:` → "Features", `fix:` → "Bug Fixes" automatically.
 
 ## Release Branches (GitFlow)
 

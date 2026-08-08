@@ -71,7 +71,7 @@ Files under `claude/rules/` are injected into context automatically — uncondit
 
 These come from ECC (everything-claude-code). They were previously nested under `rules/ecc/`; that wrapper directory is gone and the layers sit directly under `rules/`. ECC also ships a `web/` layer, which is not installed here.
 
-Rules overlap the installed skills in places (`git-workflow` vs the `commit-convention` skill, `testing` vs `testing-strategy`, `golang/*` vs the `cc-skills-golang@samber` plugin). The tradeoff is deliberate: rules load unconditionally, skills load only when the model picks them. Prefer rules for constraints that must hold regardless, and keep new ones to imperative statements rather than code examples.
+Rules overlap the installed skills in places (`git-workflow` vs the `commit-message` skill, `testing` vs `testing-strategy`, `golang/*` vs the `cc-skills-golang@samber` plugin). The tradeoff is deliberate: rules load unconditionally, skills load only when the model picks them. Prefer rules for constraints that must hold regardless, and keep new ones to imperative statements rather than code examples.
 
 ## Adding Skills and Commands
 

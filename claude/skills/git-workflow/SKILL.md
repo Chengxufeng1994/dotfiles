@@ -1,13 +1,13 @@
 ---
 name: git-workflow
-description: Git workflow discipline — branching strategy selection, atomic commit cadence, save-point patterns, merge vs rebase decisions, conflict resolution, git worktrees for parallel work, and release tagging. Use whenever starting a new branch, deciding when/how to commit, integrating long-lived branches, picking between merge or rebase, resolving merge conflicts, setting up parallel agent workspaces, cutting a release, or when commits are accumulating without discipline. Does NOT cover commit message formatting (use commit-convention) or PR descriptions (use pull-request-convention).
+description: Git workflow discipline — branching strategy selection, atomic commit cadence, save-point patterns, merge vs rebase decisions, conflict resolution, git worktrees for parallel work, and release tagging. Use whenever starting a new branch, deciding when/how to commit, integrating long-lived branches, picking between merge or rebase, resolving merge conflicts, setting up parallel agent workspaces, cutting a release, or when commits are accumulating without discipline. Does NOT cover commit message formatting or the commit flow itself (use commit-message) or PR descriptions (use pull-request-convention).
 ---
 
 # Git Workflow
 
 Git is the safety net. Commits are save points, branches are sandboxes, history is documentation. When AI agents generate code quickly, disciplined version control is what keeps the work reviewable, revertable, and integrable.
 
-This skill covers the **workflow and strategy** layer of git. For the *format* of commit messages, defer to `commit-convention`. For PR titles/descriptions, defer to `pull-request-convention`.
+This skill covers the **workflow and strategy** layer of git. For writing and formatting commit messages, and for the stage-and-commit flow itself, defer to `commit-message`. For PR titles/descriptions, defer to `pull-request-convention`.
 
 ## When to Use
 
@@ -233,7 +233,7 @@ Before every commit:
 - [ ] No secrets in the diff
 - [ ] Tests pass locally
 - [ ] No formatting-only changes mixed with behavior
-- [ ] Commit message follows `commit-convention` (delegate to that skill)
+- [ ] Commit message follows `commit-message` (delegate to that skill)
 - [ ] `.gitignore` covers env, build, IDE, OS files
 
 Before opening a PR:
@@ -245,6 +245,6 @@ Before opening a PR:
 
 ## Related Skills
 
-- `commit-convention` — Commit message format (type, scope, body)
+- `commit-message` — Commit message format (type, scope, body) and the stage-and-commit flow
 - `pull-request-convention` — PR title and body conventions
 - `create-pr` / `create-detail-pr` — Open PRs from the command line
