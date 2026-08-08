@@ -99,7 +99,7 @@ When introducing a workflow to a team:
 - [ ] Decide squash-merge vs merge-commit vs rebase-merge policy
 - [ ] Set branch naming convention (feature/, fix/, etc.)
 - [ ] Pick branch-deletion policy (auto-delete on merge recommended)
-- [ ] Decide on PR template (defer to `pull-request-convention`)
+- [ ] Decide on PR template (defer to `create-pull-request`)
 
 ## Anti-Patterns
 

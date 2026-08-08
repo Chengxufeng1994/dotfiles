@@ -1,16 +1,46 @@
-# 正文品質自檢
+# 正文品質
 
-寫完 WHAT / WHY / HOW 之後，提交之前跑一遍。
+## 三段各自要答什麼
 
-存在的理由是：**寫壞的提交正文通常不是漏了某一段，而是某一段寫了但沒有作用**——三段都在、格式正確、讀起來像模像樣，卻沒有任何一句是 diff 講不出來的。這種空轉從表面看不出來，只能用測試逼出來。
+每一段堵住一種缺口。判斷寫得好不好的唯一標準是：**這句話有沒有講出 diff 講不出來的事？**
 
-## 六項測試
+### WHAT — 做了什麼
+
+一句祈使句，動詞 + 對象，不含實作細節。
+
+> `Replace session cookies with JWT in the auth middleware`
+
+**遮蔽測試**：把 diff 遮起來只讀 WHAT，看得出改了什麼嗎？
+
+### WHY — 為什麼要改
+
+業務目標、使用者需求、缺陷背景、架構權衡。可引用 issue 編號。
+
+> `Mobile clients cannot persist cookies across app restarts, forcing users to re-login daily (#1234)`
+
+**刪除測試**：把 WHY 整段刪掉，讀者能不能從 diff 自己推出來？能的話這段沒有存在價值。
+
+WHY 是三段裡最常寫壞的，因為它是唯一**必須來自程式碼之外**的資訊。
+
+### HOW — 怎麼做的
+
+整體策略、相容性與依賴、驗證方式、風險提示、對使用者的影響。**不逐條列檔案**，diff 已經有細節。
+
+> `Issue short-lived JWTs with a refresh endpoint; existing sessions stay valid until expiry. Covered by integration tests in auth_test.go. Clients must send Authorization headers after the 2.0 rollout.`
+
+**重複測試**：這行是不是只是 diff 的自然語言版本？是的話刪掉。
+
+HOW 該答的四件事，按重要性排序：採用的整體策略（為什麼是這個做法）、相容性影響（舊資料／舊 client 會怎樣）、驗證方式（測試涵蓋到哪）、風險或後續動作。四項不必都寫，但**相容性與驗證方式是預設要有的**——這兩項是 diff 最不可能表達的資訊。
+
+## 提交前的六項自檢
+
+存在的理由是：**寫壞的正文通常不是漏了某一段，而是某一段寫了但沒有作用**——三段都在、格式正確、讀起來像模像樣，卻沒有任何一句是 diff 講不出來的。這種空轉從表面看不出來，只能用測試逼出來。
 
 | 檢查項 | 判斷動作 | 沒過的症狀 |
 |---|---|---|
-| WHAT 可獨立閱讀 | **遮蔽測試**：遮住 diff 只讀 WHAT，看得出改了什麼嗎？ | 寫成檔案清單或模糊動詞（update、improve、adjust） |
-| WHY 有資訊量 | **刪除測試**：整段刪掉，讀者能從 diff 推出來嗎？ | 泛泛而談（"to improve X"）或只是 WHAT 的改寫 |
-| HOW 不重複 diff | **重複測試**：這行是不是 diff 的自然語言版本？ | 出現「新增了 X 函式」「修改了三個檔案」 |
+| WHAT 可獨立閱讀 | 遮蔽測試 | 寫成檔案清單或模糊動詞（update、improve、adjust） |
+| WHY 有資訊量 | 刪除測試 | 泛泛而談，或只是 WHAT 的改寫 |
+| HOW 不重複 diff | 重複測試 | 出現「新增了 X 函式」「修改了三個檔案」 |
 | 三段不互相複述 | **主詞測試**：WHAT 的主詞是動作，WHY 是問題或需求，HOW 是策略 | 三段講同一件事，只是換句話說 |
 | 標題與正文一致 | **對照測試**：標題的 type/scope 對得上 WHAT 描述的動作嗎？ | 標題寫 `fix`，WHAT 描述的其實是新功能 |
 | 訊息與 diff 相符 | **驗收測試**：跑 `git diff --cached --stat`，訊息涵蓋所有變更嗎？ | 暫存區裡有訊息沒提到的檔案 |
@@ -24,7 +54,7 @@
 | 反模式 | 為什麼壞 |
 |---|---|
 | `Update auth.go and middleware.go` | 檔案清單，diff 已經有 |
-| `Fix bug` | 沒說哪個 bug，等於沒寫 |
+| `Fix bug` | 沒說哪個 bug |
 | `Improve performance` | 動詞模糊，沒有對象 |
 | `Refactor code for better readability` | 通用到能貼在任何提交上 |
 
@@ -37,11 +67,9 @@
 | `To improve the authentication system` | 泛泛而談，過不了刪除測試 |
 | `Because the old code was messy` | 主觀評價，不是動機 |
 | `Requested by the team` | 沒說為什麼要求 |
-| `See #1234` | 只給編號不給脈絡，issue 關掉之後就失聯 |
+| `See #1234` | 只給編號不給脈絡 |
 
-引用 issue 編號是好習慣，但要**編號加一句摘要**：`Mobile clients lose sessions on app restart (#1234)`。issue tracker 會遷移、會關閉、會權限變更，git history 不會。
-
-WHY 寫不出來時，代表你不知道使用者為什麼要做這個改動。**去問，不要編**——編出來的動機比空白更有害，因為它會被當真。
+引用 issue 要**編號加一句摘要**：`Mobile clients lose sessions on app restart (#1234)`。issue tracker 會遷移、會關閉、會權限變更，git history 不會。
 
 ### HOW
 
@@ -51,15 +79,6 @@ WHY 寫不出來時，代表你不知道使用者為什麼要做這個改動。*
 | `Changed the logic` | 沒說改成什麼策略 |
 | 逐條列出每個檔案改了什麼 | diff 的職責，而且會過期 |
 | 完全省略驗證方式 | 讀者無法判斷這個改動被驗證到什麼程度 |
-
-HOW 該答的四件事，按重要性排序：
-
-1. **採用的整體策略**——為什麼是這個做法而不是另一個
-2. **相容性影響**——舊資料、舊 client、舊設定會怎樣
-3. **驗證方式**——測試涵蓋到哪、有沒有手動驗過
-4. **風險或後續動作**——需要 migration、需要通知誰、哪裡還沒處理
-
-四項不必都寫，但**相容性與驗證方式是預設要有的**——這兩項是 diff 最不可能表達的資訊。
 
 ## 誠實原則
 

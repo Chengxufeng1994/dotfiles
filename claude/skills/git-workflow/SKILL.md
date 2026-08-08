@@ -1,13 +1,13 @@
 ---
 name: git-workflow
-description: Git workflow discipline — branching strategy selection, atomic commit cadence, save-point patterns, merge vs rebase decisions, conflict resolution, git worktrees for parallel work, and release tagging. Use whenever starting a new branch, deciding when/how to commit, integrating long-lived branches, picking between merge or rebase, resolving merge conflicts, setting up parallel agent workspaces, cutting a release, or when commits are accumulating without discipline. Does NOT cover commit message formatting or the commit flow itself (use commit-message) or PR descriptions (use pull-request-convention).
+description: Git workflow discipline — branching strategy selection, atomic commit cadence, save-point patterns, merge vs rebase decisions, conflict resolution, git worktrees for parallel work, and release tagging. Use whenever starting a new branch, deciding when/how to commit, integrating long-lived branches, picking between merge or rebase, resolving merge conflicts, setting up parallel agent workspaces, cutting a release, or when commits are accumulating without discipline. Does NOT cover commit message formatting or the commit flow itself (use commit-message) or PR descriptions and opening PRs (use create-pull-request).
 ---
 
 # Git Workflow
 
 Git is the safety net. Commits are save points, branches are sandboxes, history is documentation. When AI agents generate code quickly, disciplined version control is what keeps the work reviewable, revertable, and integrable.
 
-This skill covers the **workflow and strategy** layer of git. For writing and formatting commit messages, and for the stage-and-commit flow itself, defer to `commit-message`. For PR titles/descriptions, defer to `pull-request-convention`.
+This skill covers the **workflow and strategy** layer of git. For writing and formatting commit messages, and for the stage-and-commit flow itself, defer to `commit-message`. For PR titles/descriptions and opening a PR, defer to `create-pull-request`.
 
 ## When to Use
 
@@ -241,10 +241,9 @@ Before opening a PR:
 - [ ] Branch rebased onto latest main (if local) or merged with main (if shared)
 - [ ] Branch size under ~300 lines if possible, ~1000 hard cap
 - [ ] CI green locally
-- [ ] PR body follows `pull-request-convention`
+- [ ] PR body follows `create-pull-request`
 
 ## Related Skills
 
 - `commit-message` — Commit message format (type, scope, body) and the stage-and-commit flow
-- `pull-request-convention` — PR title and body conventions
-- `create-pr` / `create-detail-pr` — Open PRs from the command line
+- `create-pull-request` — PR title/body conventions and opening a PR

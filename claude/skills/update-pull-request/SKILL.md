@@ -7,13 +7,13 @@ description: |
   or bring up to date an existing PR — phrases like "update PR 123", "refresh my pull request",
   "edit the PR description", "address the review comments on #45", "resolve the review conversations",
   "my PR is behind main", or "sync the PR". A PR number is required. This is NOT for creating a new PR
-  (use create-pr or create-detail-pr), nor for reviewing, merging, or summarizing a PR.
+  (use create-pull-request), nor for reviewing, merging, or summarizing a PR.
 ---
 
 # Update Pull Request
 
 Update an existing, already-open GitHub pull request. This skill is the counterpart to
-`create-pr` / `create-detail-pr`: those open a PR, this one keeps it healthy after it exists.
+`create-pull-request`: that opens a PR, this one keeps it healthy after it exists.
 
 It covers four kinds of update, and you run **only the phases the task actually needs** — most
 updates touch one or two, not all of them:
@@ -31,7 +31,7 @@ updates touch one or two, not all of them:
 - The PR is behind its base branch and needs to catch up
 - Local commits exist that haven't been pushed to the PR branch
 
-Do **not** use this to open a new PR — that's `create-pr` / `create-detail-pr`.
+Do **not** use this to open a new PR — that's `create-pull-request`.
 
 ## Inputs
 
@@ -169,7 +169,7 @@ feedback you actually handled — leaving a genuinely open question resolved mis
 When new commits have landed or the user asks for a refresh, bring the title and body back in line
 with what the branch now contains.
 
-**Load the `pull-request-convention` skill first** — it owns the title format rules and the body
+**Load the `create-pull-request` skill first** — it owns the title format rules and the body
 principles. Don't restate or guess them.
 
 Read every commit that will land, not just the latest:
@@ -179,8 +179,8 @@ git log origin/$BASE..HEAD --format="%h %s"
 git diff origin/$BASE...HEAD
 ```
 
-Then update the PR. Match whichever body shape it already uses (lean `create-pr` vs detailed
-`create-detail-pr`) rather than reformatting wholesale:
+Then update the PR. Match whichever body shape it already uses (the lean two-section default vs one
+grown with Security/Testing/Risks) rather than reformatting wholesale:
 
 ```bash
 gh pr edit $PR --title "<title>" --body "$(cat <<'EOF'

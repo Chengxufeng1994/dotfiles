@@ -45,4 +45,4 @@ git log --format='%s%n%b%n---' <base>..HEAD
 
 **範圍內有 revert 或 fixup** → 兩筆抵銷的提交一起略過，把它們列進去只會讓讀的模型以為那個改動還在。
 
-**使用者要的是 PR 描述而不是 AI 上下文** → 改用 `pull-request-convention` skill。兩者的讀者不同：PR 描述給人看，需要 summary 與 test plan；這份給模型看，需要的是壓縮過的因果鏈。
+**使用者要的是 PR 描述而不是 AI 上下文** → 改用 `create-pull-request` skill。兩者的讀者不同：PR 描述給人看，需要 summary 與 test plan；這份給模型看，需要的是壓縮過的因果鏈。
