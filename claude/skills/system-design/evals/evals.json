@@ -1,0 +1,50 @@
+{
+  "skill_name": "system-design",
+  "evals": [
+    {
+      "id": 1,
+      "name": "rate-limiter-node",
+      "prompt": "幫我設計一個 API 限流器,我們後端是 Node.js + Express,想擋掉惡意爬蟲跟濫用",
+      "expected_output": "Walks through requirements (what counts as abuse, per-user vs per-IP), proposes an algorithm (token bucket / sliding window) with a stated trade-off, addresses distributed state across multiple app instances, gives a concrete response behavior (429 + Retry-After), and names at least one failure mode (e.g. the shared counter store going down).",
+      "files": [],
+      "expectations": [
+        "Clarifies what counts as abuse (per-IP vs per-user vs per-key) or states an explicit assumption before proposing a design",
+        "Names a specific rate-limiting algorithm (token bucket, sliding window, or fixed window) and states an explicit trade-off for that choice",
+        "Addresses shared/distributed state across multiple Node.js/Express instances (e.g. a Redis-backed counter), not just a single-process solution",
+        "Specifies concrete rejection behavior (HTTP 429, ideally with Retry-After)",
+        "Identifies at least one failure mode or single point of failure (e.g. what happens if the shared counter store is unavailable)",
+        "Includes a back-of-the-envelope traffic/QPS estimate, or explicitly asks for scale before finalizing the design"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "url-shortener-interview",
+      "prompt": "I'm interviewing for a senior backend role next week and they said to expect a system design round. Can you run me through designing a URL shortener like bit.ly? Let's say it needs to handle around 100M new links a day.",
+      "expected_output": "Clarifies functional/non-functional requirements before designing, produces a back-of-the-envelope estimate using the 100M/day number (QPS, storage), proposes a key-generation scheme with a named trade-off, discusses the 301-vs-302 redirect trade-off, and identifies at least one scaling/failure concern as the design grows.",
+      "files": [],
+      "expectations": [
+        "Explicitly lists functional and non-functional requirements before proposing the design",
+        "Performs a back-of-the-envelope calculation using the given 100M/day number (QPS and/or storage)",
+        "Names a key-generation scheme (base62 encoding, hashing, or pre-generated pool) with a stated trade-off",
+        "Discusses the 301 vs 302 redirect trade-off (caching vs analytics)",
+        "Identifies at least one scaling bottleneck or failure mode as the system grows",
+        "Frames the design as something to iterate on / revisit rather than a single final fixed answer"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "order-service-rearchitecture",
+      "prompt": "我們現有的訂單服務是一個 monolith,用 PostgreSQL,雙十一常常掛掉,QPS 大概會從平常 200 衝到快 5000。想請你幫忙看看要怎麼重新設計架構撐得住",
+      "expected_output": "Treats this as an existing-system stress-test rather than a green-field design: clarifies what's actually breaking today, reasons about the 200->5000 QPS jump with real numbers, proposes concrete measures (read replicas/caching/queueing/horizontal scaling) with stated trade-offs, explicitly discusses failure modes and degradation behavior under the 雙十一 spike, and treats the design as something to revisit rather than a final answer.",
+      "files": [],
+      "expectations": [
+        "Treats this as an existing-system problem (references the current monolith/PostgreSQL setup) rather than proposing a green-field redesign from scratch",
+        "Explicitly reasons using the given 200->5000 QPS numbers",
+        "Proposes at least one concrete database-scaling measure (read replicas, caching, sharding) appropriate to the stated bottleneck",
+        "Proposes handling the write/order-processing spike asynchronously (e.g. a queue) or explains why not",
+        "Names a degradation/failure story for the 雙十一 spike (what a user or downstream system sees when a component is overwhelmed)",
+        "States a trade-off (solves/worsens/when-to-change) for at least one major recommendation, not just naming a tool"
+      ]
+    }
+  ]
+}
