@@ -4,7 +4,6 @@
     "CLAUDE_CODE_NO_FLICKER": "1",
     "CLAUDE_CODE_TMUX_TRUECOLOR": "1"
   },
-  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -206,7 +205,7 @@
       "autoUpdate": true
     }
   },
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
   "autoMemoryEnabled": true,
   "skipDangerousModePermissionPrompt": true,
   "editorMode": "vim",
