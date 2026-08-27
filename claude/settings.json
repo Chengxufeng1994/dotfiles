@@ -48,6 +48,7 @@
   },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
@@ -73,10 +74,10 @@
     "pulumi-package-maintenance@pulumi-agent-skills": true,
     "planning-with-files@planning-with-files": false,
     "understand-anything@understand-anything": false,
-    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
-    "impeccable@impeccable": true,
     "cc-skills-golang@samber": true,
-    "pyright-lsp@claude-plugins-official": true
+    "cloudflare@cloudflare": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
+    "impeccable@impeccable": true
   },
   "extraKnownMarketplaces": {
     "knowledge-work-plugins": {
