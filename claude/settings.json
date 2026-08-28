@@ -80,6 +80,20 @@
     "impeccable@impeccable": true
   },
   "extraKnownMarketplaces": {
+    "claude-community": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-community"
+      },
+      "autoUpdate": true
+    },
+    "claude-for-financial-services": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/financial-services"
+      },
+      "autoUpdate": true
+    },
     "knowledge-work-plugins": {
       "source": {
         "source": "github",
@@ -161,13 +175,6 @@
       "source": {
         "source": "github",
         "repo": "redis/agent-skills"
-      },
-      "autoUpdate": true
-    },
-    "claude-for-financial-services": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/financial-services"
       },
       "autoUpdate": true
     },
