@@ -77,7 +77,8 @@
     "cc-skills-golang@samber": true,
     "cloudflare@cloudflare": true,
     "ui-ux-pro-max@ui-ux-pro-max-skill": true,
-    "impeccable@impeccable": true
+    "impeccable@impeccable": true,
+    "modern-go-guidelines@goland-claude-marketplace": true
   },
   "extraKnownMarketplaces": {
     "claude-community": {
@@ -212,6 +213,12 @@
         "repo": "samber/cc"
       },
       "autoUpdate": true
+    },
+    "goland-claude-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "JetBrains/go-modern-guidelines"
+      }
     }
   },
   "effortLevel": "xhigh",
