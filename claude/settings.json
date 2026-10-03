@@ -80,7 +80,8 @@
     "ui-ux-pro-max@ui-ux-pro-max-skill": true,
     "impeccable@impeccable": true,
     "modern-go-guidelines@goland-claude-marketplace": true,
-    "claude-hud@claude-hud": true
+    "claude-hud@claude-hud": true,
+    "ponytail@ponytail": true
   },
   "extraKnownMarketplaces": {
     "claude-community": {
@@ -227,6 +228,13 @@
       "source": {
         "source": "github",
         "repo": "jarrodwatts/claude-hud"
+      },
+      "autoUpdate": true
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
       },
       "autoUpdate": true
     }
