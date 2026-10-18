@@ -48,39 +48,37 @@
     "refreshInterval": 5
   },
   "enabledPlugins": {
+    "claude-code-setup@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
     "pyright-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "claude-md-management@claude-plugins-official": true,
-    "claude-code-setup@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "explanatory-output-style@claude-plugins-official": true,
-    "feature-dev@claude-plugins-official": true,
-    "hookify@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
-    "financial-analysis@claude-for-financial-services": false,
-    "agent-skills@addy-agent-skills": false,
-    "ecc@ecc": false,
-    "mattpocock-skills@mattpocock": true,
-    "obsidian@obsidian-skills": true,
-    "redis-development@redis": true,
-    "superpowers@claude-plugins-official": true,
-    "codex@openai-codex": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "commit-commands@anthropic-plugin-directory": true,
+    "feature-dev@anthropic-plugin-directory": true,
+    "hookify@anthropic-plugin-directory": true,
+    "pr-review-toolkit@anthropic-plugin-directory": true,
+    "ralph-loop@anthropic-plugin-directory": true,
+    "skill-creator@anthropic-plugin-directory": true,
+    "security-guidance@anthropic-plugin-directory": true,
+    "explanatory-output-style@anthropic-plugin-directory": true,
+    "learning-output-style@anthropic-plugin-directory": true,
+    "cloudflare@cloudflare": true,
     "pulumi-migration@pulumi-agent-skills": true,
     "pulumi@pulumi-agent-skills": true,
     "pulumi-delegation@pulumi-agent-skills": true,
     "pulumi-package-maintenance@pulumi-agent-skills": true,
+    "redis-development@redis": true,
+    "obsidian@obsidian-skills": true,
+    "claude-hud@claude-hud": true,
+    "agent-skills@addy-agent-skills": false,
+    "mattpocock-skills@mattpocock": true,
+    "superpowers@superpowers-marketplace": true,
     "planning-with-files@planning-with-files": false,
     "understand-anything@understand-anything": false,
     "cc-skills-golang@samber": true,
-    "cloudflare@cloudflare": true,
-    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
-    "impeccable@impeccable": true,
     "modern-go-guidelines@goland-claude-marketplace": true,
-    "claude-hud@claude-hud": true,
+    "codex@openai-codex": true,
     "ponytail@ponytail": true
   },
   "extraKnownMarketplaces": {
@@ -88,20 +86,6 @@
       "source": {
         "source": "github",
         "repo": "anthropics/claude-plugins-community"
-      },
-      "autoUpdate": true
-    },
-    "claude-for-financial-services": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/financial-services"
-      },
-      "autoUpdate": true
-    },
-    "knowledge-work-plugins": {
-      "source": {
-        "source": "github",
-        "repo": "anthropics/knowledge-work-plugins"
       },
       "autoUpdate": true
     },
@@ -154,13 +138,6 @@
       },
       "autoUpdate": true
     },
-    "ecc": {
-      "source": {
-        "source": "git",
-        "url": "https://github.com/affaan-m/ECC.git"
-      },
-      "autoUpdate": true
-    },
     "understand-anything": {
       "source": {
         "source": "github",
@@ -196,20 +173,6 @@
       },
       "autoUpdate": true
     },
-    "impeccable": {
-      "source": {
-        "source": "github",
-        "repo": "pbakaus/impeccable"
-      },
-      "autoUpdate": true
-    },
-    "ui-ux-pro-max-skill": {
-      "source": {
-        "source": "github",
-        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
-      },
-      "autoUpdate": true
-    },
     "samber": {
       "source": {
         "source": "github",
@@ -237,11 +200,32 @@
         "repo": "DietrichGebert/ponytail"
       },
       "autoUpdate": true
+    },
+    "ecc": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/affaan-m/ECC.git"
+      },
+      "autoUpdate": true
+    },
+    "impeccable": {
+      "source": {
+        "source": "github",
+        "repo": "pbakaus/impeccable"
+      },
+      "autoUpdate": true
+    },
+    "ui-ux-pro-max-skill": {
+      "source": {
+        "source": "github",
+        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
+      },
+      "autoUpdate": true
     }
   },
   "modelSettings": {
     "claude-opus-5-5": {
-      "effortLevel": "high"
+      "effortLevel": "medium"
     }
   },
   "autoMemoryEnabled": true,
