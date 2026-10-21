@@ -4,7 +4,7 @@
     "CLAUDE_CODE_NO_FLICKER": "1",
     "CLAUDE_CODE_TMUX_TRUECOLOR": "1"
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
@@ -249,7 +249,8 @@
   },
   "modelSettings": {
     "claude-opus-5-5": {
-      "effortLevel": "medium"
+      "effortLevel": "medium",
+      "autoCompactWindow": 400000
     }
   },
   "autoMemoryEnabled": true,
