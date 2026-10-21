@@ -79,9 +79,19 @@
     "cc-skills-golang@samber": true,
     "modern-go-guidelines@goland-claude-marketplace": true,
     "codex@openai-codex": true,
-    "ponytail@ponytail": true
+    "ponytail@ponytail": true,
+    "andrej-karpathy-skills@karpathy-skills": true,
+    "humanizer@humanizer": true,
+    "data@synced": false
   },
   "extraKnownMarketplaces": {
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      },
+      "autoUpdate": true
+    },
     "claude-community": {
       "source": {
         "source": "github",
@@ -219,6 +229,20 @@
       "source": {
         "source": "github",
         "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
+      },
+      "autoUpdate": true
+    },
+    "karpathy-skills": {
+      "source": {
+        "source": "github",
+        "repo": "forrestchang/andrej-karpathy-skills"
+      },
+      "autoUpdate": true
+    },
+    "humanizer": {
+      "source": {
+        "source": "github",
+        "repo": "blader/humanizer"
       },
       "autoUpdate": true
     }
