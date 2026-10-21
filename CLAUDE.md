@@ -38,7 +38,7 @@ dotfiles/
 ├── oh-my-posh/      # oh-my-posh prompt theme
 ├── git/             # Git config and commit template
 ├── brewfile/        # Homebrew package lists (Brewfile, Caskfile)
-├── .mcp.json        # Project MCP servers (memory, fetch, context7, exa, sequential-thinking)
+├── .mcp.json        # Project MCP servers (fetch, exa)
 └── Makefile         # All setup targets
 ```
 
