@@ -4,6 +4,7 @@
     "CLAUDE_CODE_NO_FLICKER": "1",
     "CLAUDE_CODE_TMUX_TRUECOLOR": "1"
   },
+  "includeCoAuthoredBy": false,
   "model": "opus",
   "hooks": {
     "PreToolUse": [
@@ -55,12 +56,14 @@
     "rust-analyzer-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "commit-commands@anthropic-plugin-directory": true,
+    "code-review@anthropic-plugin-directory": true,
     "feature-dev@anthropic-plugin-directory": true,
     "hookify@anthropic-plugin-directory": true,
     "pr-review-toolkit@anthropic-plugin-directory": true,
     "ralph-loop@anthropic-plugin-directory": true,
     "skill-creator@anthropic-plugin-directory": true,
     "security-guidance@anthropic-plugin-directory": true,
+    "session-report@anthropic-plugin-directory": true,
     "explanatory-output-style@anthropic-plugin-directory": true,
     "learning-output-style@anthropic-plugin-directory": true,
     "cloudflare@cloudflare": true,
