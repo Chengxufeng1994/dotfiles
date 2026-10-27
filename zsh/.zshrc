@@ -240,11 +240,17 @@ command_exists() {
 eval "$(oh-my-posh init zsh --config ~/oh-my-posh/.oh-my-posh.omp.json)"
 
 # ── Runtime ───────────────────────────────────────────────────
-# fnm setup
-eval "$(fnm env --use-on-cd)"
 
-# zoxide setup
-eval "$(zoxide init zsh)"
+# fnm
+if command -v fnm >/dev/null 2>&1; then
+  [[ -d "$XDG_RUNTIME_DIR" ]] && mkdir -p "$XDG_RUNTIME_DIR/fnm_multishells"
+  eval "$(fnm env --use-on-cd)"
+fi
+
+# zoxide
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
 
 # >>>> pyenv(python version manager) (start)
 if [ -x "$HOMEBREW_PREFIX/bin/pyenv" ]; then
