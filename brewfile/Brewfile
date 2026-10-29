@@ -152,3 +152,4 @@ tap "AlexsJones/llmfit"
 brew "llmfit"              # LLM CLI 工具，支援多種模型（GPT-4, Claude, Gemini...）
 
 brew "rtk"
+brew "agent-browser"
