@@ -239,8 +239,7 @@
   },
   "modelSettings": {
     "claude-opus-5-5": {
-      "effortLevel": "medium",
-      "autoCompactWindow": 400000
+      "effortLevel": "medium"
     }
   },
   "autoMemoryEnabled": true,
