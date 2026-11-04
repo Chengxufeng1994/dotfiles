@@ -79,7 +79,8 @@
     "codex@openai-codex": true,
     "ponytail@ponytail": true,
     "andrej-karpathy-skills@karpathy-skills": true,
-    "humanizer@humanizer": true
+    "humanizer@humanizer": true,
+    "egm@egm": true
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
@@ -166,13 +167,6 @@
       },
       "autoUpdate": true
     },
-    "pulumi-agent-skills": {
-      "source": {
-        "source": "github",
-        "repo": "pulumi/agent-skills"
-      },
-      "autoUpdate": true
-    },
     "samber": {
       "source": {
         "source": "github",
@@ -233,6 +227,13 @@
       "source": {
         "source": "github",
         "repo": "blader/humanizer"
+      },
+      "autoUpdate": true
+    },
+    "egm": {
+      "source": {
+        "source": "github",
+        "repo": "google/elephant-goldfish-model"
       },
       "autoUpdate": true
     }
