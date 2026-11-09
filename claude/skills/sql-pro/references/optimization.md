@@ -207,6 +207,106 @@ SELECT
 FROM products p
 LEFT JOIN reviews r ON p.product_id = r.product_id
 GROUP BY p.product_id, p.name;
+
+-- Keep predicates sargable: a function on the column hides it from the index
+-- Bad: Computes YEAR() for every row
+SELECT order_id FROM orders WHERE YEAR(order_date) = 2024;
+
+-- Good: Range on the bare column uses the index
+SELECT order_id FROM orders
+WHERE order_date >= '2024-01-01'
+  AND order_date <  '2025-01-01';
+-- If the function is unavoidable, index the expression (see Index Design)
+
+-- OR across different columns can block index use (confirm with EXPLAIN)
+-- Bad: Planner may fall back to a full scan
+SELECT order_id FROM orders
+WHERE customer_id = 123 OR sales_rep_id = 456;
+
+-- Good: Each branch uses its own index
+SELECT order_id FROM orders WHERE customer_id = 123
+UNION
+SELECT order_id FROM orders WHERE sales_rep_id = 456;
+-- UNION drops rows matched by both branches. UNION ALL is cheaper,
+-- but only correct when the branches cannot overlap
+
+-- A WHERE filter on the outer-joined table turns LEFT JOIN into INNER JOIN
+-- Bad: Says LEFT JOIN, yet the filter discards unmatched orders anyway
+SELECT o.order_id, c.name
+FROM orders o
+LEFT JOIN customers c ON o.customer_id = c.customer_id
+WHERE c.status = 'active';
+
+-- Good: State the join you mean
+SELECT o.order_id, c.name
+FROM orders o
+INNER JOIN customers c ON o.customer_id = c.customer_id
+WHERE c.status = 'active';
+-- To keep unmatched orders, move the filter into the ON clause instead
+
+-- Collapse repeated scans into one pass
+-- Bad: Three scans of the same table
+SELECT COUNT(*) FROM orders WHERE status = 'pending';
+SELECT COUNT(*) FROM orders WHERE status = 'shipped';
+SELECT COUNT(*) FROM orders WHERE status = 'delivered';
+
+-- Good: One scan with conditional aggregation
+SELECT
+    COUNT(CASE WHEN status = 'pending' THEN 1 END) as pending_count,
+    COUNT(CASE WHEN status = 'shipped' THEN 1 END) as shipped_count,
+    COUNT(CASE WHEN status = 'delivered' THEN 1 END) as delivered_count
+FROM orders;
+```
+
+## Pagination and Bulk Operations
+
+```sql
+-- Keyset (cursor) pagination
+-- Bad: OFFSET reads and discards every skipped row
+SELECT product_id, name, created_at
+FROM products
+ORDER BY created_at DESC, product_id DESC
+LIMIT 20 OFFSET 10000;
+
+-- Good: Seek past the last row of the previous page
+SELECT product_id, name, created_at
+FROM products
+WHERE (created_at, product_id) < ('2024-06-15 10:30:00', 98765)
+ORDER BY created_at DESC, product_id DESC
+LIMIT 20;
+-- Needs an index on (created_at, product_id); the unique tiebreaker
+-- keeps rows with equal timestamps from being skipped or repeated
+-- Row-value comparison is PostgreSQL syntax. Elsewhere expand it to:
+--   created_at < X OR (created_at = X AND product_id < Y)
+
+-- Batch writes
+-- Bad: One round trip per row
+INSERT INTO products (name, price) VALUES ('Product 1', 10.00);
+INSERT INTO products (name, price) VALUES ('Product 2', 15.00);
+INSERT INTO products (name, price) VALUES ('Product 3', 20.00);
+
+-- Good: Multi-row insert
+INSERT INTO products (name, price) VALUES
+    ('Product 1', 10.00),
+    ('Product 2', 15.00),
+    ('Product 3', 20.00);
+
+-- Temporary table for an intermediate result reused by several queries
+-- (SQL Server: SELECT ... INTO #customer_totals)
+CREATE TEMPORARY TABLE customer_totals AS
+SELECT
+    customer_id,
+    SUM(total) as total_spent,
+    COUNT(*) as order_count
+FROM orders
+WHERE order_date >= '2024-01-01'
+GROUP BY customer_id;
+
+SELECT c.name, t.total_spent, t.order_count
+FROM customer_totals t
+JOIN customers c ON t.customer_id = c.customer_id
+WHERE t.total_spent > 1000;
+-- For a single statement, a CTE does the same job without the extra table
 ```
 
 ## Partitioning Strategies
@@ -332,7 +432,25 @@ FROM pg_stat_statements
 ORDER BY mean_exec_time DESC
 LIMIT 20;
 
--- Find blocking queries
+-- MySQL: Find slow queries
+-- (requires slow_query_log = ON and log_output = 'TABLE')
+SELECT query_time, lock_time, rows_sent, rows_examined, sql_text
+FROM mysql.slow_log
+ORDER BY query_time DESC
+LIMIT 20;
+
+-- SQL Server: Find slow queries
+SELECT TOP 20
+    qs.total_elapsed_time / qs.execution_count as avg_elapsed_time,
+    qs.execution_count,
+    SUBSTRING(qt.text, (qs.statement_start_offset / 2) + 1,
+        ((CASE qs.statement_end_offset WHEN -1 THEN DATALENGTH(qt.text)
+          ELSE qs.statement_end_offset END - qs.statement_start_offset) / 2) + 1) as query_text
+FROM sys.dm_exec_query_stats qs
+CROSS APPLY sys.dm_exec_sql_text(qs.sql_handle) qt
+ORDER BY avg_elapsed_time DESC;
+
+-- PostgreSQL: Find blocking queries
 SELECT
     blocked_locks.pid AS blocked_pid,
     blocked_activity.usename AS blocked_user,
@@ -382,3 +500,7 @@ ORDER BY n_dead_tup DESC;
 8. Consider partitioning for large tables (>10M rows)
 9. Use materialized views for expensive aggregations
 10. Monitor slow query log and pg_stat_statements
+11. Keep predicates sargable: no functions on indexed columns in WHERE
+12. Use keyset pagination for deep pages instead of a large OFFSET
+13. Batch writes instead of row-by-row statements
+14. Use prepared statements for repeated queries

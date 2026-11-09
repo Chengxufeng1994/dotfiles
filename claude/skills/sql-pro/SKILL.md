@@ -31,7 +31,7 @@ Load detailed guidance based on context:
 |-------|-----------|-----------|
 | Query Patterns | `references/query-patterns.md` | JOINs, CTEs, subqueries, recursive queries |
 | Window Functions | `references/window-functions.md` | ROW_NUMBER, RANK, LAG/LEAD, analytics |
-| Optimization | `references/optimization.md` | EXPLAIN plans, indexes, statistics, tuning |
+| Optimization | `references/optimization.md` | EXPLAIN plans, indexes, statistics, tuning, pagination, batch writes |
 | Database Design | `references/database-design.md` | Normalization, keys, constraints, schemas |
 | Dialect Differences | `references/dialect-differences.md` | PostgreSQL vs MySQL vs SQL Server specifics |
 
