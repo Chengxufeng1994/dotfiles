@@ -1,6 +1,9 @@
 ---
 description: Run TDD workflow — write failing tests, implement, verify. For bugs, use the Prove-It pattern.
+disable-model-invocation: true
 ---
+
+Invoke the test-driven-development skill.
 
 For new features:
 
