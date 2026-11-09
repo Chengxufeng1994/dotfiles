@@ -113,7 +113,7 @@ Final line: `Audit: COMPLETE | Gaps: K | Fixed: F | Needs human: H`
 
 ## When NOT to Use
 
-- Compile/type/build failures → use `go-build-resolver` for Go
+- Compile/type/build failures → use `build-error-resolver` (or `go-build-resolver` for Go)
 - Secret rotation, vault/secret-manager setup, deeper threat review → use `security-reviewer`
 - App-logic bug unrelated to config → use `test-engineer`
 

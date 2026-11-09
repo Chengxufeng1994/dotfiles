@@ -20,6 +20,10 @@ Located in `~/.claude/agents/`:
 | database-reviewer | PostgreSQL queries and schemas | Writing SQL or migrations |
 | go-reviewer | Go code review | Go projects |
 | go-build-resolver | Fix Go build and vet errors | When a Go build fails |
+| typescript-reviewer | TypeScript/JavaScript code review | TypeScript/JavaScript projects |
+| build-error-resolver | Fix TypeScript build and type errors | When a TypeScript build fails |
+| python-reviewer | Python code review | Python projects |
+| docs-lookup | Look up library docs through Context7 | Library, framework or API questions |
 | env-var-detective | Env var and config drift | Undefined or mismatched env vars |
 
 ## Immediate Agent Usage
