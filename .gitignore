@@ -56,6 +56,10 @@ claude/jobs/
 claude/security/
 claude/remote/
 claude/skills/.trash/
+claude/skills/synced/
+claude/.ponytail-active
+claude/ponytail-modes/
+claude/state/
 
 
 # Gemini
