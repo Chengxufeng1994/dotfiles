@@ -113,6 +113,9 @@ WHERE u.status = 'active'
 ## 🗄️ Database-Specific Best Practices
 
 ### PostgreSQL
+
+When reviewing PostgreSQL, also load the `supabase-postgres-best-practices` skill. Where it differs from the examples below, follow that skill.
+
 ```sql
 -- Use JSONB for JSON data
 CREATE TABLE events (
