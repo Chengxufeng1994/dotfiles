@@ -8,22 +8,26 @@ Located in `~/.claude/agents/`:
 |-------|---------|-------------|
 | planner | Implementation planning | Complex features, refactoring |
 | architect | System design | Architectural decisions |
-| tdd-guide | Test-driven development | New features, bug fixes |
+| code-architect | Feature architecture blueprints | Designing a feature against existing patterns |
+| code-explorer | Trace existing features | Understanding code before changing it |
 | code-reviewer | Code review | After writing code |
 | security-reviewer | Security analysis | Before commits |
-| build-error-resolver | Fix build errors | When build fails |
-| e2e-runner | E2E testing | Critical user flows |
-| refactor-cleaner | Dead code cleanup | Code maintenance |
-| doc-updater | Documentation | Updating docs |
-| rust-reviewer | Rust code review | Rust projects |
-| harmonyos-app-resolver | HarmonyOS app development | HarmonyOS/ArkTS projects |
+| test-engineer | Test strategy and test writing | New features, bug fixes |
+| code-refactor-master | Refactoring and reorganization | Restructuring code |
+| backend-developer | APIs, services, backend systems | Server-side implementation |
+| microservices-architect | Distributed system design | Service decomposition |
+| database-architect | Data modeling, database selection | Database design decisions |
+| database-reviewer | PostgreSQL queries and schemas | Writing SQL or migrations |
+| go-reviewer | Go code review | Go projects |
+| go-build-resolver | Fix Go build and vet errors | When a Go build fails |
+| env-var-detective | Env var and config drift | Undefined or mismatched env vars |
 
 ## Immediate Agent Usage
 
 No user prompt needed:
 1. Complex feature requests - Use **planner** agent
 2. Code just written/modified - Use **code-reviewer** agent
-3. Bug fix or new feature - Use **tdd-guide** agent
+3. Bug fix or new feature - Use **test-engineer** agent
 4. Architectural decision - Use **architect** agent
 
 ## Parallel Task Execution

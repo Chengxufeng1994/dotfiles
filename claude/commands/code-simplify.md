@@ -6,7 +6,7 @@ description: Simplify code for clarity and maintainability — reduce complexity
 
 **Guiding principle: clarity over cleverness.** Prefer the obvious, boring solution a reviewer can follow in six months over the compact, clever one. Never trade readability for line count, and never change observable behavior in the name of "simpler."
 
-Invoke the agent-skills:code-simplification skill.
+Invoke the code-simplification skill.
 
 Simplify recently changed code (or the scope named in `$ARGUMENTS`) while preserving exact behavior:
 
