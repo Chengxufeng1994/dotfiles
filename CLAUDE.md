@@ -56,7 +56,7 @@ The `claude/` directory mirrors `~/.claude/` and contains:
 | `RTK.md` | RTK (Rust Token Killer) proxy reference — imported by `CLAUDE.md` via `@RTK.md` |
 | `rules/*.md` | Topic-specific rules (see Rules Files below) |
 | `agents/*.md` | Custom subagent definitions (code-reviewer, backend-architect, database-architect, etc.) |
-| `commands/*.md` | Custom slash commands (e.g. `/code-review`, `/commit-message`, `/golang-code-review`) |
+| `commands/*.md` | Custom slash commands (e.g. `/review`, `/commit-message`, `/golang-code-review`) |
 | `skills/` | Custom skills installed locally |
 | `plugins/` | Plugin marketplace config and installed plugins |
 | `settings.json` | Claude Code settings (enabled plugins, statusline, hooks) |

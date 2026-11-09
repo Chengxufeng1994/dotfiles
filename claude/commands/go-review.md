@@ -174,7 +174,7 @@ Verdict: <APPROVE | APPROVE WITH COMMENTS | REQUEST CHANGES | BLOCK>
 
 ## Edge Cases
 
-- **No `go.mod`** → Stop. Use `/code-review` for non-Go projects.
+- **No `go.mod`** → Stop. Use `/review` for non-Go projects.
 - **Tool not installed** (`staticcheck`, `golangci-lint`, `govulncheck`) → Note as skipped; review proceeds.
 - **Agent returns zero findings** → A clean review is valid. Approve without manufacturing nits.
 - **Race detector reports DATA RACE** → Treat as CRITICAL; BLOCK regardless of agent findings.
@@ -185,4 +185,4 @@ Verdict: <APPROVE | APPROVE WITH COMMENTS | REQUEST CHANGES | BLOCK>
 
 - `/go-test` — Run tests with TDD discipline before review.
 - `/go-build` — Fix build errors before review.
-- `/code-review` — Non-Go-specific review flow.
+- `/review` — Non-Go-specific review flow.
