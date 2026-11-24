@@ -58,6 +58,8 @@ The `claude/` directory mirrors `~/.claude/` and contains:
 | `agents/*.md` | Custom subagent definitions (code-reviewer, backend-architect, database-architect, etc.) |
 | `commands/*.md` | Custom slash commands (e.g. `/review`, `/commit-message`, `/golang-code-review`) |
 | `skills/` | Custom skills installed locally |
+| `references/` | Shared checklists that upstream agent-skills link to as `../../references/*.md` |
+| `mcp-configs/` | MCP server definitions |
 | `plugins/` | Plugin marketplace config and installed plugins |
 | `settings.json` | Claude Code settings (enabled plugins, statusline, hooks) |
 
@@ -67,9 +69,9 @@ Files under `claude/rules/` are injected into context automatically — uncondit
 
 - `context7.md` — when to use the Context7 MCP for live library docs
 - `common/*.md` — shared rules, loaded in every session: `coding-style`, `patterns`, `testing`, `git-workflow`, `development-workflow`, `code-review`, `security`, `performance`, `hooks`, `agents`
-- `<lang>/*.md` — `golang`, `python`, `rust`, `typescript`; each extends its `common/` counterpart and carries `paths:` frontmatter so it loads only for matching files
+- `<lang>/*.md` — `golang`, `python`, `rust`, `typescript`, `web`; each extends its `common/` counterpart and carries `paths:` frontmatter so it loads only for matching files
 
-These come from ECC (everything-claude-code). They were previously nested under `rules/ecc/`; that wrapper directory is gone and the layers sit directly under `rules/`. ECC also ships a `web/` layer, which is not installed here.
+These come from ECC (everything-claude-code). They were previously nested under `rules/ecc/`; that wrapper directory is gone and the layers sit directly under `rules/`.
 
 Rules overlap the installed skills in places (`git-workflow` vs the `commit-message` skill, `testing` vs `testing-strategy`, `golang/*` vs the `cc-skills-golang@samber` plugin). The tradeoff is deliberate: rules load unconditionally, skills load only when the model picks them. Prefer rules for constraints that must hold regardless, and keep new ones to imperative statements rather than code examples.
 
@@ -94,3 +96,4 @@ jq -r '.enabledPlugins | keys[]' claude/settings.json   # currently enabled plug
 - **`make softlink` isn't exhaustive.** It links the `zsh/`, `vim/`, `tmux/`, `git/`, and `nvim/` configs, but several present files aren't covered (`zsh/.zshenv`, `ghostty/config`, `oh-my-posh/`, `claude/` → `~/.claude/`, `gemini/`) — symlink those manually if you need them. Also, if `~/.config/nvim` already exists as a real directory, the nvim link nests inside it instead of replacing it.
 - **`.symlink` suffix is inconsistent.** `git/` and `tmux/` configs use a `*.symlink` suffix; `zsh/` and `vim/` don't. The layout is mid-migration — don't assume one naming scheme.
 - **`claude/` is live `~/.claude/`.** Only the curated subset in the table above is tracked; everything else there (`sessions/`, `cache/`, `projects/`, logs, `.credentials.json`) is runtime state — don't `git add` it.
+- **Skills from addyosmani/agent-skills are verbatim copies.** Sync by overwriting, but bring three things: `SKILL.md`, the skill's own `references/`, and any repo-root `references/*.md` it links as `../../references/` (those live in `claude/references/`, so `SKILL.md` stays unedited). Don't import upstream skills that duplicate local ones (`git-workflow-and-versioning`, `documentation-and-adrs`): the local `git-workflow`, `documentation` and `architecture-decision-records` scope themselves around `commit-message`/`create-pull-request`, and upstream's broader descriptions would compete for triggering.
