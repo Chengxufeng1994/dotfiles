@@ -76,7 +76,7 @@
     "cc-skills-golang@samber": true,
     "modern-go-guidelines@goland-claude-marketplace": true,
     "codex@openai-codex": true,
-    "ponytail@ponytail": true,
+    "ponytail@ponytail": false,
     "andrej-karpathy-skills@karpathy-skills": false,
     "humanizer@humanizer": true,
     "egm@egm": true
